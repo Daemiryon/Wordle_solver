@@ -1,0 +1,60 @@
+.grid table {
+    margin-top: 5px;
+    border: 1px solid;
+    width: auto;
+    height: auto;
+    color: aliceblue;
+    width: 50vw;
+    margin-left: 25vw;
+}
+.grid tr {
+    border: 1px solid;
+    width: auto;
+    height: auto;
+    color: aliceblue;
+}
+.grid td {
+    border: 1px solid;
+    width: 60px;
+    height: 60px;
+    color: aliceblue;
+}
+
+
+*{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #333;
+    color:aliceblue;
+}
+
+.barre_outils{
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+.menu_elements {
+    display: inline;
+    float: left;
+    /*border-right: 1px solid rgb(255, 255, 255);*/
+    /*border-left:1px solid rgb(255, 255, 255);*/
+}
+
+li a{
+    display: block;
+    color: aliceblue;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li:last-child{
+    border-left: none;
+}
+

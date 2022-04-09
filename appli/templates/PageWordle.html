@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/generateGrid.css">
+        <title>PageWordle</title>
+    </head>
+    <header class="barre_outils">
+        <ul class="menu">
+            <li class="menu_elements"><a>Règles</a></li>
+            <li class="menu_elements"><a>Statistiques</a></li>
+        </ul>
+    </header>
+    <h1 style="text-align: center;">Wordle</h1>
+    <form style="text-align: center;" action="/PageWordle" method="post">
+        <input type="text" id="maxtry" placeholder="Max number of tries">
+        <input type="text" id="wordlength" placeholder="Word length">
+        <input type="button" value="Jouer" onclick="generateGrid()" > 
+    </form>
+    <body>
+        <div class="grid"></div>
+    </body>
+    <script src="../static/styles/assets/js/generateGrid.js"></script>
+</html>
