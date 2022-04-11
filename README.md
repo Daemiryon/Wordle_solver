@@ -37,7 +37,7 @@ Il consiste en la création de deux applications autour du jeu Wordle :
 
 ## Mode d'emploi - Application WEB
 
-En cours de réalisation
+Pour réinitialiser la base de donnée à partir de la stucture définie dans le fichier data/tables.sql et des données initiales de chaque tables modifiables dans les fichiers data/*.csv, il suffit d'éxécuter le fichier init_database.sh, par exemple en tapant ./init_database.sh dans un terminal.
 
 
 ## Mode d'emploi - Solveur
