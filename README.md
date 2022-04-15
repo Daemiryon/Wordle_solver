@@ -30,9 +30,9 @@ Il consiste en la création de deux applications autour du jeu Wordle :
 [Dossier de conception - Solveur (Non disponible)](./)
 
 
-## Planning des tâches (Gantt) du projet
+## Plannings des tâches (Gantt) du projet
 
-[Planning des tâches (Gantt) (Non disponible)](./)
+[Planning des tâches (Gantt) - Application WEB](https://docs.google.com/spreadsheets/d/1sz8TemHDO66MD2cEXAMvSilQM0ajqywi5HdHzMRzw44/edit?usp=sharing)
 
 
 ## Mode d'emploi - Application WEB
