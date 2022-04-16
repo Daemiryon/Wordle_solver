@@ -10,6 +10,7 @@ function generateGrid(maxTry,wordLength) {
         for (let j=0;j<wordLength;j++){
             var cell = document.createElement("td");
             var node = document.createTextNode("");
+            cell.id = i*wordLength+j
             cell.appendChild(node);
             row.appendChild(cell);
         }
