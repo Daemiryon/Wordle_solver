@@ -1,24 +1,26 @@
-CREATE TABLE joueur (
-	id integer,
-	CONSTRAINT joueur_key PRIMARY KEY (id)
+CREATE TABLE PLAYERS (
+	idPlayer integer,
+	idLastGame integer DEFAULT 0,
+	CONSTRAINT players_key PRIMARY KEY (idPlayer)
 );
 
-CREATE TABLE parties (
-	id integer,
-	idJoueur integer,
-	nbEssaisMax integer,
-	motATrouver VARCHAR,
-	FOREIGN KEY(idJoueur) REFERENCES "joueur"("id")
-	CONSTRAINT parties_key PRIMARY KEY (id,idJoueur)
+CREATE TABLE GAMES (
+	idPlayer integer,
+	idGame integer,
+	nbMaxTries integer,
+	gameEnded INTEGER DEFAULT 0 CHECK(gameEnded=0 OR gameEnded=1),
+	wordToFind VARCHAR,
+	FOREIGN KEY(idPlayer) REFERENCES "PLAYERS"("idPlayer")
+	CONSTRAINT games_key PRIMARY KEY (idPlayer,idGame)
 );
 
-CREATE TABLE essais (
-	idJoueur integer,
-	idPartie integer,
-	id integer,
-	motEssai VARCHAR,
-	FOREIGN KEY(idJoueur) REFERENCES "joueur"("id"),
-	FOREIGN KEY(idPartie) REFERENCES "parties"("id"),
-	CONSTRAINT essais_key PRIMARY KEY (idJoueur,idPartie,id)
+CREATE TABLE TRIES (
+	idPlayer integer,
+	idGame integer,
+	idTry integer,
+	wordTried VARCHAR,
+	FOREIGN KEY(idPlayer) REFERENCES "PLAYERS"("idPlayer"),
+	FOREIGN KEY(idGame) REFERENCES "GAMES"("idGame"),
+	CONSTRAINT tries_key PRIMARY KEY (idPlayer,idGame,idTry)
 );
 
