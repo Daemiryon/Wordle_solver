@@ -1,8 +1,5 @@
-function generateGrid() {
+function generateGrid(maxTry,wordLength) {
     
-    var maxTry = document.getElementById("maxtry").value;
-    var wordLength = document.getElementById("wordlength").value;
-
     var body = document.getElementsByClassName("grid")[0];
 
     var tb = document.createElement("table");
