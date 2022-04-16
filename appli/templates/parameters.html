@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <form id="parameters" action="/currentGame" method="post">
+        <div id="form_content">
+
+            <div class="form_item">
+                <label>Nombre maximal d'essais</label>
+                <select name="maxtry">
+                    <option disabled selected value="">Nombre maximal d'essais</option>
+                    {% for elem in MAXTRYPOSSIBILITIES %}
+                        <option value="{{elem}}">{{elem}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form_item">
+                <label>Longueur du mot à trouver</label>
+                <select name="wordlength">
+                    <option disabled selected value="">Longueur du mot à trouver</option>
+                    {% for elem in WORDLENGTHPOSSIBILITIES %}
+                        <option value="{{elem}}">{{elem}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form_item">
+                <input type="submit" value="Jouer">
+            </div>
+
+        </div>
+    </form>
+{% endblock %}
