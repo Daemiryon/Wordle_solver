@@ -1,0 +1,21 @@
+#parameters{
+    margin: auto;
+    width: 220px;
+    position: relative;
+    top: 120px;
+}
+#form_content {
+    display: flex;
+    flex-direction: column;
+}
+.form_item {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.form_item select {
+    width: 220px;
+    height: 35px;
+}
+.form_item input {
+    padding: 12px;
+}
