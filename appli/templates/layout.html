@@ -26,8 +26,14 @@
                     <div id="overlayStats" class="overlayStats">
                         <div id="popupStats" class="popupStats">
                             <span id = "btnCloseStats" class="btnCloseStats">&times;</span>
-                            <h2>Mes statistiques :</h2>
-                            <p>Oui</p>
+                            {%for ele in NBPARTIES %}
+                                <h2>Mes statistiques :</h2>
+                                <strong>Nombre de parties :</strong>{{ele[0]}}
+                            {% endfor %}
+                            <br>
+                            {%for ele in NBMOYENESSAIS %}
+                            <strong>Nombre moyen d'essais maximums :</strong>{{ele[0]}}
+                            {% endfor %}
                         </div>
                     </div>
                 </li>
