@@ -55,8 +55,10 @@ def currentGame():
     '''
     ### A modifier lorsque les fonctions userId() et unfinishedGame() seront implémentées
     runningGame = False
-    nbParties,nbMoyenEssais=getStats() ##A modifier lorsqu'on reconnaîtra l'utilisateur
     # if unfinishedGame(userId()):
+
+    nbParties,nbMoyenEssais=getStats() ##A modifier lorsqu'on reconnaîtra l'utilisateur
+
     if runningGame:
         ### A compléter
         None
@@ -65,18 +67,24 @@ def currentGame():
         wordLength = request.form.get("wordlength")
     return render_template("game.html",MAXTRY=maxTry,WORDLENGTH=wordLength,NBPARTIES=nbParties,NBMOYENESSAIS=nbMoyenEssais)
 
-##Partie Popup stats
+##Partie stats
 
-def getStats(myId=1) :
-    ##Fonction qui récupère les stats d'un utilisateur (nombre de parties, nombre moyen d'essais max).
+def getStats(myId=1) : 
+    ##Fonction qui récupère les stats d'un utilisateur (nombre de parties, nombre moyen d'essais).
     ##In : idPlayer
-    ##Out : nombre de parties & nombre moyen d'essais max
+    ##Out : nombre de parties & nombre moyen d'essais
     con = sqlite3.connect(DATABASE)
     cur = con.cursor()
     cur.execute('SELECT COUNT(*) FROM games WHERE gameEnded == 1 AND idPlayer= ?',(myId,))
     c = cur.fetchall()
-    nbParties = [e[0] for e in c]
-    cur.execute('SELECT AVG(nbMaxTries) FROM games WHERE idPlayer= ?',(myId,))
+    nbParties = c[0][0]
+    cur.execute('SELECT MAX(idTry) FROM tries JOIN games ON tries.idGame=games.idGame WHERE tries.idPlayer= ? and games.gameEnded=1 group by tries.idGame',(myId,))
     c = cur.fetchall()
-    nbMaxTries_avrg = [e[0] for e in c]
-    return nbParties,nbMaxTries_avrg
+    nbTryMax = [e[0] for e in c]
+    nbTryMax_avrg = 0
+    if nbParties != 0 :
+        for i in range(len(nbTryMax)) :
+            nbTryMax_avrg += nbTryMax[i]
+        nbTryMax_avrg = nbTryMax_avrg/nbParties
+    print(nbTryMax_avrg)
+    return nbParties,nbTryMax_avrg
