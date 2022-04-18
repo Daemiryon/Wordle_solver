@@ -19,10 +19,6 @@
 
 .menu_elements {
     display: inline;
-    border-right: 1px solid rgb(255, 255, 255);
-    border-left:1px solid rgb(255, 255, 255);
-    border-top: 1px solid rgb(255, 255, 255);
-    border-bottom: 1px solid rgb(255, 255, 255);
 }
 
 #Wordle {
@@ -52,13 +48,66 @@
     bottom : 65px;
 }
 
-li a{
-    display: block;
-    text-align: center;
+/*Partie popup stats*/
+
+.btnPopupStats{
     padding: 14px 16px;
-    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.42cm;
 }
 
-li:last-child{
-    border-right: none;
+.btnPopupStats:hover{
+    background-color: rgba(128, 128, 128, 0.692);
+}
+
+.overlayStats{
+    z-index: 1;
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    display: none; /*non-visible*/
+}
+
+.popupStats{
+    position: relative;
+    bottom: 200px;
+    margin: 20% auto;
+    width: 70%;
+    border-radius: 5px;
+    background-color: #333;
+    padding: 14px;
+}
+
+.btnCloseStats{
+    float: right;
+    cursor: pointer;
+    font-size: 1cm;
+}
+
+/*Partie popup Paramètres */
+
+.btnPopupParametres{
+    padding: 14px 16px;
+    cursor: pointer;
+    font-size: 0.42cm;
+}
+
+.btnPopupParametres:hover{
+    background-color: rgba(128, 128, 128, 0.692);
+}
+
+
+/*Partie popup Règles*/
+
+.btnPopupRegles{
+    padding: 14px 16px;
+    cursor: pointer;
+    font-size: 0.42cm;
+}
+
+.btnPopupRegles:hover{
+    background-color: rgba(128, 128, 128, 0.692);
 }

@@ -7,22 +7,38 @@
         <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/layout.css">
         <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/parameters.css">
         <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/generateGrid.css">
-        <script src="./static/styles/assets/js/generateGrid.js"></script>
+        <script src="../static/styles/assets/js/generateGrid.js"></script>
         <title>Wordle</title>
     </head>
     
     <body>
         <header class="barre_outils">
             <ul class="menu">
-                <li class="menu_elements" id ="regles"><a>Règles</a></li>
+                <li class="menu_elements" id ="regles">
+                    <button id="btnPopupRegles" class="btnPopupRegles">Règles</button>
+                </li>
                 <li id ="Wordle"><h1>Wordle</h1></li>
-                <li class="menu_elements" id="param"><a>Paramètres</a></li>
-                <li class="menu_elements" id="stats"><a>Statistiques</a></li>
+                <li class="menu_elements" id="param">
+                    <button id="btnPopupParametres" class="btnPopupParametres">Paramètres</button>
+                </li>
+                <li class="menu_elements" id="stats">
+                    <button id="btnPopupStats" class="btnPopupStats">Statistiques</button>
+                    <div id="overlayStats" class="overlayStats">
+                        <div id="popupStats" class="popupStats">
+                            <span id = "btnCloseStats" class="btnCloseStats">&times;</span>
+                            <h2>Mes statistiques :</h2>
+                            <p>Oui</p>
+                        </div>
+                    </div>
+                </li>
+
             </ul>
         </header>
 
         {% block content %}{% endblock %}
-
+    
+    <script src="../static/styles/assets/js/popupStats.js"></script>
     </body>
+
 
 </html>
