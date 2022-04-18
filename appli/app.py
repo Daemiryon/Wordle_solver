@@ -36,13 +36,16 @@ def parametersPage():
     wordLengthPossibilities = [5,6,7,8,9,10,11,12,13,14,15]
 
     nbParties,nbMoyenEssais=getStats() ##A modifier lorsqu'on reconnaîtra l'utilisateur
+    motATrouver,nbEssais=getResults() ##idem
 
     return render_template(
         "parameters.html",
         MAXTRYPOSSIBILITIES=maxTryPossibilities,
         WORDLENGTHPOSSIBILITIES=wordLengthPossibilities,
         NBPARTIES=nbParties,
-        NBMOYENESSAIS=nbMoyenEssais
+        NBMOYENESSAIS=nbMoyenEssais,
+        MOTATROUVER=motATrouver,
+        NBESSAIS=nbEssais
     )
 
 @app.route('/currentGame', methods=['GET','POST'])
@@ -58,6 +61,7 @@ def currentGame():
     # if unfinishedGame(userId()):
 
     nbParties,nbMoyenEssais=getStats() ##A modifier lorsqu'on reconnaîtra l'utilisateur
+    motATrouver,nbEssais=getResults() ##idem
 
     if runningGame:
         ### A compléter
@@ -65,11 +69,12 @@ def currentGame():
     else:
         maxTry = request.form.get("maxtry")
         wordLength = request.form.get("wordlength")
-    return render_template("game.html",MAXTRY=maxTry,WORDLENGTH=wordLength,NBPARTIES=nbParties,NBMOYENESSAIS=nbMoyenEssais)
+    return render_template("game.html",MAXTRY=maxTry,WORDLENGTH=wordLength,NBPARTIES=nbParties,NBMOYENESSAIS=nbMoyenEssais,MOTATROUVER=motATrouver,
+        NBESSAIS=nbEssais)
 
 ##Partie stats
 
-def getStats(myId=1) : 
+def getStats(myId=1) : ##On peut ajouter le winrate si on a le temps (wordTried == wordToFind && max(idTry)<=nbMaxTries) (?)
     ##Fonction qui récupère les stats d'un utilisateur (nombre de parties, nombre moyen d'essais).
     ##In : idPlayer
     ##Out : nombre de parties & nombre moyen d'essais
@@ -86,5 +91,18 @@ def getStats(myId=1) :
         for i in range(len(nbTryMax)) :
             nbTryMax_avrg += nbTryMax[i]
         nbTryMax_avrg = nbTryMax_avrg/nbParties
-    print(nbTryMax_avrg)
     return nbParties,nbTryMax_avrg
+
+def getResults(myId=1,myGame=2) :
+    ##Fonction qui récupère les résultats d'une partie d'un utilisateur (mot à trouver, nombre d'essais).
+    ##In : idPlayer, idGame
+    ##Out : mot à trouver & nombre d'essais
+    con = sqlite3.connect(DATABASE)
+    cur = con.cursor()
+    cur.execute('SELECT wordToFind FROM games WHERE idGame= ? AND idPlayer= ?',(myGame,myId))
+    c = cur.fetchall()
+    motATrouver = c[0][0]
+    cur.execute('SELECT MAX(idTry) FROM tries JOIN games ON tries.idGame=games.idGame WHERE tries.idPlayer= ? and tries.idGame = ?',(myId,myGame))
+    c = cur.fetchall()
+    nbTryMax = c[0][0]
+    return motATrouver,nbTryMax

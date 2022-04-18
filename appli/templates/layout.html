@@ -38,6 +38,24 @@
 
         {% block content %}{% endblock %}
     
+       
+       
+       
+        {% if TESTENDGAME == True %} <!--Sûrement à revoir du fait qu'on ne sait pas encore comment on finit la partie-->
+            <div id="overlayEnd" class="overlayEnd">
+                <div id="popupEnd" class="popupEnd">
+                    <h2>Mes statistiques :</h2>
+                    <p><strong>Nombre de parties jouées : </strong>{{NBPARTIES}}</p>
+                    <p><strong>Nombre moyen d'essais pour gagner : </strong>{{NBMOYENESSAIS}}</p>
+                    <br>
+                    <h2>Mes résultats :</h2>
+                    <p><strong>Mot à trouver : </strong>{{MOTATROUVER}}</p>
+                    <p><strong>Nombre d'essais : </strong>{{NBESSAIS}}</p>
+                    <p><a class="btnEnd" id="btnEnd"href="/newGame">Rejouer</a></p>
+                </div>
+            </div>
+        {% endif %}
+
     <script src="../static/styles/assets/js/popupStats.js"></script>
     </body>
 

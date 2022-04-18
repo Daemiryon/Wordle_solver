@@ -111,3 +111,32 @@
 .btnPopupRegles:hover{
     background-color: rgba(128, 128, 128, 0.692);
 }
+
+/*Partie popup End */
+
+.overlayEnd{
+    z-index: 1;
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.popupEnd{
+    position: relative;
+    bottom: 200px;
+    margin: 20% auto;
+    width: 70%;
+    border-radius: 5px;
+    background-color: #333;
+    padding: 14px;
+}
+
+.btnEnd{
+    display:block;
+    text-align:center;
+    cursor: pointer;
+    font-size: 0.42cm;
+}
