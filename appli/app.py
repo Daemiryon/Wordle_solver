@@ -55,6 +55,7 @@ def currentGame():
     '''
     ### A modifier lorsque les fonctions userId() et unfinishedGame() seront implémentées
     runningGame = False
+    nbParties,nbMoyenEssais=getStats() ##A modifier lorsqu'on reconnaîtra l'utilisateur
     # if unfinishedGame(userId()):
     if runningGame:
         ### A compléter
@@ -62,7 +63,7 @@ def currentGame():
     else:
         maxTry = request.form.get("maxtry")
         wordLength = request.form.get("wordlength")
-    return render_template("game.html",MAXTRY=maxTry,WORDLENGTH=wordLength)
+    return render_template("game.html",MAXTRY=maxTry,WORDLENGTH=wordLength,NBPARTIES=nbParties,NBMOYENESSAIS=nbMoyenEssais)
 
 ##Partie Popup stats
 
@@ -78,5 +79,4 @@ def getStats(myId=1) :
     cur.execute('SELECT AVG(nbMaxTries) FROM games WHERE idPlayer= ?',(myId,))
     c = cur.fetchall()
     nbMaxTries_avrg = [e[0] for e in c]
-    print(nbMaxTries_avrg,nbParties)
     return nbParties,nbMaxTries_avrg

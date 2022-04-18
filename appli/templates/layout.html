@@ -28,11 +28,10 @@
                             <span id = "btnCloseStats" class="btnCloseStats">&times;</span>
                             {%for ele in NBPARTIES %}
                                 <h2>Mes statistiques :</h2>
-                                <strong>Nombre de parties :</strong>{{ele[0]}}
+                                <p><strong>Nombre de parties jouées : </strong>{{ele}}</p>
                             {% endfor %}
-                            <br>
                             {%for ele in NBMOYENESSAIS %}
-                            <strong>Nombre moyen d'essais maximums :</strong>{{ele[0]}}
+                                <p><strong>Nombre moyen d'essais maximums : </strong>{{ele}}</p>
                             {% endfor %}
                         </div>
                     </div>
