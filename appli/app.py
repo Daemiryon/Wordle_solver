@@ -2,9 +2,24 @@ from contextlib import nullcontext
 from crypt import methods
 from flask import Flask,render_template,g,redirect,url_for,request
 import sqlite3
+import json
+from random import choice
 app = Flask(__name__)
 
 DATABASE = "./data/database.db"
+
+def get_a_word(WORDLENGTH):
+    '''
+    Fonction qui retourne un mot de taille n du dictionnaire 
+    
+    IN : WORDLENGTH ( int )
+    OUT : word ( str )
+    '''
+    dic_file = open(f"./data/dictionnaires/{WORDLENGTH}_lettres.json")
+    Mots_valides=json.load(dic_file)
+    dic_file.close()
+    return choice(Mots_valides)
+
 
 @app.route('/', methods=['GET'])
 def root():
