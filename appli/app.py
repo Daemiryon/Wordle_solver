@@ -7,7 +7,8 @@ import json
 from random import choice
 app = Flask(__name__)
 app.secret_key = "any random string" #chiffrement des cookies sessions
-DATABASE = "./appli/data/database.db"
+DATABASE = "data/database.db"
+
 
 @app.before_request
 def make_session_permanent():
@@ -56,7 +57,7 @@ def couleur(guess,target):
 
     return Couleurs
         
-
+# -----
 
 @app.route('/', methods=['GET'])
 def root():
@@ -68,13 +69,12 @@ def root():
     IN :
     OUT: HTML page
     '''
-    
+    ### getUser()
     ### Login - ne s'execute pour l'instant que sur la route '/', a corriger dans le futur
     if "id" not in session:
         session["id"] = db.addUser()
     else:
         print("Utilisateurs numero %s est reconnu." % session["id"])
-
 
     ### A modifier lorsque les fonctions userId() et unfinishedGame() seront implémentées
     runningGame = False
@@ -84,7 +84,7 @@ def root():
     else:
         return redirect("/newGame")
 
-@app.route('/newGame', methods=['GET'])
+@app.route('/newGame', methods=['GET','POST'])
 def parametersPage():
     '''
     Fonction qui charge la page d'initialisation d'une partie.
@@ -92,21 +92,36 @@ def parametersPage():
     IN :
     OUT: HTML page
     '''
-    maxTryPossibilities = [3,4,5,6,7,8,9,10]
-    wordLengthPossibilities = [5,6,7,8,9,10,11,12,13,14,15]
+    nbParties,nbMoyenEssais = getStats(session["id"]) ##A modifier lorsqu'on reconnaîtra l'utilisateur
+    motATrouver,nbEssais = getResults() ##idem
 
-    nbParties,nbMoyenEssais=getStats() ##A modifier lorsqu'on reconnaîtra l'utilisateur
-    motATrouver,nbEssais=getResults() ##idem
+    if request.method == "POST":
+        maxTry = request.form.get("maxtry")
+        wordLength = request.form.get("wordlength")
+        wordToFind = get_a_word(wordLength)
+        with sqlite3.connect(DATABASE) as con:
+            cur = con.cursor()
+            temp = cur.execute("SELECT MAX(idGame) FROM GAMES WHERE idPlayer=?",(session["id"],)).fetchone()[0]
+            idGame = 1
+            if temp != None:
+                idGame += temp
+            cur.execute("INSERT INTO GAMES VALUES (?,?,?,0,?)",(session["id"],idGame,maxTry,wordToFind))
+            cur.execute("UPDATE PLAYERS SET idLastGame=?",(idGame,))
+            cur.close()
+            con.commit()
+        return redirect('/currentGame')
 
-    return render_template(
-        "parameters.html",
-        MAXTRYPOSSIBILITIES=maxTryPossibilities,
-        WORDLENGTHPOSSIBILITIES=wordLengthPossibilities,
-        NBPARTIES=nbParties,
-        NBMOYENESSAIS=nbMoyenEssais,
-        MOTATROUVER=motATrouver,
-        NBESSAIS=nbEssais
-    )
+    else:
+        maxTryPossibilities = [3,4,5,6,7,8,9,10]
+        wordLengthPossibilities = [5,6,7,8,9,10,11,12,13,14,15]
+        return render_template("parameters.html",
+            MAXTRYPOSSIBILITIES=maxTryPossibilities,
+            WORDLENGTHPOSSIBILITIES=wordLengthPossibilities,
+            NBPARTIES=nbParties,
+            NBMOYENESSAIS=nbMoyenEssais,
+            MOTATROUVER=motATrouver,
+            NBESSAIS=nbEssais
+        )
 
 @app.route('/currentGame', methods=['GET','POST'])
 def currentGame():
@@ -116,21 +131,27 @@ def currentGame():
     IN :
     OUT: HTML page
     '''
-    ### A modifier lorsque les fonctions userId() et unfinishedGame() seront implémentées
-    runningGame = False
-    # if unfinishedGame(userId()):
-
     nbParties,nbMoyenEssais=getStats() ##A modifier lorsqu'on reconnaîtra l'utilisateur
     motATrouver,nbEssais=getResults() ##idem
-
-    if runningGame:
-        ### A compléter
-        None
-    else:
-        maxTry = request.form.get("maxtry")
-        wordLength = request.form.get("wordlength")
-    return render_template("game.html",MAXTRY=maxTry,WORDLENGTH=wordLength,NBPARTIES=nbParties,NBMOYENESSAIS=nbMoyenEssais,MOTATROUVER=motATrouver,
+    with sqlite3.connect(DATABASE) as con:
+        cur = con.cursor()
+        idGame = cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(session["id"],)).fetchone()[0]
+        maxTry = cur.execute("SELECT nbMaxTries FROM GAMES WHERE idPlayer=? AND idGame=?",(session["id"],idGame)).fetchone()[0]
+        wordToFind = cur.execute("SELECT wordToFind FROM GAMES WHERE idPlayer=? AND idGame=?",(session["id"],idGame)).fetchone()[0]
+        wordLength = len(wordToFind)
+    
+    return render_template("game.html",
+        MAXTRY=maxTry,
+        WORDLENGTH=wordLength,
+        NBPARTIES=nbParties,
+        NBMOYENESSAIS=nbMoyenEssais,
+        MOTATROUVER=motATrouver,
         NBESSAIS=nbEssais)
+
+
+
+
+
 
 ##Partie stats
 
