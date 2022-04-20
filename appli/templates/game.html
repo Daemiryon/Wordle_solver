@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div class="grid"></div>
-    <script>generateGrid("{{MAXTRY}}","{{WORDLENGTH}}");</script>
+<div class="grid"></div>
+<div class="Keyboard"></div>
+<script>
+    var maxTry = "{{MAXTRY}}";
+    generateGrid("{{WORDLENGTH}}");
+    generateKeyboard();
+</script>
 {% endblock %}

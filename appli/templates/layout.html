@@ -1,28 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/layout.css">
-        <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/parameters.css">
-        <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/generateGrid.css">
-        <script src="./static/styles/assets/js/generateGrid.js"></script>
-        <title>Wordle</title>
-    </head>
-    
-    <body>
-        <header class="barre_outils">
-            <ul class="menu">
-                <li class="menu_elements" id ="regles"><a>Règles</a></li>
-                <li id ="Wordle"><h1>Wordle</h1></li>
-                <li class="menu_elements" id="param"><a>Paramètres</a></li>
-                <li class="menu_elements" id="stats"><a>Statistiques</a></li>
-            </ul>
-        </header>
 
-        {% block content %}{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/layout.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/parameters.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/generateGrid.css">
+    <script src="../static/styles/assets/js/generateGrid.js"></script>
+    <script src="../static/styles/assets/js/generateKeyboard.js"></script>
+    <title>Wordle</title>
+</head>
 
-    </body>
+<body>
+    <header class="barre_outils">
+        <ul class="menu">
+            <li class="menu_elements" id="regles">
+                <button id="btnPopupRegles" class="btnPopupRegles">Règles</button>
+            </li>
+            <li id="Wordle">
+                <h1>Wordle</h1>
+            </li>
+            <li class="menu_elements" id="param">
+                <button id="btnPopupParametres" class="btnPopupParametres">Paramètres</button>
+            </li>
+            <li class="menu_elements" id="stats">
+                <button id="btnPopupStats" class="btnPopupStats">Statistiques</button>
+                <div id="overlayStats" class="overlayStats">
+                    <div id="popupStats" class="popupStats">
+                        <span id="btnCloseStats" class="btnCloseStats">&times;</span>
+                        <h2>Mes statistiques :</h2>
+                        <p><strong>Nombre de parties jouées : </strong>{{NBPARTIES}}</p>
+                        <p><strong>Nombre moyen d'essais pour gagner : </strong>{{NBMOYENESSAIS}}</p>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </header>
+
+    {% block content %}{% endblock %}
+
+
+
+
+    {% if TESTENDGAME == True %}
+    <!--Sûrement à revoir du fait qu'on ne sait pas encore comment on finit la partie-->
+    <div id="overlayEnd" class="overlayEnd">
+        <div id="popupEnd" class="popupEnd">
+            <h2>Mes statistiques :</h2>
+            <p><strong>Nombre de parties jouées : </strong>{{NBPARTIES}}</p>
+            <p><strong>Nombre moyen d'essais pour gagner : </strong>{{NBMOYENESSAIS}}</p>
+            <br>
+            <h2>Mes résultats :</h2>
+            <p><strong>Mot à trouver : </strong>{{MOTATROUVER}}</p>
+            <p><strong>Nombre d'essais : </strong>{{NBESSAIS}}</p>
+            <p><a class="btnEnd" id="btnEnd" href="/newGame">Rejouer</a></p>
+        </div>
+    </div>
+    {% endif %}
+
+    <script src="../static/styles/assets/js/popupStats.js"></script>
+</body>
+
 
 </html>
