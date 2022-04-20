@@ -13,17 +13,49 @@ DATABASE = "./appli/data/database.db"
 def make_session_permanent():
     session.permanent = True #Rend le cookie de la session persistant
 
-def get_a_word(WORDLENGTH):
+def get_valid_words(WORDLENGTH):
     '''
-    Fonction qui retourne un mot de taille n du dictionnaire 
+    Fonction qui retourne une liste de mots de taille WORDLENGTH du dictionnaire 
     
     IN : WORDLENGTH ( int )
-    OUT : word ( str )
+    OUT : word ( List [ str ] )
     '''
     dic_file = open(f"./data/dictionnaires/{WORDLENGTH}_lettres.json")
     Mots_valides=json.load(dic_file)
     dic_file.close()
-    return choice(Mots_valides)
+    return Mots_valides
+
+def get_a_word(WORDLENGTH):
+    '''
+    Fonction qui retourne un mot de taille WORDLENGTH du dictionnaire 
+    
+    IN : WORDLENGTH ( int )
+    OUT : word ( str )
+    '''
+    return choice(get_valid_words(WORDLENGTH))
+
+def couleur(guess,target):
+    Couleurs=[0,]*len(target)
+    reste ={}
+    
+    for i in range(len(target)):
+        if guess[i]==target[i]:
+            Couleurs[i]=2
+        else:
+            if target[i] not in reste:
+                reste[target[i]]=1
+            else :
+                reste[target[i]]+=1
+        
+    
+    for i in range(len(target)):
+        if  guess[i] in reste and reste[guess[i]]!=0 :
+            reste[guess[i]]-=1
+            Couleurs[i]=max(1,Couleurs[i])
+
+
+    return Couleurs
+        
 
 
 @app.route('/', methods=['GET'])
