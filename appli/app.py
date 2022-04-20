@@ -7,7 +7,7 @@ import json
 from random import choice
 app = Flask(__name__)
 app.secret_key = "any random string" #chiffrement des cookies sessions
-DATABASE = "./data/database.db"
+DATABASE = "./appli/data/database.db"
 
 @app.before_request
 def make_session_permanent():
