@@ -1,14 +1,14 @@
 /*Pour tout le monde*/
 
-*{
+* {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #333;
-    color:aliceblue;
+    color: aliceblue;
 }
 
 /*Partie header*/
 
-.barre_outils{
+.barre_outils {
     padding: 16px;
     border-bottom: 1px solid rgb(255, 255, 255);
 }
@@ -30,48 +30,49 @@
 }
 
 #regles {
-    float : left;
+    float: left;
     position: relative;
     right: 30px;
-    bottom : 7px;
+    bottom: 7px;
 }
 
 #param {
-    float:right;
+    float: right;
     position: relative;
-    bottom : 65px;
+    bottom: 65px;
 }
 
 #stats {
     float: right;
     position: relative;
-    bottom : 65px;
+    bottom: 65px;
 }
 
 /*Partie popup stats*/
 
-.btnPopupStats{
+.btnPopupStats {
     padding: 14px 16px;
     cursor: pointer;
     font-size: 0.42cm;
 }
 
-.btnPopupStats:hover{
+.btnPopupStats:hover {
     background-color: rgba(128, 128, 128, 0.692);
 }
 
-.overlayStats{
+.overlayStats {
     z-index: 1;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     left: 0px;
     top: 0px;
     width: 100%;
     height: 100%;
-    display: none; /*non-visible*/
+    display: none;
+    /*non-visible*/
 }
 
-.popupStats{
+.popupStats {
     position: relative;
     bottom: 200px;
     margin: 20% auto;
@@ -81,7 +82,7 @@
     padding: 14px;
 }
 
-.btnCloseStats{
+.btnCloseStats {
     float: right;
     cursor: pointer;
     font-size: 1cm;
@@ -89,34 +90,34 @@
 
 /*Partie popup Paramètres */
 
-.btnPopupParametres{
+.btnPopupParametres {
     padding: 14px 16px;
     cursor: pointer;
     font-size: 0.42cm;
 }
 
-.btnPopupParametres:hover{
+.btnPopupParametres:hover {
     background-color: rgba(128, 128, 128, 0.692);
 }
 
 
 /*Partie popup Règles*/
 
-.btnPopupRegles{
+.btnPopupRegles {
     padding: 14px 16px;
     cursor: pointer;
     font-size: 0.42cm;
 }
 
-.btnPopupRegles:hover{
+.btnPopupRegles:hover {
     background-color: rgba(128, 128, 128, 0.692);
 }
 
 /*Partie popup End */
 
-.overlayEnd{
+.overlayEnd {
     z-index: 1;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     left: 0px;
     top: 0px;
@@ -124,7 +125,7 @@
     height: 100%;
 }
 
-.popupEnd{
+.popupEnd {
     position: relative;
     bottom: 200px;
     margin: 20% auto;
@@ -134,9 +135,45 @@
     padding: 14px;
 }
 
-.btnEnd{
-    display:block;
-    text-align:center;
+.btnEnd {
+    display: block;
+    text-align: center;
     cursor: pointer;
     font-size: 0.42cm;
+}
+
+/* generate keyboard */
+
+.kb_line {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.35em;
+    width: 100%;
+    margin-top: 0.35em;
+    width: 40%;
+    align-self: center;
+}
+
+.key {
+    font-size: 18px;
+    display: inline-block;
+    border: 1px solid;
+    border-radius: 5px;
+    user-select: none;
+    flex-grow: 1;
+    flex-shrink: 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.keyboard {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: static;
+    width: 100%;
+
 }
