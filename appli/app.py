@@ -1,10 +1,16 @@
 from contextlib import nullcontext
 from crypt import methods
-from flask import Flask,render_template,g,redirect,url_for,request
+from flask import Flask,render_template,g,redirect,url_for,request,session
 import sqlite3
+import db
 app = Flask(__name__)
-
+app.secret_key = "any random string" #chiffrement des cookies sessions
 DATABASE = "./data/database.db"
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True #Rend le cookie de la session persistant
+
 
 @app.route('/', methods=['GET'])
 def root():
@@ -16,6 +22,14 @@ def root():
     IN :
     OUT: HTML page
     '''
+    
+    ### Login
+    if "id" not in session:
+        session["id"] = db.addUser()
+    else:
+        print("Utilisateurs numero %s est déjà authentifié." % session["id"])
+
+
     ### A modifier lorsque les fonctions userId() et unfinishedGame() seront implémentées
     runningGame = False
     # if unfinishedGame(userId()):
