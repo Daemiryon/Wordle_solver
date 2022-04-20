@@ -12,6 +12,7 @@ DATABASE = "./data/database.db"
 @app.before_request
 def make_session_permanent():
     session.permanent = True #Rend le cookie de la session persistant
+
 def get_a_word(WORDLENGTH):
     '''
     Fonction qui retourne un mot de taille n du dictionnaire 
@@ -36,11 +37,11 @@ def root():
     OUT: HTML page
     '''
     
-    ### Login
+    ### Login - ne s'execute pour l'instant que sur la route '/', a corriger dans le futur
     if "id" not in session:
         session["id"] = db.addUser()
     else:
-        print("Utilisateurs numero %s est déjà authentifié." % session["id"])
+        print("Utilisateurs numero %s est reconnu." % session["id"])
 
 
     ### A modifier lorsque les fonctions userId() et unfinishedGame() seront implémentées
