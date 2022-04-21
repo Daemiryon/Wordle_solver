@@ -5,7 +5,8 @@
 <div class="Keyboard"></div>
 <script>
     var maxTry = "{{MAXTRY}}";
-    generateGrid(maxTry,"{{WORDLENGTH}}");
+    var wordLength = "{{WORDLENGTH}}";
+    generateGrid();
     generateKeyboard();
 </script>
 {% endblock %}

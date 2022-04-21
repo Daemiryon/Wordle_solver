@@ -12,13 +12,41 @@ function generateKeyboard() {
         var ligne = document.createElement("div");
         ligne.className = "kb_line";
         element.forEach(touche => {
-            var key = document.createElement("dive");
+            var key = document.createElement("button");
             var text = document.createTextNode(touche);
             key.className = "key";
+            key.dataset["touche"] = touche
             key.appendChild(text);
+            key.addEventListener('click', input)
             ligne.appendChild(key);
         });
         body.appendChild(ligne);
         console.log(element);
     });
+}
+
+function input(event) {
+    key = event.target.dataset["touche"]
+
+
+    switch (key) {
+        case "effacer":
+            // retire_lettre();
+            console.log(key)
+            break;
+
+        case "entree":
+            // if (valide_mot()) {
+            //     post_new_try();
+            // }
+            console.log(key)
+            break;
+
+        default:
+            // ajout_lettre(key);
+            console.log(key)
+            break;
+    }
+
+
 }
