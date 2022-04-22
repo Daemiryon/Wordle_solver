@@ -6,7 +6,7 @@
 <script>
     var guess = "";
     var cursor = "{{CURSOR}}";
-    var Mots_Valides = {{ MOTSVALIDES | tojson | safe }};
+    var validWords = {{ MOTSVALIDES | tojson | safe }};
     var tries = {{ TRIES| tojson | safe }};
     var tries_color = {{ COLOR | tojson | safe }};
     var maxTry = "{{MAXTRY}}";

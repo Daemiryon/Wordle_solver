@@ -36,11 +36,11 @@ function input(event) {
             break;
 
         case "entree":
-            // if (valide_mot()) {
-            //     post_new_try();
-            //      { mot_propose, cursor, lite des tries }
+            // if (testTry()) {
+            //     //     post_new_try();
+            //     //      { mot_propose, cursor, lite des tries }
             // }
-            console.log(key)
+            console.log(testTry())
             break;
 
         default:
