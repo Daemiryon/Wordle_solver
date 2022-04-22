@@ -213,6 +213,6 @@ def currentGame():
         COLOR = colors,
         NBPARTIES=nbParties,
         NBMOYENESSAIS=nbMoyenEssais,
-        MOTATROUVER=wordToFind #Ne renvoie le mot QUE si la partie est terminée
+        MOTATROUVER=wordToFind #Ne renvoie le mot QUE si la partie est terminée. Sinon renvoie la chaine de caractères vide
         #NBESSAIS=maxTry # correspond à la variable MAXTRY, si utilisé à remplacer dans le code par MAXTRY svp
         )
