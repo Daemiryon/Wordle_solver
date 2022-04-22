@@ -1,6 +1,8 @@
-# PPII «Projet Pluridisciplinaire d'Informatique Intégrative» 2 - Wordle
+# **PPII «Projet Pluridisciplinaire d'Informatique Intégrative» 2 - Wordle**
 
-## Responsable du projet
+
+# Informations générales
+## Responsable
 
 Olivier Festor <<olivier.festor@telecomnancy.eu>>
 
@@ -12,7 +14,7 @@ Olivier Festor <<olivier.festor@telecomnancy.eu>>
 - Elyas ELAZIZ <<elyas.elaziz@telecomnancy.eu>>
 
 
-## Description générale du projet
+## Description
 
 Ce projet est réalisé dans le cadre du module P2I2 2 - Projet Pluridisciplinaire d'Informatique Intégrative 2 de Première année à TELECOM Nancy.
 
@@ -35,11 +37,37 @@ Il consiste en la création de deux applications autour du jeu Wordle :
 [Planning des tâches (Gantt) - Application WEB](https://docs.google.com/spreadsheets/d/1sz8TemHDO66MD2cEXAMvSilQM0ajqywi5HdHzMRzw44/edit?usp=sharing)
 
 
-## Mode d'emploi - Application WEB
+## Rapport du projet
 
-Pour réinitialiser la base de donnée à partir de la stucture définie dans le fichier data/tables.sql et des données initiales de chaque tables modifiables dans les fichiers data/*.csv, il suffit d'éxécuter le fichier init_database.sh, par exemple en tapant ./init_database.sh dans un terminal.
+[Rapport (Non disponible)](./)
 
 
-## Mode d'emploi - Solveur
+
+# Mode d'emploi - Application WEB
+## Execution de l'application
+Dans un terminal Linux, une fois le projet cloné, exécuter le script *run.sh* à la racine du projet.
+```bash
+# A exécuter depuis la racine du projet
+bash run.sh
+```
+Pour fermer l'application, appuyer sur CTRL+C dans le terminal
+
+
+## Base de données
+La base de données se trouve dans le répertoire *appli/data*.
+
+La structure est décrite dans le fichier *tables.sql* et les données initiales de chaque table dans les fichiers *.csv* correspondants.
+
+Pour la réinitialiser, il faut exécuter les commandes suivantes dans un terminal Linux:
+```bash
+# Aller dans le répertoire "appli/data" depuis la racine du projet
+cd appli/data
+
+# Dans le répertoire "appli/data"
+./init_database.sh
+```
+
+
+# Mode d'emploi - Solveur
 
 En cours de réalisation
