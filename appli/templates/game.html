@@ -6,10 +6,9 @@
 <script>
     var guess = "";
     var cursor = "{{CURSOR}}";
-    var Mots_Valides = "{{MOTSVALIDES}}";
-    var tries = "{{TRIES}}";
-    var tries_color = "{{COLOR}}";
-    var cursor = "{{len(TRIES)}}";
+    var Mots_Valides = {{ MOTSVALIDES | tojson | safe }};
+    var tries = {{ TRIES| tojson | safe }};
+    var tries_color = {{ COLOR | tojson | safe }};
     var maxTry = "{{MAXTRY}}";
     var wordLength = "{{WORDLENGTH}}";
     generateGrid();
