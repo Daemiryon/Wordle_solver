@@ -31,22 +31,44 @@ function input(event) {
 
     switch (key) {
         case "effacer":
-            // retire_lettre();
+            retire_lettre();
             console.log(key)
             break;
 
         case "entree":
             // if (valide_mot()) {
             //     post_new_try();
+            //      { mot_propose, cursor, lite des tries }
             // }
             console.log(key)
             break;
 
         default:
-            // ajout_lettre(key);
+            ajout_lettre(key);
             console.log(key)
             break;
     }
 
+
+}
+
+function ajout_lettre(lettre) {
+    if (guess.length < wordLength) {
+        var cell = document.getElementById(cursor * wordLength + guess.length);
+        cell.textContent = lettre;
+        guess = guess + lettre;
+        console.log(guess);
+    }
+
+}
+
+function retire_lettre() {
+    if (guess.length > 0) {
+        guess = guess.substring(0, guess.length - 1);
+        var cell = document.getElementById(cursor * wordLength + guess.length);
+        cell.textContent = "";
+
+        console.log(guess);
+    }
 
 }
