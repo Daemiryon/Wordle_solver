@@ -77,7 +77,7 @@ def root():
         print("Utilisateurs numero %s est reconnu." % session["id"])
 
     ### A modifier lorsque les fonctions userId() et unfinishedGame() seront implémentées
-    runningGame = False
+    runningGame = 1
     # if unfinishedGame(userId()):
     if runningGame:
         return redirect("/currentGame")
@@ -92,8 +92,8 @@ def parametersPage():
     IN :
     OUT: HTML page
     '''
-    nbParties,nbMoyenEssais = getStats(session["id"]) ##A modifier lorsqu'on reconnaîtra l'utilisateur
-    motATrouver,nbEssais = getResults() ##idem
+    # nbParties,nbMoyenEssais = getStats(session["id"]) ##A modifier lorsqu'on reconnaîtra l'utilisateur
+    # motATrouver,nbEssais = getResults() ##idem
 
     if request.method == "POST":
         maxTry = request.form.get("maxtry")
@@ -117,10 +117,10 @@ def parametersPage():
         return render_template("parameters.html",
             MAXTRYPOSSIBILITIES=maxTryPossibilities,
             WORDLENGTHPOSSIBILITIES=wordLengthPossibilities,
-            NBPARTIES=nbParties,
-            NBMOYENESSAIS=nbMoyenEssais,
-            MOTATROUVER=motATrouver,
-            NBESSAIS=nbEssais
+            # NBPARTIES=nbParties,
+            # NBMOYENESSAIS=nbMoyenEssais,
+            # MOTATROUVER=motATrouver,
+            # NBESSAIS=nbEssais
         )
 
 @app.route('/currentGame', methods=['GET','POST'])
@@ -132,21 +132,22 @@ def currentGame():
     OUT: HTML page
     '''
     nbParties,nbMoyenEssais=getStats() ##A modifier lorsqu'on reconnaîtra l'utilisateur
-    motATrouver,nbEssais=getResults() ##idem
-    with sqlite3.connect(DATABASE) as con:
-        cur = con.cursor()
-        idGame = cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(session["id"],)).fetchone()[0]
-        maxTry = cur.execute("SELECT nbMaxTries FROM GAMES WHERE idPlayer=? AND idGame=?",(session["id"],idGame)).fetchone()[0]
-        wordToFind = cur.execute("SELECT wordToFind FROM GAMES WHERE idPlayer=? AND idGame=?",(session["id"],idGame)).fetchone()[0]
-        wordLength = len(wordToFind)
+    wordToFind,wordLength,maxTry,Tries,colors = get_game_data() 
     
+    print(Tries,colors,wordToFind)
+
     return render_template("game.html",
         MAXTRY=maxTry,
         WORDLENGTH=wordLength,
+        CURSOR = len(Tries),
+        MOTSVALIDES = get_valid_words(wordLength),
+        TRIES = Tries,
+        COLOR = colors,
         NBPARTIES=nbParties,
         NBMOYENESSAIS=nbMoyenEssais,
-        MOTATROUVER=motATrouver,
-        NBESSAIS=nbEssais)
+        # MOTATROUVER=motATrouver, <- ne pas mettre sur la page
+        NBESSAIS=maxTry # correspond à la variable MAXTRY, si utilisé à remplacer dans le code par MAXTRY svp
+        )
 
 
 
@@ -174,16 +175,17 @@ def getStats(myId=1) : ##On peut ajouter le winrate si on a le temps (wordTried 
         nbTryMax_avrg = nbTryMax_avrg/nbParties
     return nbParties,nbTryMax_avrg
 
-def getResults(myId=1,myGame=2) :
+def get_game_data(myId=1) :
     ##Fonction qui récupère les résultats d'une partie d'un utilisateur (mot à trouver, nombre d'essais).
-    ##In : idPlayer, idGame
-    ##Out : mot à trouver & nombre d'essais
+    ##In : idPlayer
+    ##Out : mot à trouver & longueur du mot à trouver & nombre d'essais &
     con = sqlite3.connect(DATABASE)
     cur = con.cursor()
-    cur.execute('SELECT wordToFind FROM games WHERE idGame= ? AND idPlayer= ?',(myGame,myId))
-    c = cur.fetchall()
-    motATrouver = c[0][0]
-    cur.execute('SELECT MAX(idTry) FROM tries JOIN games ON tries.idGame=games.idGame WHERE tries.idPlayer= ? and tries.idGame = ?',(myId,myGame))
-    c = cur.fetchall()
-    nbTryMax = c[0][0]
-    return motATrouver,nbTryMax
+    idGame = cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(session["id"],)).fetchone()[0]
+    maxTry = cur.execute("SELECT nbMaxTries FROM GAMES WHERE idPlayer=? AND idGame=?",(session["id"],idGame)).fetchone()[0]
+    wordToFind = cur.execute("SELECT wordToFind FROM GAMES WHERE idPlayer=? AND idGame=?",(session["id"],idGame)).fetchone()[0]
+    wordLength = len(wordToFind)
+    Tries_data = cur.execute("select wordTried from tries where idplayer = ? and idgame = ?",(myId,idGame)).fetchall()
+    Tries = [e[0] for e in Tries_data]
+    colors = [couleur(guess,wordToFind) for guess in Tries]
+    return wordToFind,wordLength,maxTry,Tries,colors

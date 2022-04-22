@@ -5,7 +5,11 @@
 <div class="Keyboard"></div>
 <script>
     var guess = "";
-    var cursor = "0";
+    var cursor = "{{CURSOR}}";
+    var Mots_Valides = "{{MOTSVALIDES}}";
+    var tries = "{{TRIES}}";
+    var tries_color = "{{COLOR}}";
+    var cursor = "{{len(TRIES)}}";
     var maxTry = "{{MAXTRY}}";
     var wordLength = "{{WORDLENGTH}}";
     generateGrid();
