@@ -14,6 +14,15 @@ DATABASE = "data/database.db"
 def make_session_permanent():
     session.permanent = True #Rend le cookie de la session persistant
 
+def maj_keyboard_color(kb_color,guess,colors):
+    for letter,color in zip(guess,colors):
+        if letter in kb_color:
+            kb_color[letter]=max(kb_color[letter],color)
+        else : 
+            kb_color[letter]=color
+    
+    return kb_color
+
 
 # -----
 # Fonctions auxiliaires de la route '/newGame'
@@ -187,6 +196,10 @@ def currentGame():
     wordToFind,wordLength,maxTry,tries,colors = get_game_data(session["id"]) 
     cursor = len(tries)
 
+    kb_color = {}
+    for guess,color in zip(tries,colors): 
+        kb_color = maj_keyboard_color(kb_color,guess,color)
+
     if request.method == 'POST':
         guess = request.form.get("guess")
 
@@ -204,6 +217,9 @@ def currentGame():
         cursor += 1
         colors.append(couleur(guess,wordToFind))
         tries.append(guess)
+        kb_color = maj_keyboard_color(kb_color,guess,colors[-1])
+
+
 
         if testEndGame(wordToFind,guess,cursor,maxTry):
             None
@@ -212,6 +228,7 @@ def currentGame():
             wordToFind = ""
 
     return render_template("game.html",
+        KBCOLOR=kb_color,
         MAXTRY=maxTry,
         WORDLENGTH=wordLength,
         CURSOR = cursor,

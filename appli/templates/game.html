@@ -5,12 +5,13 @@
 <div class="Keyboard"></div>
 <script>
     var guess = "";
+    var kb_color_obj = {{ KBCOLOR | tojson | safe }};
     var cursor = "{{CURSOR}}";
-    var validWords = {{ MOTSVALIDES | tojson | safe }};
     var tries = {{ TRIES| tojson | safe }};
     var tries_color = {{ COLOR | tojson | safe }};
     var maxTry = "{{MAXTRY}}";
     var wordLength = "{{WORDLENGTH}}";
+    var validWords = {{ MOTSVALIDES | tojson | safe }};
     generateGrid();
     generateKeyboard();
 </script>
