@@ -45,7 +45,7 @@ def get_game_data(idPlayer=1) :
     triesData = cur.execute("select wordTried from tries where idplayer = ? and idgame = ?",(idPlayer,idGame)).fetchall()
     tries = [e[0] for e in triesData]
     colors = [couleur(guess,wordToFind) for guess in tries]
-    return wordLength,maxTry,tries,colors
+    return wordToFind,wordLength,maxTry,tries,colors
 
 def get_valid_words(WORDLENGTH):
     '''
@@ -184,19 +184,23 @@ def currentGame():
     '''
     nbParties,nbMoyenEssais = getStats() ##A modifier lorsqu'on reconnaîtra l'utilisateur
     if request.method == 'GET':
-        wordLength,maxTry,tries,colors = get_game_data(session["id"]) 
+        wordToFind,wordLength,maxTry,tries,colors = get_game_data(session["id"]) 
         cursor = len(tries)
         wordToFind = ""
     else:
-        guess = ""
-        cursor = 0
-        tries = []
-        colors = []
+        guess = request.form.get("guess")
         with sqlite3.connect(DATABASE) as con:
             cur = con.cursor()
             idGame = cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(session["id"],)).fetchone()[0]
-            wordToFind = cur.execute("SELECT wordToFind FROM GAMES WHERE idPlayer=? AND idGame=?",(session["id"],idGame)).fetchone()[0]
-            maxTry = cur.execute("SELECT nbMaxTries FROM GAMES WHERE idPlayer=? AND idGame=?",(session["id"],idGame)).fetchone()[0]
+            temp = cur.execute("SELECT MAX(idTry) FROM TRIES WHERE idPlayer=? AND idGame=?",(session["id"],idGame)).fetchone()[0]
+            idTry = 1
+            if temp != None:
+                idTry += temp
+            cur.execute("INSERT INTO TRIES VALUES (?,?,?,?)",(session["id"],idGame,idTry,guess))
+            cur.close()
+            con.commit()
+        wordToFind,wordLength,maxTry,tries,colors = get_game_data(session["id"]) 
+        cursor = len(tries)
         colors.append(couleur(guess,wordToFind))
         if testEndGame(wordToFind,guess,cursor,maxTry):
             None
