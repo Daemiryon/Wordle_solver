@@ -1,5 +1,7 @@
 function generateGrid() {
 
+    Class_color = ["absent", "malplace", "bienplace"]
+
     var body = document.getElementsByClassName("grid")[0];
 
     var tb = document.createElement("table");
@@ -9,7 +11,8 @@ function generateGrid() {
         var row = document.createElement("tr");
         for (let j = 0; j < wordLength; j++) {
             var cell = document.createElement("td");
-            var node = document.createTextNode("");
+            var node = document.createTextNode(tries[i][j]);
+            cell.className = Class_color[tries_color[i][j]]
             cell.id = i * wordLength + j
             cell.appendChild(node);
             row.appendChild(cell);
@@ -19,3 +22,5 @@ function generateGrid() {
     tb.appendChild(tb_body);
     body.appendChild(tb);
 }
+// TRIES = tries + [' ' * wordLength] * (maxTry - cursor),
+// COLOR = colors + [[0,] * wordLength] * (maxTry - cursor),

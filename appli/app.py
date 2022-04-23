@@ -189,7 +189,7 @@ def currentGame():
 
     if request.method == 'POST':
         guess = request.form.get("guess")
-        
+
         with sqlite3.connect(DATABASE) as con:
             cur = con.cursor()
             idGame = cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(session["id"],)).fetchone()[0]
@@ -216,8 +216,8 @@ def currentGame():
         WORDLENGTH=wordLength,
         CURSOR = cursor,
         MOTSVALIDES = get_valid_words(wordLength),
-        TRIES = tries,
-        COLOR = colors,
+        TRIES = tries + [' '*wordLength]*(maxTry-cursor),
+        COLOR = colors + [[0,]*wordLength]*(maxTry-cursor),
         NBPARTIES=nbParties,
         NBMOYENESSAIS=nbMoyenEssais,
         MOTATROUVER=wordToFind #Ne renvoie le mot QUE si la partie est terminée. Sinon renvoie la chaine de caractères vide
