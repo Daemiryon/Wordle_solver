@@ -21,4 +21,12 @@
     width: 60px;
     height: 60px;
     color: aliceblue;
+    text-align: center;
+    font-weight: bold;
+}
+.bienplace {
+    background-color: #538D4E;
+}
+.malplace {
+    background-color: #B59F3B;
 }
