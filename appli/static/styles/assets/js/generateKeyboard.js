@@ -36,10 +36,9 @@ function input(event) {
             break;
 
         case "entree":
-            // if (testTry()) {
-            //     //     post_new_try();
-            //     //      { mot_propose, cursor, lite des tries }
-            // }
+            if (testTry()) {
+                post_new_try();
+            }
             console.log(testTry())
             break;
 
@@ -71,4 +70,16 @@ function retire_lettre() {
         console.log(guess);
     }
 
+}
+function post_new_try() {
+    const form = document.createElement('form');
+    form.method = 'post';
+    form.action = '/currentGame';
+    document.body.appendChild(form);
+    const data = document.createElement('input');
+    data.type = 'hidden';
+    data.name = 'guess';
+    data.value = guess;
+    form.appendChild(data);
+    form.submit();
 }
