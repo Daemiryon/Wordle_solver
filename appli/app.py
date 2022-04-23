@@ -183,12 +183,13 @@ def currentGame():
     OUT: HTML page
     '''
     nbParties,nbMoyenEssais = getStats() ##A modifier lorsqu'on reconnaîtra l'utilisateur
-    if request.method == 'GET':
-        wordToFind,wordLength,maxTry,tries,colors = get_game_data(session["id"]) 
-        cursor = len(tries)
-        wordToFind = ""
-    else:
+    
+    wordToFind,wordLength,maxTry,tries,colors = get_game_data(session["id"]) 
+    cursor = len(tries)
+
+    if request.method == 'POST':
         guess = request.form.get("guess")
+        
         with sqlite3.connect(DATABASE) as con:
             cur = con.cursor()
             idGame = cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(session["id"],)).fetchone()[0]
@@ -199,9 +200,11 @@ def currentGame():
             cur.execute("INSERT INTO TRIES VALUES (?,?,?,?)",(session["id"],idGame,idTry,guess))
             cur.close()
             con.commit()
-        wordToFind,wordLength,maxTry,tries,colors = get_game_data(session["id"]) 
-        cursor = len(tries)
+
+        cursor += 1
         colors.append(couleur(guess,wordToFind))
+        tries.append(guess)
+
         if testEndGame(wordToFind,guess,cursor,maxTry):
             None
             #Exécution de endGame()
