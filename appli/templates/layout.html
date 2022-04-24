@@ -47,6 +47,11 @@
     {% if TESTENDGAME == True %}
     <div id="overlayEnd" class="overlayEnd">
         <div id="popupEnd" class="popupEnd">
+            {% if WHICHEND == True %}
+                <h1>VICTORY!</h1>
+            {% else %}
+                <h1>DEFEAT</h1>
+            {% endif %}
             <h2>Mes résultats :</h2>
             <p><strong>Mot à trouver : </strong>{{MOTATROUVER}}</p>
             <p><strong>Nombre d'essais : </strong>{{MAXTRY}}</p>

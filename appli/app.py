@@ -133,8 +133,15 @@ def endGame(idPlayer,idGame) :
     cur.execute('UPDATE games SET gameEnded=1 WHERE idPlayer=? AND idGame=?',(idPlayer,idGame))
     cur.close()
     con.commit()
-
     return None
+
+def whichEnd(wordToFind,guess) :
+    '''
+    Fonction qui détermine si l'utilisateur a gagné ou perdu la partie
+    '''
+    if guess == wordToFind :
+        return True #Winning case
+    return False #Losing case
 
 
 # -----
@@ -240,6 +247,7 @@ def currentGame():
             nbParties,nbMoyenEssais = getStats(session["id"])
             return render_template("game.html",
                 TESTENDGAME = True,
+                WHICHEND = whichEnd(wordToFind,guess),
                 KBCOLOR=kb_color,
                 MAXTRY=maxTry,
                 WORDLENGTH=wordLength,
