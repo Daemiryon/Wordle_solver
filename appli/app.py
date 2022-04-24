@@ -7,7 +7,7 @@ import json
 from random import choice
 app = Flask(__name__)
 app.secret_key = "any random string" #chiffrement des cookies sessions
-DATABASE = "data/database.db"
+DATABASE = "./data/database.db"
 
 
 @app.before_request
@@ -118,6 +118,24 @@ def getStats(myId=1) : ##On peut ajouter le winrate si on a le temps (wordTried 
         nbTryMax_avrg = nbTryMax_avrg/nbParties
     return nbParties,nbTryMax_avrg
 
+# -----
+# Fonctions auxiliaires pour la fin de partie
+def endGame(idPlayer,idGame) :
+    '''
+    Fonction qui MAJ la BD (gameEnded =1)
+    
+    IN : idPlayer, idGame
+    OUT : -
+    '''
+    con = sqlite3.connect(DATABASE)
+    cur = con.cursor()
+
+    cur.execute('UPDATE games SET gameEnded=1 WHERE idPlayer=? AND idGame=?',(idPlayer,idGame))
+    cur.close()
+    con.commit()
+
+    return None
+
 
 # -----
 # Routes
@@ -152,8 +170,7 @@ def parametersPage():
     IN :
     OUT: HTML page
     '''
-    nbParties,nbMoyenEssais = getStats(session["id"]) ##A modifier lorsqu'on reconnaîtra l'utilisateur
-    # motATrouver,nbEssais = getResults() ##idem
+    nbParties,nbMoyenEssais = getStats(session["id"]) 
 
     if request.method == "POST":
         maxTry = request.form.get("maxtry")
@@ -179,8 +196,6 @@ def parametersPage():
             WORDLENGTHPOSSIBILITIES=wordLengthPossibilities,
             NBPARTIES=nbParties,
             NBMOYENESSAIS=nbMoyenEssais,
-            # MOTATROUVER=motATrouver,
-            # NBESSAIS=nbEssais
         )
 
 @app.route('/currentGame', methods=['GET','POST'])
@@ -191,7 +206,7 @@ def currentGame():
     IN :
     OUT: HTML page
     '''
-    nbParties,nbMoyenEssais = getStats() ##A modifier lorsqu'on reconnaîtra l'utilisateur
+    nbParties,nbMoyenEssais = getStats(session["id"]) 
     
     wordToFind,wordLength,maxTry,tries,colors = get_game_data(session["id"]) 
     cursor = len(tries)
@@ -220,10 +235,22 @@ def currentGame():
         kb_color = maj_keyboard_color(kb_color,guess,colors[-1])
 
 
-
         if testEndGame(wordToFind,guess,cursor,maxTry):
-            None
-            #Exécution de endGame()
+            endGame(idGame,session["id"])
+            nbParties,nbMoyenEssais = getStats(session["id"])
+            return render_template("game.html",
+                TESTENDGAME = True,
+                KBCOLOR=kb_color,
+                MAXTRY=maxTry,
+                WORDLENGTH=wordLength,
+                CURSOR = cursor,
+                MOTSVALIDES = get_valid_words(wordLength),
+                TRIES = tries + [' '*wordLength]*(maxTry-cursor),
+                COLOR = colors + [[0,]*wordLength]*(maxTry-cursor),
+                NBPARTIES=nbParties,
+                NBMOYENESSAIS=nbMoyenEssais,
+                MOTATROUVER=wordToFind
+            )
         else:
             wordToFind = ""
 
@@ -237,6 +264,4 @@ def currentGame():
         COLOR = colors + [[0,]*wordLength]*(maxTry-cursor),
         NBPARTIES=nbParties,
         NBMOYENESSAIS=nbMoyenEssais,
-        MOTATROUVER=wordToFind #Ne renvoie le mot QUE si la partie est terminée. Sinon renvoie la chaine de caractères vide
-        #NBESSAIS=maxTry # correspond à la variable MAXTRY, si utilisé à remplacer dans le code par MAXTRY svp
         )
