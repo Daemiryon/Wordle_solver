@@ -30,7 +30,6 @@ def isFinishedGame(idPlayer):
     with sqlite3.connect(DATABASE) as con:
         cur = con.cursor()
         idLastGame = cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(idPlayer,)).fetchone()[0]
-        print(idPlayer,idLastGame)
         if idLastGame == 0:
             return 1
         gameEnded = cur.execute("SELECT gameEnded FROM GAMES WHERE idPlayer=? AND idGame=?",(idPlayer,idLastGame)).fetchone()[0]
