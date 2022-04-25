@@ -24,9 +24,10 @@
             <li id="Wordle">
                 <h1>Wordle</h1>
             </li>
-            <li class="menu_elements" id="param">
+            <!-- Tache secondaire non terminée -->
+            <!-- <li class="menu_elements" id="param">
                 <button id="btnPopupParametres" class="btnPopupParametres">Paramètres</button>
-            </li>
+            </li> -->
             <li class="menu_elements" id="stats">
                 <button id="btnPopupStats" class="btnPopupStats">Statistiques</button>
             </li>
@@ -36,7 +37,7 @@
                     <table id="statsTable">
                         <thead>
                             <tr>
-                                <th colspan="2" id="statsMainTitle">Mes statistiques</th>
+                                <th colspan="2" id="statsMainTitle">Mes statistiques :</th>
                             </tr>
                         </thead>
                         <tbody id="statsBody">
@@ -53,10 +54,35 @@
                     <span id="btnCloseStats" class="btnClose">&times;</span>
                 </div>
                 <div id="popupRegles" class="popup">
-                    <p>Guess the WORDLE in six tries.<br />
-                        Each guess must be a valid five-letter word. Hit the enter button to submit.<br />
-                        After each guess, the color of the tiles will change to show how close your guess was to the word.<br />
-                        [image exemple avec code couleur]</p>
+                    <h2>Règles du jeu :</h2>
+                    <p>
+                        Le but du jeu est de trouver un mot de la langue française en un nombre minimal d'essai.<br />
+                        Ce mot peut être un nom, un adjectif, un verbe (conjugué ou non), un adverbe,...<br />
+                        Ce mot peut également être au singulier ou au pluriel.
+                    </p>
+                    <p>
+                        En début de partie, vous pouvez paramétrer la longueur du mot (de 5 à 15 lettres) ainsi que le nombre maximal d'essais possibles (de 3 à 10).
+                    </p>
+                    <p>
+                        Pendant la partie, proposez des mots en utilisant le clavier intégré ou votre propre clavier.<br >
+                        Une fois que vous avez appuyé sur Entrée, les cases de la grille et du clavier seront colorées :
+                    </p>
+                    <table id="examples">
+                        <tbody>
+                            <tr>
+                                <td id="example1" class="example">A</td>
+                                <td class="explanation">La lettre est à la bonne place dans le mot</td>
+                            </tr>
+                            <tr>
+                                <td id="example2" class="example">A</td>
+                                <td class="explanation">La lettre est dans le mot mais pas à la bonne place</td>
+                            </tr>
+                            <tr>
+                                <td class="example">A</td>
+                                <td class="explanation">La lettre n'est pas dans le mot. (Sur le clavier intégré, la lettre sera noircie)</td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <span id="btnCloseRegles" class="btnClose">&times;</span>
                 </div>
             </div>

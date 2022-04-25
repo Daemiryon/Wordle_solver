@@ -110,6 +110,7 @@
     font-size: 1cm;
     position:relative;
     padding-left: 50%;
+    right : 0.25cm;
 }
 
 /*Partie popup Paramètres */
@@ -135,6 +136,30 @@
 
 .btnPopupRegles:hover {
     background-color: rgba(128, 128, 128, 0.692);
+}
+
+#examples {
+    margin-left: 20px;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+.example {
+    border: 1px solid;
+    width: 60px;
+    height: 60px;
+    color: aliceblue;
+    text-align: center;
+    font-weight: bold;
+    font-size: 32px;
+}
+#example1 {
+    background-color: #538D4E;
+}
+#example2 {
+    background-color: #B59F3B;
+}
+.explanation {
+    padding-left: 50px;
 }
 
 /*Partie popup End */
