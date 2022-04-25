@@ -60,7 +60,7 @@
     background-color: rgba(128, 128, 128, 0.692);
 }
 
-.overlayStats {
+.overlay {
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
@@ -72,20 +72,44 @@
     /*non-visible*/
 }
 
-.popupStats {
-    position: relative;
-    bottom: 200px;
-    margin: 20% auto;
-    width: 70%;
+.popup{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    padding: 14px;
     border-radius: 5px;
     background-color: #333;
-    padding: 14px;
+    display: none;
 }
 
-.btnCloseStats {
-    float: right;
+#popupRegles {
+    display: none;
+}
+
+#statsTable {
+    table-layout: fixed;
+}
+
+#statsBody>tr>td{
+    padding: 10px;
+}
+#statsNumbers {
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bold;
+}
+#statsMainTitle{
+    text-align: center;
+}
+
+.btnClose{
+    /*float: middle*/
     cursor: pointer;
     font-size: 1cm;
+    position:relative;
+    padding-left: 50%;
 }
 
 /*Partie popup Paramètres */

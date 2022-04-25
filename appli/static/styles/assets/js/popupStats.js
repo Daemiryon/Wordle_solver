@@ -5,11 +5,27 @@ var btnCloseStats = document.getElementById("btnCloseStats");
 btnPopupStats.addEventListener('click',openPopupStats);
 
 function openPopupStats(){
-    overlayStats.style.display = "block";
+    overlay.style.display = "block";
+    popupStats.style.display = "block";
 }
 
 btnCloseStats.addEventListener('click',closePopupStats);
 
 function closePopupStats(){
-    overlayStats.style.display = "none";
+    overlay.style.display = "none";
+    popupStats.style.display = "none";
+}
+
+btnPopupRegles.addEventListener('click',openPopupRegles);
+
+function openPopupRegles(){
+    overlay.style.display = "block";
+    popupRegles.style.display = "block";
+}
+
+btnCloseRegles.addEventListener('click',closePopupRegles);
+
+function closePopupRegles(){
+    overlay.style.display = "none";
+    popupRegles.style.display = "none";
 }
