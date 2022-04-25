@@ -89,7 +89,7 @@ def couleur(guess,target):
     return Couleurs
 
 def testEndGame(wordToFind,guess,cursor,maxTry):
-    if guess == wordToFind or cursor > maxTry:
+    if guess == wordToFind or cursor >= maxTry:
         return True
     return False
 
@@ -133,7 +133,7 @@ def endGame(idPlayer,idGame) :
     cur.execute('UPDATE games SET gameEnded=1 WHERE idPlayer=? AND idGame=?',(idPlayer,idGame))
     cur.close()
     con.commit()
-    return None
+
 
 def whichEnd(wordToFind,guess) :
     '''
@@ -243,7 +243,7 @@ def currentGame():
 
 
         if testEndGame(wordToFind,guess,cursor,maxTry):
-            endGame(idGame,session["id"])
+            endGame(session["id"],idGame)
             nbParties,nbMoyenEssais = getStats(session["id"])
             return render_template("game.html",
                 TESTENDGAME = True,
@@ -259,8 +259,6 @@ def currentGame():
                 NBMOYENESSAIS=nbMoyenEssais,
                 MOTATROUVER=wordToFind
             )
-        else:
-            wordToFind = ""
 
     return render_template("game.html",
         KBCOLOR=kb_color,
