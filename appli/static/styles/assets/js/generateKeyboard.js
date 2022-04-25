@@ -9,7 +9,7 @@ function generateKeyboard() {
     var Kb = [
         ["A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P"],
         ["Q", "S", "D", "F", "G", "H", "J", "K", "L", "M"],
-        ["W", "X", "C", "V", "B", "N", "effacer", "entree"],
+        ["W", "X", "C", "V", "B", "N", "effacer", "enter"],
     ];
 
     Kb.forEach(element => {
@@ -27,7 +27,9 @@ function generateKeyboard() {
             }
             key.dataset["touche"] = touche
             // key.appendChild(text);
-            key.addEventListener('click', input)
+            // key.addEventListener('keypress', reel_kb_input)
+            key.addEventListener('click', virt_kb_input);
+            ;
             ligne.appendChild(key);
         });
         body.appendChild(ligne);
@@ -35,17 +37,23 @@ function generateKeyboard() {
     });
 }
 
-function input(event) {
-    key = event.target.dataset["touche"]
+function virt_kb_input(event) {
+    input(event.target.dataset["touche"])
+}
 
+
+
+function input(key) {
+    key = key.toUpperCase();
 
     switch (key) {
-        case "effacer":
+        case "BACKSPACE":
+        case "EFFACER":
             retire_lettre();
             console.log(key)
             break;
 
-        case "entree":
+        case "ENTER":
             if (testTry()) {
                 post_new_try();
             }
@@ -97,4 +105,17 @@ function post_new_try() {
     data2.value = cursor;
     form.appendChild(data2);
     form.submit();
+}
+
+function input_keyboard() {
+    document.addEventListener("keypress", function (e) {
+        console.log(e);
+        input(e.key.toUpperCase());
+    })
+    document.addEventListener("keydown", function (e) {
+        console.log(e);
+        if (e.key == "Backspace") {
+            input("EFFACER");
+        }
+    })
 }
