@@ -181,20 +181,7 @@ def parametersPage():
 
     if request.method == "POST":
         maxTry = request.form.get("maxtry")
-        wordLength = request.form.get("wordlength")
-
-        if wordLength == None or maxTry == None:
-            error = 1
-            maxTryPossibilities = [3,4,5,6,7,8,9,10]
-            wordLengthPossibilities = [5,6,7,8,9,10,11,12,13,14,15]
-            return render_template("parameters.html",
-                MAXTRYPOSSIBILITIES = maxTryPossibilities,
-                WORDLENGTHPOSSIBILITIES = wordLengthPossibilities,
-                NBPARTIES = nbParties,
-                NBMOYENESSAIS = nbMoyenEssais,
-                ERROR = error
-            )
-        
+        wordLength = request.form.get("wordlength")      
         wordToFind = get_a_word(wordLength)
         with sqlite3.connect(DATABASE) as con:
             cur = con.cursor()
@@ -209,7 +196,6 @@ def parametersPage():
         return redirect('/currentGame')
 
     else:
-        error = 0
         maxTryPossibilities = [3,4,5,6,7,8,9,10]
         wordLengthPossibilities = [5,6,7,8,9,10,11,12,13,14,15]
         return render_template("parameters.html",
@@ -217,7 +203,6 @@ def parametersPage():
             WORDLENGTHPOSSIBILITIES=wordLengthPossibilities,
             NBPARTIES=nbParties,
             NBMOYENESSAIS=nbMoyenEssais,
-            ERROR = error
         )
 
 @app.route('/currentGame', methods=['GET','POST'])
