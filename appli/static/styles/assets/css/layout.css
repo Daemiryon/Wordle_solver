@@ -60,7 +60,7 @@
     background-color: rgba(128, 128, 128, 0.692);
 }
 
-.overlayStats {
+.overlay {
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
@@ -72,20 +72,44 @@
     /*non-visible*/
 }
 
-.popupStats {
-    position: relative;
-    bottom: 200px;
-    margin: 20% auto;
-    width: 70%;
+.popup{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    padding: 14px;
     border-radius: 5px;
     background-color: #333;
-    padding: 14px;
+    display: none;
 }
 
-.btnCloseStats {
-    float: right;
+#popupRegles {
+    display: none;
+}
+
+#statsTable {
+    table-layout: fixed;
+}
+
+#statsBody>tr>td{
+    padding: 10px;
+}
+#statsNumbers {
+    text-align: center;
+    font-size: xx-large;
+    font-weight: bold;
+}
+#statsMainTitle{
+    text-align: center;
+}
+
+.btnClose{
+    /*float: middle*/
     cursor: pointer;
     font-size: 1cm;
+    position:relative;
+    padding-left: 50%;
 }
 
 /*Partie popup Paramètres */
@@ -142,83 +166,3 @@
     font-size: 0.42cm;
 }
 
-/* generate keyboard */
-
-.kb_line {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.35em;
-    width: 100%;
-    margin-top: 0.35em;
-    width: 40%;
-    align-self: center;
-}
-
-.key {
-    font-size: 18px;
-    display: inline-block;
-    border: 1px solid;
-    border-radius: 5px;
-    user-select: none;
-    flex-grow: 1;
-    flex-shrink: 0;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #505050;
-}
-
-.key_absent {
-    font-size: 18px;
-    display: inline-block;
-    border: 1px solid;
-    border-radius: 5px;
-    user-select: none;
-    flex-grow: 1;
-    flex-shrink: 0;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.key_malplace {
-    font-size: 18px;
-    display: inline-block;
-    border: 1px solid;
-    border-radius: 5px;
-    user-select: none;
-    flex-grow: 1;
-    flex-shrink: 0;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #B59F3B;
-}
-
-.key_bienplace {
-    font-size: 18px;
-    display: inline-block;
-    border: 1px solid;
-    border-radius: 5px;
-    user-select: none;
-    flex-grow: 1;
-    flex-shrink: 0;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #538D4E;
-}
-
-.keyboard {
-    margin-top: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: static;
-    width: 100%;
-
-}

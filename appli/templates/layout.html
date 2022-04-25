@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/layout.css">
     <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/parameters.css">
     <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/generateGrid.css">
+    <link rel="stylesheet" type ="text/css" href="../static/styles/assets/css/keyboard.css">
     <script src="../static/styles/assets/js/generateGrid.js"></script>
     <script src="../static/styles/assets/js/generateKeyboard.js"></script>
     <script src="../static/styles/assets/js/testTry.js"></script>
@@ -28,16 +29,37 @@
             </li>
             <li class="menu_elements" id="stats">
                 <button id="btnPopupStats" class="btnPopupStats">Statistiques</button>
-                <div id="overlayStats" class="overlayStats">
-                    <div id="popupStats" class="popupStats">
-                        <span id="btnCloseStats" class="btnCloseStats">&times;</span>
-                        <h2>Mes statistiques :</h2>
-                        <p><strong>Nombre de parties jouées : </strong>{{NBPARTIES}}</p>
-                        <p><strong>Nombre moyen d'essais pour gagner : </strong>{{NBMOYENESSAIS}}</p>
-                    </div>
-                </div>
             </li>
-
+            <div id="overlay" class="overlay">
+                <!--Chacune des div suivantes sont cachés et s'affichent lorsque le bouton correspondant est cliqué-->
+                <div id="popupStats" class="popup">
+                    <table id="statsTable">
+                        <thead>
+                            <tr>
+                                <th colspan="2" id="statsMainTitle">Mes statistiques</th>
+                            </tr>
+                        </thead>
+                        <tbody id="statsBody">
+                            <tr id="statsNumbers">
+                                <td>{{NBPARTIES}}</td>
+                                <td>{{NBMOYENESSAIS}}</td>
+                            </tr>
+                            <tr id="statsSubTitles">
+                                <td>Nombre de parties jouées</td>
+                                <td>Nombre moyen d'essais pour gagner</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <span id="btnCloseStats" class="btnClose">&times;</span>
+                </div>
+                <div id="popupRegles" class="popup">
+                    <p>Guess the WORDLE in six tries.<br />
+                        Each guess must be a valid five-letter word. Hit the enter button to submit.<br />
+                        After each guess, the color of the tiles will change to show how close your guess was to the word.<br />
+                        [image exemple avec code couleur]</p>
+                    <span id="btnCloseRegles" class="btnClose">&times;</span>
+                </div>
+            </div>
         </ul>
     </header>
 

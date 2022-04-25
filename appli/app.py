@@ -116,7 +116,7 @@ def getStats(myId=1) : ##On peut ajouter le winrate si on a le temps (wordTried 
         for i in range(len(nbTryMax)) :
             nbTryMax_avrg += nbTryMax[i]
         nbTryMax_avrg = nbTryMax_avrg/nbParties
-    return nbParties,nbTryMax_avrg
+    return nbParties,round(nbTryMax_avrg,1)
 
 # -----
 # Fonctions auxiliaires pour la fin de partie
@@ -181,7 +181,7 @@ def parametersPage():
 
     if request.method == "POST":
         maxTry = request.form.get("maxtry")
-        wordLength = request.form.get("wordlength")
+        wordLength = request.form.get("wordlength")      
         wordToFind = get_a_word(wordLength)
         with sqlite3.connect(DATABASE) as con:
             cur = con.cursor()
