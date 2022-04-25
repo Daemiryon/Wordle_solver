@@ -86,10 +86,15 @@ function post_new_try() {
     form.method = 'post';
     form.action = '/currentGame';
     document.body.appendChild(form);
-    const data = document.createElement('input');
-    data.type = 'hidden';
-    data.name = 'guess';
-    data.value = guess;
-    form.appendChild(data);
+    const data1 = document.createElement('input');
+    data1.type = 'hidden';
+    data1.name = 'guess';
+    data1.value = guess;
+    form.appendChild(data1);
+    const data2 = document.createElement('input');
+    data2.type = 'hidden';
+    data2.name = 'cursor';
+    data2.value = cursor;
+    form.appendChild(data2);
     form.submit();
 }
