@@ -104,6 +104,19 @@
     text-align: center;
 }
 
+.nbParties{
+    width: 50%;
+}
+
+#nbMoyenEssaisText{
+    text-align: center;
+}
+
+
+
+
+
+
 .btnClose{
     /*float: middle*/
     cursor: pointer;
