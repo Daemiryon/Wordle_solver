@@ -8,13 +8,6 @@
     display: flex;
     flex-direction: column;
 }
-#fail {
-    background-color: crimson;
-    text-align: center;
-    margin-top: 2%;
-    margin-left: 35%;
-    margin-right: 35%;
-}
 .form_item {
     margin-bottom: 20px;
     text-align: center;
