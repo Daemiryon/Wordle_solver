@@ -26,6 +26,17 @@ def maj_keyboard_color(kb_color,guess,colors):
 
 # -----
 # Fonctions auxiliaires de la route '/newGame'
+def isFinishedGame(idPlayer):
+    with sqlite3.connect(DATABASE) as con:
+        cur = con.cursor()
+        idLastGame = cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(idPlayer,)).fetchone()[0]
+        print(idPlayer,idLastGame)
+        if idLastGame == 0:
+            return 1
+        gameEnded = cur.execute("SELECT gameEnded FROM GAMES WHERE idPlayer=? AND idGame=?",(idPlayer,idLastGame)).fetchone()[0]
+        return gameEnded
+
+
 def get_a_word(WORDLENGTH):
     '''
     Fonction qui retourne un mot de taille WORDLENGTH du dictionnaire 
@@ -162,9 +173,9 @@ def root():
         print("Utilisateurs numero %s est reconnu." % session["id"])
 
     ### A modifier lorsque les fonctions userId() et unfinishedGame() seront implémentées
-    runningGame = 0
+    # runningGame = 0
     # if unfinishedGame(session["id"]):
-    if runningGame:
+    if not isFinishedGame(session["id"]):
         return redirect("/currentGame")
     else:
         return redirect("/newGame")
@@ -225,9 +236,7 @@ def currentGame():
     if request.method == 'POST':
         guess = request.form.get("guess")
         cursor_page = int(request.form.get("cursor"))
-        print(cursor,cursor_page)
         if cursor_page==cursor:
-            print('ok')
             with sqlite3.connect(DATABASE) as con:
                 cur = con.cursor()
                 temp = cur.execute("SELECT MAX(idTry) FROM TRIES WHERE idPlayer=? AND idGame=?",(session["id"],idGame)).fetchone()[0]

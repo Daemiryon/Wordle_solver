@@ -10,10 +10,10 @@ def addUser() -> int :
         connexion = sqlite3.connect(database)
         cursor = connexion.cursor()
 
-        cursor.execute("SELECT max(idPlayer) FROM players")
-        newId=cursor.fetchone()[0]+1
-        print(newId)
-
+        newId = 1
+        temp = cursor.execute("SELECT max(idPlayer) FROM players").fetchone()[0]
+        if temp != None:
+            newId += temp
         sql_pb = "INSERT INTO PLAYERS (idPlayer) values (?)"
         cursor.executemany(sql_pb, [(newId,)])
         connexion.commit()
