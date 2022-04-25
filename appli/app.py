@@ -43,7 +43,7 @@ def get_game_data(idPlayer=1) :
     Fonction qui récupère les données de la partie en cours pour le joueur
     
     IN  : idPlayer (int)
-    OUT : wordLength (str), maxTry (str), tries (List[str]), colors (List[List[int]])
+    OUT : wordLength (str), maxTry (str), tries (List[str]), colors (List[List[int]]),idGame (int)
     '''
     con = sqlite3.connect(DATABASE)
     cur = con.cursor()
@@ -54,7 +54,7 @@ def get_game_data(idPlayer=1) :
     triesData = cur.execute("select wordTried from tries where idplayer = ? and idgame = ?",(idPlayer,idGame)).fetchall()
     tries = [e[0] for e in triesData]
     colors = [couleur(guess,wordToFind) for guess in tries]
-    return wordToFind,wordLength,maxTry,tries,colors
+    return wordToFind,wordLength,maxTry,tries,colors,idGame
 
 def get_valid_words(WORDLENGTH):
     '''
@@ -89,7 +89,7 @@ def couleur(guess,target):
     return Couleurs
 
 def testEndGame(wordToFind,guess,cursor,maxTry):
-    if guess == wordToFind or cursor > maxTry:
+    if guess == wordToFind or cursor >= maxTry:
         return True
     return False
 
@@ -133,7 +133,7 @@ def endGame(idPlayer,idGame) :
     cur.execute('UPDATE games SET gameEnded=1 WHERE idPlayer=? AND idGame=?',(idPlayer,idGame))
     cur.close()
     con.commit()
-    return None
+
 
 def whichEnd(wordToFind,guess) :
     '''
@@ -215,7 +215,7 @@ def currentGame():
     '''
     nbParties,nbMoyenEssais = getStats(session["id"]) 
     
-    wordToFind,wordLength,maxTry,tries,colors = get_game_data(session["id"]) 
+    wordToFind,wordLength,maxTry,tries,colors,idGame = get_game_data(session["id"]) 
     cursor = len(tries)
 
     kb_color = {}
@@ -224,43 +224,43 @@ def currentGame():
 
     if request.method == 'POST':
         guess = request.form.get("guess")
+        cursor_page = int(request.form.get("cursor"))
+        print(cursor,cursor_page)
+        if cursor_page==cursor:
+            print('ok')
+            with sqlite3.connect(DATABASE) as con:
+                cur = con.cursor()
+                temp = cur.execute("SELECT MAX(idTry) FROM TRIES WHERE idPlayer=? AND idGame=?",(session["id"],idGame)).fetchone()[0]
+                idTry = 1
+                if temp != None:
+                    idTry += temp
+                cur.execute("INSERT INTO TRIES VALUES (?,?,?,?)",(session["id"],idGame,idTry,guess))
+                cur.close()
+                con.commit()
 
-        with sqlite3.connect(DATABASE) as con:
-            cur = con.cursor()
-            idGame = cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(session["id"],)).fetchone()[0]
-            temp = cur.execute("SELECT MAX(idTry) FROM TRIES WHERE idPlayer=? AND idGame=?",(session["id"],idGame)).fetchone()[0]
-            idTry = 1
-            if temp != None:
-                idTry += temp
-            cur.execute("INSERT INTO TRIES VALUES (?,?,?,?)",(session["id"],idGame,idTry,guess))
-            cur.close()
-            con.commit()
-
-        cursor += 1
-        colors.append(couleur(guess,wordToFind))
-        tries.append(guess)
-        kb_color = maj_keyboard_color(kb_color,guess,colors[-1])
+            cursor += 1
+            colors.append(couleur(guess,wordToFind))
+            tries.append(guess)
+            kb_color = maj_keyboard_color(kb_color,guess,colors[-1])
 
 
-        if testEndGame(wordToFind,guess,cursor,maxTry):
-            endGame(idGame,session["id"])
-            nbParties,nbMoyenEssais = getStats(session["id"])
-            return render_template("game.html",
-                TESTENDGAME = True,
-                WHICHEND = whichEnd(wordToFind,guess),
-                KBCOLOR=kb_color,
-                MAXTRY=maxTry,
-                WORDLENGTH=wordLength,
-                CURSOR = cursor,
-                MOTSVALIDES = get_valid_words(wordLength),
-                TRIES = tries + [' '*wordLength]*(maxTry-cursor),
-                COLOR = colors + [[0,]*wordLength]*(maxTry-cursor),
-                NBPARTIES=nbParties,
-                NBMOYENESSAIS=nbMoyenEssais,
-                MOTATROUVER=wordToFind
-            )
-        else:
-            wordToFind = ""
+            if testEndGame(wordToFind,guess,cursor,maxTry):
+                endGame(session["id"],idGame)
+                nbParties,nbMoyenEssais = getStats(session["id"])
+                return render_template("game.html",
+                    TESTENDGAME = True,
+                    WHICHEND = whichEnd(wordToFind,guess),
+                    KBCOLOR=kb_color,
+                    MAXTRY=maxTry,
+                    WORDLENGTH=wordLength,
+                    CURSOR = cursor,
+                    MOTSVALIDES = get_valid_words(wordLength),
+                    TRIES = tries + [' '*wordLength]*(maxTry-cursor),
+                    COLOR = colors + [[0,]*wordLength]*(maxTry-cursor),
+                    NBPARTIES=nbParties,
+                    NBMOYENESSAIS=nbMoyenEssais,
+                    MOTATROUVER=wordToFind
+                )
 
     return render_template("game.html",
         KBCOLOR=kb_color,
