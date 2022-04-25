@@ -85,3 +85,21 @@
     width: 100%;
 
 }
+
+/*Pour le petit curseur clic*/
+
+.key:hover{
+    background-color: rgba(128, 128, 128, 0.692);
+}
+
+.key_absent:hover{
+    background-color: rgba(80, 80, 80, 0.692);
+}
+
+.key_bienplace:hover{
+    background-color: rgba(83, 141, 78, 0.692);
+}
+
+.key_malplace:hover{
+    background-color: rgba(181, 159, 59, 0.692);
+}
