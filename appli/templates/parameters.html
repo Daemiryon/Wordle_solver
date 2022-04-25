@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 
 {% block content %}
+    {% if ERROR == 1 %}
+    <div id='fail'>
+        Echec de l'opération
+    </div>
+    {% endif %}
     <form id="parameters" action="/newGame" method="post">
         <div id="form_content">
 
