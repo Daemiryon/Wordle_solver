@@ -61,8 +61,10 @@ function input(key) {
             break;
 
         default:
-            ajout_lettre(key);
-            console.log(key)
+            if (/[A-Z]/.test(key)) {
+                ajout_lettre(key);
+                console.log(key)
+            }
             break;
     }
 
