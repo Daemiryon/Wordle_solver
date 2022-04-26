@@ -4,18 +4,21 @@
     display: flex;
     justify-content: center;
 }
+
 .grid table {
     /*border: 1px solid;*/
     width: auto;
     height: auto;
     color: aliceblue;
 }
+
 .grid tr {
     border: 1px solid;
     width: auto;
     height: auto;
     color: aliceblue;
 }
+
 .grid td {
     border: 1px solid;
     width: 60px;
@@ -24,4 +27,42 @@
     text-align: center;
     font-weight: bold;
     font-size: 32px;
+}
+
+.tr_shake {
+    animation: shake 2s ease;
+}
+
+@keyframes shake {
+    0% {
+        transform: translate(0, 0)
+    }
+
+    1.78571% {
+        transform: translate(5px, 0)
+    }
+
+    3.57143% {
+        transform: translate(0, 0)
+    }
+
+    5.35714% {
+        transform: translate(5px, 0)
+    }
+
+    7.14286% {
+        transform: translate(0, 0)
+    }
+
+    8.92857% {
+        transform: translate(5px, 0)
+    }
+
+    10.71429% {
+        transform: translate(0, 0)
+    }
+
+    100% {
+        transform: translate(0, 0)
+    }
 }

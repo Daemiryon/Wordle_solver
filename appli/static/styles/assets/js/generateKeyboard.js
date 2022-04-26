@@ -56,6 +56,15 @@ function input(key) {
         case "ENTER":
             if (testTry()) {
                 post_new_try();
+            } else {
+                var row = document.getElementById(`tr_${cursor}`);
+
+                row.className = "tr_shake";
+                setTimeout(() => {
+                    row.className = "";
+                }, 2000);
+
+
             }
             console.log(testTry())
             break;

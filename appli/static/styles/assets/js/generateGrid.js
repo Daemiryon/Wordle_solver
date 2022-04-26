@@ -9,6 +9,7 @@ function generateGrid() {
 
     for (let i = 0; i < maxTry; i++) {
         var row = document.createElement("tr");
+        row.id = `tr_${i}`;
         for (let j = 0; j < wordLength; j++) {
             var cell = document.createElement("td");
             var node = document.createTextNode(tries[i][j]);
@@ -22,5 +23,3 @@ function generateGrid() {
     tb.appendChild(tb_body);
     body.appendChild(tb);
 }
-// TRIES = tries + [' ' * wordLength] * (maxTry - cursor),
-// COLOR = colors + [[0,] * wordLength] * (maxTry - cursor),
