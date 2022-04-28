@@ -18,7 +18,8 @@ def get_a_word(WORDLENGTH):
     IN : WORDLENGTH ( int )
     OUT : word ( str )
     '''
-    return choice(get_valid_words(WORDLENGTH))
+    Liste_mots = json.load(open('./data/dictionnaires/liste_mots_a_trouver.json','r'))
+    return choice(Liste_mots[int(WORDLENGTH)])
 
 
 # -----
