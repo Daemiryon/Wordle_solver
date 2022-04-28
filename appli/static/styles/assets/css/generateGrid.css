@@ -1,24 +1,21 @@
+/* CSS grille */
 .grid {
     margin-top: 20px;
     width: 100%;
     display: flex;
     justify-content: center;
 }
-
 .grid table {
-    /*border: 1px solid;*/
     width: auto;
     height: auto;
     color: aliceblue;
 }
-
 .grid tr {
     border: 1px solid;
     width: auto;
     height: auto;
     color: aliceblue;
 }
-
 .grid td {
     border: 1px solid;
     width: 60px;
@@ -29,6 +26,16 @@
     font-size: 32px;
 }
 
+/* Coloration des cases */
+.bienplace {
+    background-color: #538D4E;
+}
+.malplace {
+    background-color: #B59F3B;
+}
+
+
+/* Erreur : mot non valide */
 .tr_shake {
     animation: shake 2s ease;
 }

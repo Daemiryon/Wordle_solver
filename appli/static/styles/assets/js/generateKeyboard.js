@@ -1,6 +1,6 @@
 function generateKeyboard() {
 
-    COLOR_class = ["_absent", "_malplace", "_bienplace"];
+    COLOR_class = ["absent", "malplace", "bienplace"];
 
     const kb_color = new Map(Object.entries(kb_color_obj))
 
@@ -17,17 +17,15 @@ function generateKeyboard() {
         ligne.className = "kb_line";
         element.forEach(touche => {
             var key = document.createElement("input");
-            // var text = document.createTextNode(touche);
             key.value = touche;
             key.type = "button";
+            key.className = "key"
             if (kb_color.has(touche)) {
-                key.className = "key" + COLOR_class[kb_color.get(touche)];
+                key.id = COLOR_class[kb_color.get(touche)];
             } else {
-                key.className = "key";
+                key.id = "pas_essaye";
             }
             key.dataset["touche"] = touche
-            // key.appendChild(text);
-            // key.addEventListener('keypress', reel_kb_input)
             key.addEventListener('click', virt_kb_input);
             ;
             ligne.appendChild(key);

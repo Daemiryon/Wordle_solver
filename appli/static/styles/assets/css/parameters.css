@@ -17,4 +17,5 @@
 }
 .form_item input {
     padding: 12px;
+    border-radius: 5px;
 }

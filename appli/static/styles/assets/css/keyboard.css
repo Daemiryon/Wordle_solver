@@ -1,12 +1,13 @@
-.bienplace {
-    background-color: #538D4E;
-}
-.malplace {
-    background-color: #B59F3B;
-}
-
 /* generate keyboard */
 
+.keyboard {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: static;
+    width: 100%;
+}
 .kb_line {
     display: flex;
     justify-content: space-between;
@@ -16,7 +17,6 @@
     width: 40%;
     align-self: center;
 }
-
 .key {
     font-size: 18px;
     display: inline-block;
@@ -29,77 +29,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+#pas_essaye {
     background-color: #505050;
 }
-
-.key_absent {
-    font-size: 18px;
-    display: inline-block;
-    border: 1px solid;
-    border-radius: 5px;
-    user-select: none;
-    flex-grow: 1;
-    flex-shrink: 0;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.key_malplace {
-    font-size: 18px;
-    display: inline-block;
-    border: 1px solid;
-    border-radius: 5px;
-    user-select: none;
-    flex-grow: 1;
-    flex-shrink: 0;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#malplace {
     background-color: #B59F3B;
 }
-
-.key_bienplace {
-    font-size: 18px;
-    display: inline-block;
-    border: 1px solid;
-    border-radius: 5px;
-    user-select: none;
-    flex-grow: 1;
-    flex-shrink: 0;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#bienplace {
     background-color: #538D4E;
-}
-
-.keyboard {
-    margin-top: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: static;
-    width: 100%;
-
 }
 
 /*Pour le petit curseur clic*/
 
-.key:hover{
+#pas_essaye:hover{
     background-color: rgba(128, 128, 128, 0.692);
 }
-
-.key_absent:hover{
+#absent:hover{
     background-color: rgba(80, 80, 80, 0.692);
 }
-
-.key_bienplace:hover{
+#bienplace:hover{
     background-color: rgba(83, 141, 78, 0.692);
 }
-
-.key_malplace:hover{
+#malplace:hover{
     background-color: rgba(181, 159, 59, 0.692);
 }

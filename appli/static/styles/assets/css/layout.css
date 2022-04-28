@@ -6,6 +6,7 @@
     color: aliceblue;
 }
 
+
 /*Partie header*/
 
 .barre_outils {
@@ -14,49 +15,34 @@
 }
 
 .menu {
-    list-style-type: none;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
-
 .menu_elements {
-    display: inline;
+    width: 241px;
+}
+#rightButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 241px;
+}
+.menuButtons {
+    border-radius: 5px;
 }
 
-#Noodle{
-    width: 6em;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    right: 30px;
-}
-
-#regles {
-    float: left;
-    position: relative;
-    right: 30px;
-    bottom: 7px;
-}
-
-#param {
-    float: right;
-    position: relative;
-    bottom: 65px;
-}
-
-#stats {
-    float: right;
-    position: relative;
-    bottom: 65px;
-}
 
 /*Partie popup stats*/
 
-.btnPopupStats {
+#btnPopupStats {
     padding: 14px 16px;
     cursor: pointer;
     font-size: 0.42cm;
 }
 
-.btnPopupStats:hover {
+#btnPopupStats:hover {
     background-color: rgba(128, 128, 128, 0.692);
 }
 
@@ -69,7 +55,6 @@
     width: 100%;
     height: 100%;
     display: none;
-    /*non-visible*/
 }
 
 .popup{
@@ -112,11 +97,6 @@
     text-align: center;
 }
 
-
-
-
-
-
 .btnClose{
     /*float: middle*/
     cursor: pointer;
@@ -126,28 +106,29 @@
     right : 0.25cm;
 }
 
+
 /*Partie popup Paramètres */
 
-.btnPopupParametres {
+#btnPopupParametres {
     padding: 14px 16px;
     cursor: pointer;
     font-size: 0.42cm;
 }
 
-.btnPopupParametres:hover {
+#btnPopupParametres:hover {
     background-color: rgba(128, 128, 128, 0.692);
 }
 
 
 /*Partie popup Règles*/
 
-.btnPopupRegles {
+#btnPopupRegles {
     padding: 14px 16px;
     cursor: pointer;
     font-size: 0.42cm;
 }
 
-.btnPopupRegles:hover {
+#btnPopupRegles:hover {
     background-color: rgba(128, 128, 128, 0.692);
 }
 
@@ -175,7 +156,8 @@
     padding-left: 50px;
 }
 
-/*Partie popup End */
+
+/* Partie popup End */
 
 .overlayEnd {
     z-index: 1;

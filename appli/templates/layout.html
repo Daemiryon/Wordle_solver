@@ -18,76 +18,71 @@
 
 <body>
     <header class="barre_outils">
-        <ul class="menu">
-            <li class="menu_elements" id="regles">
-                <button id="btnPopupRegles" class="btnPopupRegles">Règles</button>
-            </li>
-            <li id="Noodle">
-                <h1>Noodle</h1>
-            </li>
-            <!-- Tache secondaire non terminée -->
-            <!-- <li class="menu_elements" id="param">
-                <button id="btnPopupParametres" class="btnPopupParametres">Paramètres</button>
-            </li> -->
-            <li class="menu_elements" id="stats">
-                <button id="btnPopupStats" class="btnPopupStats">Statistiques</button>
-            </li>
-            <div id="overlay" class="overlay">
-                <!--Chacune des div suivantes sont cachés et s'affichent lorsque le bouton correspondant est cliqué-->
-                <div id="popupStats" class="popup">
-                    <table id="statsTable">
-                        <thead>
-                            <tr>
-                                <th colspan="2" id="statsMainTitle">Mes statistiques :</th>
-                            </tr>
-                        </thead>
-                        <tbody id="statsBody">
-                            <tr id="statsNumbers">
-                                <td id="nbParties" class="nbParties">{{NBPARTIES}}</td>
-                                <td id ="nbMoyenEssais">{{NBMOYENESSAIS}}</td>
-                            </tr>
-                            <tr id="statsSubTitles">
-                                <td id ="nbPartiesText" class="nbParties">Nombre de parties jouées</td>
-                                <td id ="nbMoyenEssaisText">Nombre moyen d'essais pour gagner</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <span id="btnCloseStats" class="btnClose">&times;</span>
-                </div>
-                <div id="popupRegles" class="popup">
-                    <h2>Règles du jeu :</h2>
-                    <p>
-                        Le but du jeu est de trouver un mot de la langue française en un nombre minimal d'essai.<br />
-                        Ce mot peut être un nom, un adjectif, un verbe (conjugué ou non), un adverbe,...<br />
-                        Ce mot peut également être au singulier ou au pluriel.
-                    </p>
-                    <p>
-                        En début de partie, vous pouvez paramétrer la longueur du mot (de 5 à 15 lettres) ainsi que le nombre maximal d'essais possibles (de 3 à 10).
-                    </p>
-                    <p>
-                        Pendant la partie, proposez des mots en utilisant le clavier intégré ou votre propre clavier.<br >
-                        Une fois que vous avez appuyé sur Entrée, les cases de la grille et du clavier seront colorées :
-                    </p>
-                    <table id="examples">
-                        <tbody>
-                            <tr>
-                                <td id="example1" class="example">A</td>
-                                <td class="explanation">La lettre est à la bonne place dans le mot</td>
-                            </tr>
-                            <tr>
-                                <td id="example2" class="example">A</td>
-                                <td class="explanation">La lettre est dans le mot mais pas à la bonne place</td>
-                            </tr>
-                            <tr>
-                                <td class="example">A</td>
-                                <td class="explanation">La lettre n'est pas dans le mot. (Sur le clavier intégré, la lettre sera noircie)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <span id="btnCloseRegles" class="btnClose">&times;</span>
-                </div>
+        <div class="menu">
+            <div class="menu_elements">
+                <button class="menuButtons" id="btnPopupRegles">Règles</button>
             </div>
-        </ul>
+            <h1>Noodle</h1>
+            <div class="menu_elements" id="rightButtons">
+                <!-- <button class="menuButtons" id="btnPopupParametres">Paramètres</button> -->    <!-- Tache secondaire non terminée -->
+                <button class="menuButtons" id="btnPopupStats">Statistiques</button>
+            </div>
+        </div>
+        <div id="overlay" class="overlay">
+            <!--Chacune des div suivantes sont cachés et s'affichent lorsque le bouton correspondant est cliqué-->
+            <div id="popupStats" class="popup">
+                <table id="statsTable">
+                    <thead>
+                        <tr>
+                            <th colspan="2" id="statsMainTitle">Mes statistiques :</th>
+                        </tr>
+                    </thead>
+                    <tbody id="statsBody">
+                        <tr id="statsNumbers">
+                            <td id="nbParties" class="nbParties">{{NBPARTIES}}</td>
+                            <td id ="nbMoyenEssais">{{NBMOYENESSAIS}}</td>
+                        </tr>
+                        <tr id="statsSubTitles">
+                            <td id ="nbPartiesText" class="nbParties">Nombre de parties jouées</td>
+                            <td id ="nbMoyenEssaisText">Nombre moyen d'essais pour gagner</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span id="btnCloseStats" class="btnClose">&times;</span>
+            </div>
+            <div id="popupRegles" class="popup">
+                <h2>Règles du jeu :</h2>
+                <p>
+                    Le but du jeu est de trouver un mot de la langue française en un nombre minimal d'essai.<br />
+                    Ce mot peut être un nom, un adjectif, un verbe (conjugué ou non), un adverbe,...<br />
+                    Ce mot peut également être au singulier ou au pluriel.
+                </p>
+                <p>
+                    En début de partie, vous pouvez paramétrer la longueur du mot (de 5 à 15 lettres) ainsi que le nombre maximal d'essais possibles (de 3 à 10).
+                </p>
+                <p>
+                    Pendant la partie, proposez des mots en utilisant le clavier intégré ou votre propre clavier.<br >
+                    Une fois que vous avez appuyé sur Entrée, les cases de la grille et du clavier seront colorées :
+                </p>
+                <table id="examples">
+                    <tbody>
+                        <tr>
+                            <td id="example1" class="example">A</td>
+                            <td class="explanation">La lettre est à la bonne place dans le mot</td>
+                        </tr>
+                        <tr>
+                            <td id="example2" class="example">A</td>
+                            <td class="explanation">La lettre est dans le mot mais pas à la bonne place</td>
+                        </tr>
+                        <tr>
+                            <td class="example">A</td>
+                            <td class="explanation">La lettre n'est pas dans le mot. (Sur le clavier intégré, la lettre sera noircie)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span id="btnCloseRegles" class="btnClose">&times;</span>
+            </div>
+        </div>
     </header>
 
     {% block content %}{% endblock %}
