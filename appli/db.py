@@ -56,28 +56,51 @@ def endGame(idPlayer,idGame) :
 
 # -----
 # Fonctions auxiliaires pour les stastiques et les paramètres
-def getStats(myId=1) : ##On peut ajouter le winrate si on a le temps (wordTried == wordToFind && max(idTry)<=nbMaxTries) (?)
+def getStats(myId=1) : 
     '''
-    Fonction qui récupère les stats d'un utilisateur (nombre de parties, nombre moyen d'essais).
+    Fonction qui récupère les stats d'un utilisateur (nombre de parties, plus gros score).
 
     IN  : idPlayer (int)
-    OUT : nbParties (int), nbTryMax_avrg (float)
+    OUT : nbParties (int), highestScore (int)
     '''
     con = sqlite3.connect(database)
     cur = con.cursor()
     cur.execute('SELECT COUNT(*) FROM games WHERE gameEnded == 1 AND idPlayer= ?',(myId,))
     c = cur.fetchall()
     nbParties = c[0][0]
+
+    #Partie HighestScore
+
     cur.execute('SELECT MAX(idTry) FROM tries JOIN games ON tries.idGame=games.idGame WHERE tries.idPlayer= ? and games.gameEnded=1 group by tries.idGame',(myId,))
     c = cur.fetchall()
-    nbTryMax = [e[0] for e in c]
-    nbTryMax_avrg = 0
-    if nbParties != 0 :
-        for i in range(len(nbTryMax)) :
-            nbTryMax_avrg += nbTryMax[i]
-        nbTryMax_avrg = nbTryMax_avrg/nbParties
-    return nbParties,round(nbTryMax_avrg,1)
+    temp= [e[0] for e in c]
+    if temp == [] :
+        highestScore = 0
+    else :
+        minIdTry = min(temp)
+        
+        cur.execute('SELECT MAX(idTry),tries.idGame from tries JOIN games ON tries.idGame=games.idGame WHERE tries.idPlayer= ? and games.gameEnded=1 group by tries.idGame',(myId,))
+        c = cur.fetchall()
+        temp= [e for e in c]
+        temp_idGame = []
+        for ele in temp :
+            if ele[0] == minIdTry :
+                temp_idGame.append(ele[1])
+        
+        Scores = []
+        for i in range(len(temp_idGame)) :
+            wordToFind = cur.execute('SELECT wordToFind FROM games WHERE games.idPlayer= ? and games.gameEnded=1 and games.idGame =?',(myId,temp_idGame[i])).fetchone()[0]
+            Scores.append( int(round(len(wordToFind)/minIdTry,3)*1000) )
+        
+        highestScore = max(Scores)
 
+    return nbParties,highestScore
+
+def getNbTries(idPlayer,idGame) :
+    con = sqlite3.connect(database)
+    cur = con.cursor()
+    nbTries = cur.execute('SELECT MAX(idTry) from tries where tries.idPlayer=? and tries.idGame=?',(idPlayer,idGame)).fetchone()[0]
+    return nbTries 
 # -----
 # Fonctions auxliaires de la route '/currentGame'
 def get_game_data(idPlayer=1) :
