@@ -105,7 +105,6 @@
     text-align: center;
 }
 .btnClose{
-    /*float: middle*/
     cursor: pointer;
     font-size: 1cm;
     position:relative;
@@ -195,3 +194,15 @@
     cursor: pointer;
 }
 
+#winOrLose {
+    text-align: center;
+}
+
+#figures {
+    display: flex;
+    justify-content: space-evenly;
+}
+.fig {
+    width: 300px;
+    text-align: center;
+}
