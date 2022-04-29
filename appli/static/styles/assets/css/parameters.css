@@ -1,14 +1,16 @@
-#parameters{
+#parameters {
     margin: auto;
     width: 300px;
     height: 300px;
     position: relative;
-    top: 120px;
+    top: 0px;
 }
+
 #form_content {
     display: flex;
     flex-direction: column;
 }
+
 .form_item {
     display: flex;
     flex-direction: column;
@@ -16,25 +18,35 @@
     margin-bottom: 20px;
     text-align: center;
 }
+
 .form_item select {
     height: 35px;
 }
+
 .form_item input {
+    font-size: xx-large;
     width: 300px;
     border-radius: 5px;
     margin: 0;
 }
+
+.form_item input:hover {
+    background-color: #5fa44c;
+}
+
 datalist {
     width: 300px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
+
 .case {
     width: 23px;
     padding: 0px;
     content: '';
 }
+
 #play {
     padding: 14px 16px;
 }
