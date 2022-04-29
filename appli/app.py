@@ -39,12 +39,11 @@ def parametersPage():
     OUT: HTML page
     '''
     nbParties,highestScore = db.getStats(session["id"]) 
-
     if request.method == "POST":
         maxTry = request.form.get("maxtry")
         wordLength = request.form.get("wordlength")      
         wordToFind = fn.get_a_word(wordLength)
-        db.createNewGame(session['id'], maxTry, wordToFind)
+        db.createNewGame(session['id'], maxTry, wordToFind,0)
         return redirect('/currentGame')
 
     else:
@@ -53,6 +52,7 @@ def parametersPage():
         return render_template("parameters.html",
             MAXTRYPOSSIBILITIES=maxTryPossibilities,
             WORDLENGTHPOSSIBILITIES=wordLengthPossibilities,
+            
             NBPARTIES=nbParties,
             HIGHESTSCORE = highestScore
         )
@@ -84,6 +84,8 @@ def currentGame():
         if fn.testEndGame(wordToFind,guess,cursor,maxTry):
             db.endGame(session["id"],idGame)
             nbTries = db.getNbTries(session["id"],idGame)
+            score = fn.calcul_score(wordLength,nbTries,wordToFind,guess)
+            db.update_score(session["id"],idGame,score)
             nbParties,highestScore = db.getStats(session["id"])
             return render_template("game.html",
                 TESTENDGAME = True,
@@ -99,9 +101,9 @@ def currentGame():
                 NBPARTIES=nbParties,
                 MOTATROUVER=wordToFind,
                 NBESSAIS=nbTries,
-                SCORE=int(round(wordLength/nbTries,3)*1000) if fn.whichEnd(wordToFind,guess) else 0,
-                HIGHESTSCORE = highestScore
 
+                SCORE=score,
+                HIGHESTSCORE = highestScore
             )
         return redirect(url_for('currentGame'))
 

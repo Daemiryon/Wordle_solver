@@ -47,7 +47,6 @@ def endGame(idPlayer,idGame) :
     '''
     con = sqlite3.connect(database)
     cur = con.cursor()
-
     cur.execute('UPDATE games SET gameEnded=1 WHERE idPlayer=? AND idGame=?',(idPlayer,idGame))
     cur.close()
     con.commit()
@@ -68,36 +67,9 @@ def getStats(myId=1) :
     cur.execute('SELECT COUNT(*) FROM games WHERE gameEnded == 1 AND idPlayer= ?',(myId,))
     c = cur.fetchall()
     nbParties = c[0][0]
-
-    #Partie HighestScore
-
-    cur.execute('SELECT MAX(idTry) FROM tries JOIN games ON tries.idGame=games.idGame WHERE games.idPlayer= ? and games.gameEnded=1 group by tries.idGame',(myId,))
-    c = cur.fetchall()
-    temp= [e[0] for e in c]
-    if temp == [] :
-        highestScore = 0
-    else :
-        minIdTry = min(temp)
-        
-        cur.execute('SELECT MAX(idTry),tries.idGame from tries JOIN games ON tries.idGame=games.idGame WHERE games.idPlayer= ? and games.gameEnded=1 group by tries.idGame',(myId,))
-        c = cur.fetchall()
-        temp= [e for e in c]
-        temp_idGame = []
-        for ele in temp :
-            if ele[0] == minIdTry :
-                temp_idGame.append(ele[1])
-        
-        Scores = []
-        for i in range(len(temp_idGame)) :
-            wordToFind = cur.execute('SELECT wordToFind FROM games WHERE games.idPlayer= ? and games.gameEnded=1 and games.idGame =?',(myId,temp_idGame[i])).fetchone()[0]
-            lastTry = cur.execute('SELECT MAX(idTry) from tries JOIN games ON tries.idGame=games.idGame WHERE games.idPlayer =? and games.gameEnded=1 and games.idGame=?',(myId,temp_idGame[i])).fetchone()[0]
-            wordLastTry = cur.execute('SELECT wordTried FROM tries JOIN games ON tries.idGame=games.idGame WHERE games.idPLayer = ? and games.gameEnded =1 and games.idGame =? and idTry =?',(myId,temp_idGame[i],lastTry)).fetchone()[0]
-            
-            score_user = int(round(len(wordToFind)/minIdTry,3)*1000)*(wordLastTry==wordToFind)
-            Scores.append( score_user )
-        
-        highestScore = max(Scores)
-
+    highestScore = cur.execute('SELECT MAX(score) from games WHERE idPlayer = ?',(myId,)).fetchone()[0]
+    if highestScore == None : #L'utilisateur n'a jamais joué
+        highestScore =0
     return nbParties,highestScore
 
 def getNbTries(idPlayer,idGame) :
@@ -105,6 +77,14 @@ def getNbTries(idPlayer,idGame) :
     cur = con.cursor()
     nbTries = cur.execute('SELECT MAX(idTry) from tries where tries.idPlayer=? and tries.idGame=?',(idPlayer,idGame)).fetchone()[0]
     return nbTries 
+
+def update_score(idPlayer,idGame,score):
+    con = sqlite3.connect(database)
+    cur = con.cursor()
+    cur.execute('UPDATE games SET score=? WHERE idPlayer=? AND idGame=?',(score,idPlayer,idGame))
+    cur.close()
+    con.commit()
+
 # -----
 # Fonctions auxliaires de la route '/currentGame'
 def get_game_data(idPlayer=1) :
