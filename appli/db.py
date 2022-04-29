@@ -3,6 +3,22 @@ import sqlite3
 import fn
 database = "data/database.db"
 
+def cookieUnsyncedDb(session_id):
+    connexion = sqlite3.connect(database)
+    cursor = connexion.cursor()
+
+    temp = cursor.execute("SELECT idPlayer FROM players where idPlayer = ?",(session_id,)).fetchone()
+    
+    connexion.commit()
+    cursor.close()
+    connexion.close()
+
+    print("-----------------------------------")
+    print(temp)
+    print("is unsynced: "+ str(temp==None))
+    return temp == None
+
+
 def addUser() -> int :
     """
     Ajoute un utilisateur dans la base de donnée en incrémentant l'ID du dernier joueur, et retourne cet ID.
@@ -15,8 +31,8 @@ def addUser() -> int :
         temp = cursor.execute("SELECT max(idPlayer) FROM players").fetchone()[0]
         if temp != None:
             newId += temp
-        sql_pb = "INSERT INTO PLAYERS (idPlayer) values (?)"
-        cursor.executemany(sql_pb, [(newId,)])
+        sql_pb = "INSERT INTO PLAYERS (idPlayer,idLastGame) values (?,?)"
+        cursor.executemany(sql_pb, [(newId,0)])
         connexion.commit()
         print("Utilisateur enregistré avec succès")
         cursor.close()
@@ -30,6 +46,7 @@ def addUser() -> int :
 def isFinishedGame(idPlayer):
     with sqlite3.connect(database) as con:
         cur = con.cursor()
+        print("PLEASE WORK" + str(idPlayer))
         idLastGame = cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(idPlayer,)).fetchone()[0]
         if idLastGame == 0:
             return 1
@@ -122,3 +139,24 @@ def insertNewTry(session_id, guess, idGame):
             cur.execute("INSERT INTO TRIES VALUES (?,?,?,?)",(session_id,idGame,idTry,guess))
             cur.close()
             con.commit()
+
+def removeCurrentGame(session_id, idGame):
+    '''
+    Supprime les tries
+    supprime le player last game
+    supprime la partie
+    '''
+    try:
+        connexion = sqlite3.connect(database)
+        cursor = connexion.cursor()
+
+        cursor.execute("DELETE FROM TRIES WHERE idPlayer = ? AND idGame = ?",(session_id,idGame))
+        cursor.execute("UPDATE PLAYERS SET idLastGame = idLastGame -1 WHERE idPlayer = ?",(session_id,))
+        cursor.execute("DELETE FROM GAMES WHERE idPlayer = ? AND idGame = ?",(session_id,idGame))
+        print("SUCCESS DELETION")
+
+        connexion.commit()
+        cursor.close()
+        connexion.close()
+    except sqlite3.Error as error:
+        print("Erreur lors de la suppresion de la parite")

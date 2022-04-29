@@ -20,10 +20,12 @@ def root():
     IN :
     OUT: HTML page
     '''
-    if "id" not in session:
+    print('----------------------------------------------')
+    if "id" not in session or db.cookieUnsyncedDb(session['id']):
         session["id"] = db.addUser()
     else:
         print("Utilisateurs numero %s est reconnu." % session["id"])
+    print(session['id'])
 
     if not db.isFinishedGame(session["id"]):
         return redirect("/currentGame")
@@ -99,6 +101,10 @@ def currentGame():
                 MOTATROUVER=wordToFind
             )
         return redirect(url_for('currentGame'))
+    
+    if request.args.get("abandon"):
+        #db.removeCurrentGame(session['id'],idGame)
+        return redirect('/newGame')
 
     return render_template("game.html",
         KBCOLOR=kb_color,
