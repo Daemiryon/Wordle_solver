@@ -99,7 +99,7 @@ def currentGame():
                 NBPARTIES=nbParties,
                 MOTATROUVER=wordToFind,
                 NBESSAIS=nbTries,
-                SCORE=int(round(wordLength/maxTry,3)*1000),
+                SCORE=int(round(wordLength/nbTries,3)*1000) if fn.whichEnd(wordToFind,guess) else 0,
                 HIGHESTSCORE = highestScore
 
             )

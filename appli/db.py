@@ -71,7 +71,7 @@ def getStats(myId=1) :
 
     #Partie HighestScore
 
-    cur.execute('SELECT MAX(idTry) FROM tries JOIN games ON tries.idGame=games.idGame WHERE tries.idPlayer= ? and games.gameEnded=1 group by tries.idGame',(myId,))
+    cur.execute('SELECT MAX(idTry) FROM tries JOIN games ON tries.idGame=games.idGame WHERE games.idPlayer= ? and games.gameEnded=1 group by tries.idGame',(myId,))
     c = cur.fetchall()
     temp= [e[0] for e in c]
     if temp == [] :
@@ -79,7 +79,7 @@ def getStats(myId=1) :
     else :
         minIdTry = min(temp)
         
-        cur.execute('SELECT MAX(idTry),tries.idGame from tries JOIN games ON tries.idGame=games.idGame WHERE tries.idPlayer= ? and games.gameEnded=1 group by tries.idGame',(myId,))
+        cur.execute('SELECT MAX(idTry),tries.idGame from tries JOIN games ON tries.idGame=games.idGame WHERE games.idPlayer= ? and games.gameEnded=1 group by tries.idGame',(myId,))
         c = cur.fetchall()
         temp= [e for e in c]
         temp_idGame = []
@@ -90,7 +90,11 @@ def getStats(myId=1) :
         Scores = []
         for i in range(len(temp_idGame)) :
             wordToFind = cur.execute('SELECT wordToFind FROM games WHERE games.idPlayer= ? and games.gameEnded=1 and games.idGame =?',(myId,temp_idGame[i])).fetchone()[0]
-            Scores.append( int(round(len(wordToFind)/minIdTry,3)*1000) )
+            lastTry = cur.execute('SELECT MAX(idTry) from tries JOIN games ON tries.idGame=games.idGame WHERE games.idPlayer =? and games.gameEnded=1 and games.idGame=?',(myId,temp_idGame[i])).fetchone()[0]
+            wordLastTry = cur.execute('SELECT wordTried FROM tries JOIN games ON tries.idGame=games.idGame WHERE games.idPLayer = ? and games.gameEnded =1 and games.idGame =? and idTry =?',(myId,temp_idGame[i],lastTry)).fetchone()[0]
+            
+            score_user = int(round(len(wordToFind)/minIdTry,3)*1000)*(wordLastTry==wordToFind)
+            Scores.append( score_user )
         
         highestScore = max(Scores)
 
@@ -123,14 +127,14 @@ def get_game_data(idPlayer=1) :
 
 
 #----
-def createNewGame(session_id, maxTry, wordToFind):
+def createNewGame(session_id, maxTry, wordToFind,difficulty):
     with sqlite3.connect(database) as con:
                 cur = con.cursor()
                 temp = cur.execute("SELECT MAX(idGame) FROM GAMES WHERE idPlayer=?",(session_id,)).fetchone()[0]
                 idGame = 1
                 if temp != None:
                     idGame += temp
-                cur.execute("INSERT INTO GAMES VALUES (?,?,?,0,?)",(session_id,idGame,maxTry,wordToFind))
+                cur.execute("INSERT INTO GAMES VALUES (?,?,?,0,?,0,?)",(session_id,idGame,maxTry,wordToFind,difficulty))
                 cur.execute("UPDATE PLAYERS SET idLastGame=?",(idGame,))
                 cur.close()
                 con.commit()
