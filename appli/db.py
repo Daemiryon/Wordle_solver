@@ -27,6 +27,8 @@ def addUser() -> int :
         connexion = sqlite3.connect(database)
         cursor = connexion.cursor()
 
+        
+
         newId = 1
         temp = cursor.execute("SELECT max(idPlayer) FROM players").fetchone()[0]
         if temp != None:
@@ -48,10 +50,13 @@ def isFinishedGame(idPlayer):
         cur = con.cursor()
         print("PLEASE WORK" + str(idPlayer))
         idLastGame = cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(idPlayer,)).fetchone()[0]
+        print((idPlayer,idLastGame))
         if idLastGame == 0:
             return 1
-        gameEnded = cur.execute("SELECT gameEnded FROM GAMES WHERE idPlayer=? AND idGame=?",(idPlayer,idLastGame)).fetchone()[0]
-        return gameEnded
+        gameEnded = cur.execute("SELECT gameEnded FROM GAMES WHERE idPlayer=? AND idGame=?",(idPlayer,idLastGame)).fetchone()
+        if gameEnded == None:
+            return 1
+        return gameEnded[0]
 
 # -----
 # Fonctions auxiliaires pour la fin de partie
