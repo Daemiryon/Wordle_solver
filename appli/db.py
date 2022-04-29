@@ -64,7 +64,6 @@ def endGame(idPlayer,idGame) :
     '''
     con = sqlite3.connect(database)
     cur = con.cursor()
-
     cur.execute('UPDATE games SET gameEnded=1 WHERE idPlayer=? AND idGame=?',(idPlayer,idGame))
     cur.close()
     con.commit()
@@ -73,27 +72,41 @@ def endGame(idPlayer,idGame) :
 
 # -----
 # Fonctions auxiliaires pour les stastiques et les paramètres
-def getStats(myId=1) : ##On peut ajouter le winrate si on a le temps (wordTried == wordToFind && max(idTry)<=nbMaxTries) (?)
+def getStats(myId=1) : 
     '''
-    Fonction qui récupère les stats d'un utilisateur (nombre de parties, nombre moyen d'essais).
+    Fonction qui récupère les stats d'un utilisateur (nombre de parties, plus gros score).
 
     IN  : idPlayer (int)
-    OUT : nbParties (int), nbTryMax_avrg (float)
+    OUT : nbParties (int), highestScore (int)
     '''
     con = sqlite3.connect(database)
     cur = con.cursor()
     cur.execute('SELECT COUNT(*) FROM games WHERE gameEnded == 1 AND idPlayer= ?',(myId,))
     c = cur.fetchall()
     nbParties = c[0][0]
-    cur.execute('SELECT MAX(idTry) FROM tries JOIN games ON tries.idGame=games.idGame WHERE tries.idPlayer= ? and games.gameEnded=1 group by tries.idGame',(myId,))
-    c = cur.fetchall()
-    nbTryMax = [e[0] for e in c]
-    nbTryMax_avrg = 0
-    if nbParties != 0 :
-        for i in range(len(nbTryMax)) :
-            nbTryMax_avrg += nbTryMax[i]
-        nbTryMax_avrg = nbTryMax_avrg/nbParties
-    return nbParties,round(nbTryMax_avrg,1)
+    highestScore = cur.execute('SELECT MAX(score) from games WHERE idPlayer = ?',(myId,)).fetchone()[0]
+    if highestScore == None : #L'utilisateur n'a jamais joué
+        highestScore =0
+    return nbParties,highestScore
+
+def getNbTries(idPlayer,idGame) :
+    con = sqlite3.connect(database)
+    cur = con.cursor()
+    nbTries = cur.execute('SELECT MAX(idTry) from tries where tries.idPlayer=? and tries.idGame=?',(idPlayer,idGame)).fetchone()[0]
+    return nbTries 
+
+def calcul_score(wordLength,nbTries,wordToFind,guess,idPlayer,idGame) :
+    con = sqlite3.connect(database)
+    cur = con.cursor()
+    difficulty=cur.execute('SELECT difficulty from games where idPlayer = ? and idGame=? ',(idPlayer,idGame)).fetchone()[0]
+    return 10000*(difficulty) + int(round(wordLength/nbTries,3)*1000) if fn.whichEnd(wordToFind,guess) else 0
+
+def update_score(idPlayer,idGame,score):
+    con = sqlite3.connect(database)
+    cur = con.cursor()
+    cur.execute('UPDATE games SET score=? WHERE idPlayer=? AND idGame=?',(score,idPlayer,idGame))
+    cur.close()
+    con.commit()
 
 # -----
 # Fonctions auxliaires de la route '/currentGame'
@@ -117,14 +130,14 @@ def get_game_data(idPlayer=1) :
 
 
 #----
-def createNewGame(session_id, maxTry, wordToFind):
+def createNewGame(session_id, maxTry, wordToFind,difficulty):
     with sqlite3.connect(database) as con:
                 cur = con.cursor()
                 temp = cur.execute("SELECT MAX(idGame) FROM GAMES WHERE idPlayer=?",(session_id,)).fetchone()[0]
                 idGame = 1
                 if temp != None:
                     idGame += temp
-                cur.execute("INSERT INTO GAMES VALUES (?,?,?,0,?)",(session_id,idGame,maxTry,wordToFind))
+                cur.execute("INSERT INTO GAMES VALUES (?,?,?,0,?,0,?)",(session_id,idGame,maxTry,wordToFind,difficulty))
                 cur.execute("UPDATE PLAYERS SET idLastGame=?",(idGame,))
                 cur.close()
                 con.commit()

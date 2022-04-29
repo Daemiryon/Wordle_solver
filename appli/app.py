@@ -40,13 +40,13 @@ def parametersPage():
     IN :
     OUT: HTML page
     '''
-    nbParties,nbMoyenEssais = db.getStats(session["id"]) 
-
+    nbParties,highestScore = db.getStats(session["id"]) 
     if request.method == "POST":
         maxTry = request.form.get("maxtry")
-        wordLength = request.form.get("wordlength")      
-        wordToFind = fn.get_a_word(wordLength)
-        db.createNewGame(session['id'], maxTry, wordToFind)
+        wordLength = request.form.get("wordlength")  
+        difficulty = int(request.form.get("Difficulty"))    
+        wordToFind = fn.get_a_word(wordLength,difficulty)
+        db.createNewGame(session['id'], maxTry, wordToFind,difficulty)
         return redirect('/currentGame')
 
     else:
@@ -55,8 +55,9 @@ def parametersPage():
         return render_template("parameters.html",
             MAXTRYPOSSIBILITIES=maxTryPossibilities,
             WORDLENGTHPOSSIBILITIES=wordLengthPossibilities,
+            
             NBPARTIES=nbParties,
-            NBMOYENESSAIS=nbMoyenEssais,
+            HIGHESTSCORE = highestScore
         )
 
 @app.route('/currentGame', methods=['GET','POST'])
@@ -67,7 +68,7 @@ def currentGame():
     IN :
     OUT: HTML page
     '''
-    nbParties,nbMoyenEssais = db.getStats(session["id"]) 
+    nbParties,highestScore = db.getStats(session["id"]) 
     
     wordToFind,wordLength,maxTry,tries,colors,idGame = db.get_game_data(session["id"]) 
     cursor = len(tries)
@@ -85,7 +86,10 @@ def currentGame():
         kb_color = fn.maj_keyboard_color(kb_color,guess,colors[-1])
         if fn.testEndGame(wordToFind,guess,cursor,maxTry):
             db.endGame(session["id"],idGame)
-            nbParties,nbMoyenEssais = db.getStats(session["id"])
+            nbTries = db.getNbTries(session["id"],idGame)
+            score = db.calcul_score(wordLength,nbTries,wordToFind,guess,session["id"],idGame)
+            db.update_score(session["id"],idGame,score)
+            nbParties,highestScore = db.getStats(session["id"])
             return render_template("game.html",
                 TESTENDGAME = True,
                 WHICHEND = fn.whichEnd(wordToFind,guess),
@@ -96,9 +100,13 @@ def currentGame():
                 MOTSVALIDES = fn.get_valid_words(wordLength),
                 TRIES = tries + [' '*wordLength]*(maxTry-cursor),
                 COLOR = colors + [[0,]*wordLength]*(maxTry-cursor),
+              
                 NBPARTIES=nbParties,
-                NBMOYENESSAIS=nbMoyenEssais,
-                MOTATROUVER=wordToFind
+                MOTATROUVER=wordToFind,
+                NBESSAIS=nbTries,
+
+                SCORE=score,
+                HIGHESTSCORE = highestScore
             )
         return redirect(url_for('currentGame'))
     
@@ -114,6 +122,7 @@ def currentGame():
         MOTSVALIDES = fn.get_valid_words(wordLength),
         TRIES = tries + [' '*wordLength]*(maxTry-cursor),
         COLOR = colors + [[0,]*wordLength]*(maxTry-cursor),
+        
         NBPARTIES=nbParties,
-        NBMOYENESSAIS=nbMoyenEssais,
+        HIGHESTSCORE = highestScore
     )

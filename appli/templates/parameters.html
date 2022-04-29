@@ -1,39 +1,45 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <form id="parameters" action="/newGame" method="post">
+<form id="parameters" action="/newGame" method="post">
+    <div style="display: flex; flex-direction: column; align-items: center; ">
+        <div>
+            <img src="../static/Noodle.svg" width="500px">
+        </div>
         <div id="form_content">
 
             <div class="form_item">
                 <label>Longueur du mot à trouver</label>
-                <select name="wordlength">
+                <div><input name="wordlength" type="range" list="wordLengthTickmarks" min="5" max="15" step="1"
+                        value="5"></div>
+                <datalist id="wordLengthTickmarks">
                     {% for elem in WORDLENGTHPOSSIBILITIES %}
-                        {% if elem == 5 %}
-                            <option selected value="{{elem}}">{{elem}}</option>
-                        {% else %}
-                            <option value="{{elem}}">{{elem}}</option>
-                        {% endif %}
+                    <option class="case" value="{{elem}}" label="{{elem}}"></option>
                     {% endfor %}
-                </select>
+                </datalist>
             </div>
 
             <div class="form_item">
-                <label>Nombre maximal d'essais</label>
-                <select name="maxtry">
+                <label>Nombre maximal d'essais possibles</label>
+                <div><input name="maxtry" type="range" list="maxTryTickmarks" min="3" max="10" step="1" value="6"></div>
+                <datalist id="maxTryTickmarks">
                     {% for elem in MAXTRYPOSSIBILITIES %}
-                        {% if elem == 6 %}
-                            <option selected value="{{elem}}">{{elem}}</option>
-                        {% else %}
-                            <option value="{{elem}}">{{elem}}</option>
-                        {% endif %}
+                    <option class="case" value="{{elem}}" label="{{elem}}"></option>
                     {% endfor %}
-                </select>
+                </datalist>
+            </div>
+            <div class="form_item">
+                <label>Difficulté</label>
+                <div><input name="Difficulty" type="range" min="0" max="2" value="1"></div>
             </div>
 
+
             <div class="form_item">
-                <input type="submit" value="Jouer">
+                <input type="submit" id="play" value="Jouer">
             </div>
 
         </div>
-    </form>
+    </div>
+
+</form>
 {% endblock %}

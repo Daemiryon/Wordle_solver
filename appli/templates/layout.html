@@ -8,12 +8,12 @@
     <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/layout.css">
     <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/parameters.css">
     <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/generateGrid.css">
-    <link rel="stylesheet" type ="text/css" href="../static/styles/assets/css/keyboard.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles/assets/css/keyboard.css">
     <script src="../static/styles/assets/js/generateGrid.js"></script>
     <script src="../static/styles/assets/js/generateKeyboard.js"></script>
     <script src="../static/styles/assets/js/testTry.js"></script>
     <title>Noodle</title>
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='Noodle.ico.svg') }}">
 </head>
 
 <body>
@@ -24,7 +24,8 @@
             </div>
             <h1>Noodle</h1>
             <div class="menu_elements" id="rightButtons">
-                <!-- <button class="menuButtons" id="btnPopupParametres">Paramètres</button> -->    <!-- Tache secondaire non terminée -->
+                <!-- <button class="menuButtons" id="btnPopupParametres">Paramètres</button> -->
+                <!-- Tache secondaire non terminée -->
                 <button class="menuButtons" id="btnPopupStats">Statistiques</button>
             </div>
         </div>
@@ -40,11 +41,11 @@
                     <tbody id="statsBody">
                         <tr id="statsNumbers">
                             <td id="nbParties" class="nbParties">{{NBPARTIES}}</td>
-                            <td id ="nbMoyenEssais">{{NBMOYENESSAIS}}</td>
+                            <td id ="score" class="score">{{HIGHESTSCORE}}</td>
                         </tr>
                         <tr id="statsSubTitles">
                             <td id ="nbPartiesText" class="nbParties">Nombre de parties jouées</td>
-                            <td id ="nbMoyenEssaisText">Nombre moyen d'essais pour gagner</td>
+                            <td id ="scoreText" class="score">Mon meilleur score</td>
                         </tr>
                     </tbody>
                 </table>
@@ -58,10 +59,11 @@
                     Ce mot peut également être au singulier ou au pluriel.
                 </p>
                 <p>
-                    En début de partie, vous pouvez paramétrer la longueur du mot (de 5 à 15 lettres) ainsi que le nombre maximal d'essais possibles (de 3 à 10).
+                    En début de partie, vous pouvez paramétrer la longueur du mot (de 5 à 15 lettres) ainsi que le
+                    nombre maximal d'essais possibles (de 3 à 10).
                 </p>
                 <p>
-                    Pendant la partie, proposez des mots en utilisant le clavier intégré ou votre propre clavier.<br >
+                    Pendant la partie, proposez des mots en utilisant le clavier intégré ou votre propre clavier.<br>
                     Une fois que vous avez appuyé sur Entrée, les cases de la grille et du clavier seront colorées :
                 </p>
                 <table id="examples">
@@ -76,7 +78,8 @@
                         </tr>
                         <tr>
                             <td class="example">A</td>
-                            <td class="explanation">La lettre n'est pas dans le mot. (Sur le clavier intégré, la lettre sera noircie)</td>
+                            <td class="explanation">La lettre n'est pas dans le mot. (Sur le clavier intégré, la lettre
+                                sera noircie)</td>
                         </tr>
                     </tbody>
                 </table>
@@ -98,11 +101,12 @@
             {% endif %}
             <h2>Mes résultats :</h2>
             <p><strong>Mot à trouver : </strong>{{MOTATROUVER}}</p>
-            <p><strong>Nombre d'essais : </strong>{{MAXTRY}}</p>
+            <p><strong>Nombre d'essais : </strong>{{NBESSAIS}}</p>
+            <p><strong>Mon score : </strong>{{SCORE}}</p>
             <br>
             <h2>Mes statistiques :</h2>
             <p><strong>Nombre de parties jouées : </strong>{{NBPARTIES}}</p>
-            <p><strong>Nombre moyen d'essais pour gagner : </strong>{{NBMOYENESSAIS}}</p>
+            <p><strong>Mon meilleur score : </strong>{{HIGHESTSCORE}}</p>
             <p><a class="btnEnd" id="btnEnd" href="/newGame">Rejouer</a></p>
         </div>
     </div>
