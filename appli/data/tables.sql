@@ -11,7 +11,7 @@ CREATE TABLE GAMES (
 	gameEnded INTEGER DEFAULT 0 CHECK(gameEnded>=0 AND gameEnded<=2),
 	wordToFind VARCHAR,
 	score INTEGER DEFAULT 0,
-	difficulty INTEGER DEFAULT 0 CHECK(difficulty>=0 AND difficulty<=2),
+	difficulty INTEGER DEFAULT 0 CHECK(difficulty>=0 AND difficulty<=9),
 	FOREIGN KEY(idPlayer) REFERENCES "PLAYERS"("idPlayer")
 	CONSTRAINT games_key PRIMARY KEY (idPlayer,idGame)
 );
