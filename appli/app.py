@@ -126,7 +126,7 @@ def currentGame():
 
 @app.route('/restart')
 def restart():
-    return redirect('/newGame')
+    return redirect('/')
 
 @app.route('/quitGame')
 def quitGame():
