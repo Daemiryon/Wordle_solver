@@ -1,6 +1,7 @@
 #parameters{
     margin: auto;
-    width: 220px;
+    width: 300px;
+    height: 300px;
     position: relative;
     top: 120px;
 }
@@ -9,6 +10,9 @@
     flex-direction: column;
 }
 .form_item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -16,6 +20,21 @@
     height: 35px;
 }
 .form_item input {
-    padding: 12px;
+    width: 300px;
     border-radius: 5px;
+    margin: 0;
+}
+datalist {
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.case {
+    width: 23px;
+    padding: 0px;
+    content: '';
+}
+#play {
+    padding: 14px 16px;
 }
