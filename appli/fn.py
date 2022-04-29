@@ -19,7 +19,6 @@ def get_a_word(WORDLENGTH,difficulte=2):
     OUT : word ( str )
     '''
     Liste_mots = json.load(open('./data/dictionnaires/liste_mots_a_trouver.json','r'))[int(WORDLENGTH)]
-    print(Liste_mots[difficulte*len(Liste_mots)//3:(difficulte+1)*len(Liste_mots)//3])
     return choice(Liste_mots[difficulte*len(Liste_mots)//4:(difficulte+1)*len(Liste_mots)//4])
 
 
