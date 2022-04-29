@@ -68,7 +68,7 @@ def currentGame():
 
     IN :
     OUT: HTML page
-    '''
+    '''  
     nbParties,highestScore = db.getStats(session["id"]) 
     
     wordToFind,wordLength,maxTry,tries,colors,idGame = db.get_game_data(session["id"]) 
@@ -110,10 +110,6 @@ def currentGame():
                 HIGHESTSCORE = highestScore
             )
         return redirect(url_for('currentGame'))
-    
-    if request.args.get("abandon"):
-        db.removeCurrentGame(session['id'],idGame)
-        return redirect('/newGame')
 
     return render_template("game.html",
         KBCOLOR=kb_color,
@@ -127,3 +123,13 @@ def currentGame():
         NBPARTIES=nbParties,
         HIGHESTSCORE = highestScore
     )
+
+@app.route('/restart')
+def restart():
+    return redirect('/newGame')
+
+@app.route('/quitGame')
+def quitGame():
+    idGame = db.getIdGameLeft(session["id"])
+    db.removeCurrentGame(session['id'],idGame)
+    return redirect('/newGame')
