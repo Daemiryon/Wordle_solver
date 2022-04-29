@@ -112,7 +112,7 @@ def currentGame():
         return redirect(url_for('currentGame'))
     
     if request.args.get("abandon"):
-        #db.removeCurrentGame(session['id'],idGame)
+        db.removeCurrentGame(session['id'],idGame)
         return redirect('/newGame')
 
     return render_template("game.html",
