@@ -43,12 +43,22 @@ def parametersPage():
     '''
     nbParties,highestScore = db.getStats(session["id"]) 
     if request.method == "POST":
-        maxTry = request.form.get("maxtry")
-        wordLength = request.form.get("wordlength")  
-        difficulty = int(request.form.get("Difficulty"))    
-        wordToFind = fn.get_a_word(wordLength,difficulty)
-        db.createNewGame(session['id'], maxTry, wordToFind,difficulty)
-        return redirect('/currentGame')
+        try:
+            maxTry = request.form.get("maxtry")
+            wordLength = int(request.form.get("wordlength"))
+            wordLength= min(max(5,wordLength),15)
+            difficulty = int(request.form.get("Difficulty"))
+            difficulty = min(max(0,difficulty),9)
+            wordToFind = fn.get_a_word(str(wordLength),int(difficulty))
+
+        except:
+            maxTry = 6
+            wordLength = 6
+            difficulty = 0
+            wordToFind = 'NOODLE'
+
+        db.createNewGame(session['id'], maxTry, wordToFind,int(difficulty))
+        return redirect('/currentGame')    
 
     else:
         maxTryPossibilities = [3,4,5,6,7,8,9,10]
