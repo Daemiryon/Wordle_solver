@@ -61,10 +61,10 @@
                 </p>
                 <p>
                     En début de partie, vous pouvez paramétrer la longueur du mot (de 5 à 15 lettres) ainsi que le
-                    nombre maximal d'essais possibles (de 3 à 10).
+                    nombre maximal d'essais possibles (de 3 à 10) et la difficulté (de 0 à 9).
                 </p>
                 <p>
-                    Pendant la partie, proposez des mots en utilisant le clavier intégré ou votre propre clavier.<br>
+                    Pendant la partie, proposez des mots en utilisant le clavier intégré ou votre propre clavier.<br />
                     Une fois que vous avez appuyé sur Entrée, les cases de la grille et du clavier seront colorées :
                 </p>
                 <table id="examples">
@@ -84,6 +84,12 @@
                         </tr>
                     </tbody>
                 </table>
+                <p>
+                    En fin de partie, vous obtiendrez un score qui est calculé en fonction des 3 paramètres choisis en début de partie.
+                </p>
+                <p>
+                    Vous pouvez relancer une nouvelle partie à tout moment. Cependant, abandonner une partie en cours est irréversible !
+                </p>
                 <span id="btnCloseRegles" class="btnClose">&times;</span>
             </div>
         </div>
@@ -95,19 +101,26 @@
     {% if TESTENDGAME == True %}
     <div id="overlayEnd" class="overlayEnd">
         <div id="popupEnd" class="popupEnd">
-            {% if WHICHEND == True %}
-                <h1>VICTORY!</h1>
-            {% else %}
-                <h1>DEFEAT</h1>
-            {% endif %}
-            <h2>Mes résultats :</h2>
-            <p><strong>Mot à trouver : </strong>{{MOTATROUVER}}</p>
-            <p><strong>Nombre d'essais : </strong>{{NBESSAIS}}</p>
-            <p><strong>Mon score : </strong>{{SCORE}}</p>
-            <br>
-            <h2>Mes statistiques :</h2>
-            <p><strong>Nombre de parties jouées : </strong>{{NBPARTIES}}</p>
-            <p><strong>Mon meilleur score : </strong>{{HIGHESTSCORE}}</p>
+            <div id="winOrLose">
+                {% if WHICHEND == True %}
+                    <h1>VICTORY!</h1>
+                {% else %}
+                    <h1>DEFEAT</h1>
+                {% endif %}
+            </div>
+            <div id="figures">
+                <div id="myresults" class="fig">
+                    <h2>Mes résultats :</h2>
+                    <p><strong>Mot à trouver : </strong>{{MOTATROUVER}}</p>
+                    <p><strong>Nombre d'essais : </strong>{{NBESSAIS}}</p>
+                    <p><strong>Mon score : </strong>{{SCORE}}</p>
+                </div>
+                <div id="mystats" class="fig">
+                    <h2>Mes statistiques :</h2>
+                    <p><strong>Nombre de parties jouées : </strong>{{NBPARTIES}}</p>
+                    <p><strong>Mon meilleur score : </strong>{{HIGHESTSCORE}}</p>
+                </div>
+            </div>
             <span id = "btnCloseEnd" class="btnCloseEnd">&times;</span>
         </div>
     </div>
