@@ -78,6 +78,12 @@ def getNbTries(idPlayer,idGame) :
     nbTries = cur.execute('SELECT MAX(idTry) from tries where tries.idPlayer=? and tries.idGame=?',(idPlayer,idGame)).fetchone()[0]
     return nbTries 
 
+def calcul_score(wordLength,nbTries,wordToFind,guess,idPlayer,idGame) :
+    con = sqlite3.connect(database)
+    cur = con.cursor()
+    difficulty=cur.execute('SELECT difficulty from games where idPlayer = ? and idGame=? ',(idPlayer,idGame)).fetchone()[0]
+    return 10000*(difficulty) + int(round(wordLength/nbTries,3)*1000) if fn.whichEnd(wordToFind,guess) else 0
+
 def update_score(idPlayer,idGame,score):
     con = sqlite3.connect(database)
     cur = con.cursor()

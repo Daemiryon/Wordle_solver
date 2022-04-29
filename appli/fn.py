@@ -72,9 +72,3 @@ def whichEnd(wordToFind,guess) :
     Fonction qui détermine si l'utilisateur a gagné ou perdu la partie
     '''
     return guess == wordToFind
-
-# -----
-# Fonctions auxiliaires pour la fin de partie
-    
-def calcul_score(wordLength,nbTries,wordToFind,guess) :
-    return int(round(wordLength/nbTries,3)*1000) if whichEnd(wordToFind,guess) else 0

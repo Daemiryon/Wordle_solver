@@ -43,7 +43,7 @@ def parametersPage():
         maxTry = request.form.get("maxtry")
         wordLength = request.form.get("wordlength")      
         wordToFind = fn.get_a_word(wordLength)
-        db.createNewGame(session['id'], maxTry, wordToFind,0)
+        db.createNewGame(session['id'], maxTry, wordToFind,1)
         return redirect('/currentGame')
 
     else:
@@ -84,7 +84,7 @@ def currentGame():
         if fn.testEndGame(wordToFind,guess,cursor,maxTry):
             db.endGame(session["id"],idGame)
             nbTries = db.getNbTries(session["id"],idGame)
-            score = fn.calcul_score(wordLength,nbTries,wordToFind,guess)
+            score = db.calcul_score(wordLength,nbTries,wordToFind,guess,session["id"],idGame)
             db.update_score(session["id"],idGame,score)
             nbParties,highestScore = db.getStats(session["id"])
             return render_template("game.html",
