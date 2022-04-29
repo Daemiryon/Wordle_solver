@@ -1,15 +1,20 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <form id="parameters" action="/newGame" method="post">
+<form id="parameters" action="/newGame" method="post">
+    <div style="display: flex; flex-direction: column; align-items: center; ">
+        <div>
+            <img src="../static/Noodle.svg" width="500px">
+        </div>
         <div id="form_content">
 
             <div class="form_item">
                 <label>Longueur du mot à trouver</label>
-                <div><input name="wordlength" type="range" list="wordLengthTickmarks" min="5" max="15" step="1" value="5"></div>
+                <div><input name="wordlength" type="range" list="wordLengthTickmarks" min="5" max="15" step="1"
+                        value="5"></div>
                 <datalist id="wordLengthTickmarks">
                     {% for elem in WORDLENGTHPOSSIBILITIES %}
-                        <option class="case" value="{{elem}}" label="{{elem}}"></option>
+                    <option class="case" value="{{elem}}" label="{{elem}}"></option>
                     {% endfor %}
                 </datalist>
             </div>
@@ -19,15 +24,22 @@
                 <div><input name="maxtry" type="range" list="maxTryTickmarks" min="3" max="10" step="1" value="6"></div>
                 <datalist id="maxTryTickmarks">
                     {% for elem in MAXTRYPOSSIBILITIES %}
-                        <option class="case" value="{{elem}}" label="{{elem}}"></option>
+                    <option class="case" value="{{elem}}" label="{{elem}}"></option>
                     {% endfor %}
                 </datalist>
             </div>
+            <div class="form_item">
+                <label>Difficulté</label>
+                <div><input name="Difficulty" type="range" min="0" max="2" value="0"></div>
+            </div>
+
 
             <div class="form_item">
                 <input type="submit" id="play" value="Jouer">
             </div>
 
         </div>
-    </form>
+    </div>
+
+</form>
 {% endblock %}

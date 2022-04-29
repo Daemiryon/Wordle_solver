@@ -11,7 +11,7 @@ def maj_keyboard_color(kb_color,guess,colors):
     return kb_color
 
 
-def get_a_word(WORDLENGTH,difficulte=0):
+def get_a_word(WORDLENGTH,difficulte=2):
     '''
     Fonction qui retourne un mot de taille WORDLENGTH du dictionnaire 
     
@@ -19,7 +19,7 @@ def get_a_word(WORDLENGTH,difficulte=0):
     OUT : word ( str )
     '''
     Liste_mots = json.load(open('./data/dictionnaires/liste_mots_a_trouver.json','r'))[int(WORDLENGTH)]
-    print(Liste_mots[difficulte*len(Liste_mots)//4:(difficulte+1)*len(Liste_mots)//4])
+    print(Liste_mots[difficulte*len(Liste_mots)//3:(difficulte+1)*len(Liste_mots)//3])
     return choice(Liste_mots[difficulte*len(Liste_mots)//4:(difficulte+1)*len(Liste_mots)//4])
 
 
