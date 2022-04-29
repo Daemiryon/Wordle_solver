@@ -13,9 +13,6 @@ def cookieUnsyncedDb(session_id):
     cursor.close()
     connexion.close()
 
-    print("-----------------------------------")
-    print(temp)
-    print("is unsynced: "+ str(temp==None))
     return temp == None
 
 
@@ -26,9 +23,6 @@ def addUser() -> int :
     try:
         connexion = sqlite3.connect(database)
         cursor = connexion.cursor()
-
-        
-
         newId = 1
         temp = cursor.execute("SELECT max(idPlayer) FROM players").fetchone()[0]
         if temp != None:
@@ -43,20 +37,20 @@ def addUser() -> int :
         return newId
     except sqlite3.Error as error:
         print("Erreur lors de l'insertion dans la table USER", error)
-    
+
+
 # Fonctions auxiliaires de la route '/newGame'
 def isFinishedGame(idPlayer):
     with sqlite3.connect(database) as con:
         cur = con.cursor()
-        print("PLEASE WORK" + str(idPlayer))
         idLastGame = cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(idPlayer,)).fetchone()[0]
-        print((idPlayer,idLastGame))
         if idLastGame == 0:
             return 1
         gameEnded = cur.execute("SELECT gameEnded FROM GAMES WHERE idPlayer=? AND idGame=?",(idPlayer,idLastGame)).fetchone()
         if gameEnded == None:
             return 1
         return gameEnded[0]
+
 
 # -----
 # Fonctions auxiliaires pour la fin de partie
@@ -72,7 +66,6 @@ def endGame(idPlayer,idGame) :
     cur.execute('UPDATE games SET gameEnded=1 WHERE idPlayer=? AND idGame=?',(idPlayer,idGame))
     cur.close()
     con.commit()
-
 
 
 # -----

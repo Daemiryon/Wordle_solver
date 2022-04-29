@@ -22,9 +22,10 @@ def root():
     '''
     print('----------------------------------------------')
     if "id" not in session or db.cookieUnsyncedDb(session['id']):
+        print("Utilisateur non reconnu. Ajout à la base de données")
         session["id"] = db.addUser()
     else:
-        print("Utilisateurs numero %s est reconnu." % session["id"])
+        print("Utilisateur %s reconnu." % session["id"])
     print(session['id'])
 
     if not db.isFinishedGame(session["id"]):
