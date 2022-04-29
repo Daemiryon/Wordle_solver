@@ -127,14 +127,14 @@ def get_game_data(idPlayer=1) :
 
 
 #----
-def createNewGame(session_id, maxTry, wordToFind):
+def createNewGame(session_id, maxTry, wordToFind,difficulty):
     with sqlite3.connect(database) as con:
                 cur = con.cursor()
                 temp = cur.execute("SELECT MAX(idGame) FROM GAMES WHERE idPlayer=?",(session_id,)).fetchone()[0]
                 idGame = 1
                 if temp != None:
                     idGame += temp
-                cur.execute("INSERT INTO GAMES VALUES (?,?,?,0,?)",(session_id,idGame,maxTry,wordToFind))
+                cur.execute("INSERT INTO GAMES VALUES (?,?,?,0,?,0,?)",(session_id,idGame,maxTry,wordToFind,difficulty))
                 cur.execute("UPDATE PLAYERS SET idLastGame=?",(idGame,))
                 cur.close()
                 con.commit()
