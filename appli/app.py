@@ -42,7 +42,7 @@ def parametersPage():
     if request.method == "POST":
         maxTry = request.form.get("maxtry")
         wordLength = request.form.get("wordlength")  
-        difficulty = request.form.get("Difficulty")    
+        difficulty = int(request.form.get("Difficulty"))    
         wordToFind = fn.get_a_word(wordLength,difficulty)
         db.createNewGame(session['id'], maxTry, wordToFind,difficulty)
         return redirect('/currentGame')
