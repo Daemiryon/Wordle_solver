@@ -126,6 +126,12 @@ def get_game_data(idPlayer=1) :
     colors = [fn.couleur(guess,wordToFind) for guess in tries]
     return wordToFind,wordLength,maxTry,tries,colors,idGame
 
+# -----
+# Fonctions auxliaires de la route '/quit'
+def getIdGameLeft(idPlayer):
+    with sqlite3.connect(database) as con:
+        cur = con.cursor()
+        return cur.execute("SELECT idLastGame FROM PLAYERS WHERE idPlayer=?",(idPlayer,)).fetchone()[0]
 
 #----
 def createNewGame(session_id, maxTry, wordToFind,difficulty):

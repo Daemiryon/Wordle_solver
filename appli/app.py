@@ -43,12 +43,22 @@ def parametersPage():
     '''
     nbParties,highestScore = db.getStats(session["id"]) 
     if request.method == "POST":
-        maxTry = request.form.get("maxtry")
-        wordLength = request.form.get("wordlength")  
-        difficulty = int(request.form.get("Difficulty"))    
-        wordToFind = fn.get_a_word(wordLength,difficulty)
-        db.createNewGame(session['id'], maxTry, wordToFind,difficulty)
-        return redirect('/currentGame')
+        try:
+            maxTry = request.form.get("maxtry")
+            wordLength = int(request.form.get("wordlength"))
+            wordLength= min(max(5,wordLength),15)
+            difficulty = int(request.form.get("Difficulty"))
+            difficulty = min(max(0,difficulty),9)
+            wordToFind = fn.get_a_word(str(wordLength),int(difficulty))
+
+        except:
+            maxTry = 6
+            wordLength = 6
+            difficulty = 0
+            wordToFind = 'NOODLE'
+
+        db.createNewGame(session['id'], maxTry, wordToFind,int(difficulty))
+        return redirect('/currentGame')    
 
     else:
         maxTryPossibilities = [3,4,5,6,7,8,9,10]
@@ -68,7 +78,7 @@ def currentGame():
 
     IN :
     OUT: HTML page
-    '''
+    '''  
     nbParties,highestScore = db.getStats(session["id"]) 
     
     wordToFind,wordLength,maxTry,tries,colors,idGame = db.get_game_data(session["id"]) 
@@ -110,10 +120,6 @@ def currentGame():
                 HIGHESTSCORE = highestScore
             )
         return redirect(url_for('currentGame'))
-    
-    if request.args.get("abandon"):
-        db.removeCurrentGame(session['id'],idGame)
-        return redirect('/newGame')
 
     return render_template("game.html",
         KBCOLOR=kb_color,
@@ -127,3 +133,13 @@ def currentGame():
         NBPARTIES=nbParties,
         HIGHESTSCORE = highestScore
     )
+
+@app.route('/restart')
+def restart():
+    return redirect('/')
+
+@app.route('/quitGame')
+def quitGame():
+    idGame = db.getIdGameLeft(session["id"])
+    db.removeCurrentGame(session['id'],idGame)
+    return redirect('/newGame')

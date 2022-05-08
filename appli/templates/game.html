@@ -1,8 +1,21 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="grid"></div>
-<div class="Keyboard"></div>
+
+<div id="game">
+    <form>
+        <div id="restartAndQuit">
+            {% if TESTENDGAME %}
+                <button class="menuButtons" id="restartButton" formaction="/restart">Rejouer</button>
+            {% else %}
+                <button class="menuButtons" id="quitButton" formaction="/quitGame">Abandonner la partie</button>
+            {% endif %}
+        </div>
+    </form>
+
+    <div class="grid"></div>
+    <div class="Keyboard"></div>
+</div>
 <script>
     var guess = "";
     var kb_color_obj = {{ KBCOLOR | tojson | safe }};
@@ -16,5 +29,4 @@
     generateKeyboard();
     input_keyboard();
 </script>
-<a id="surreder" href="/currentGame?abandon=True"><br />Abandon</a>
 {% endblock %}

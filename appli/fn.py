@@ -18,8 +18,11 @@ def get_a_word(WORDLENGTH,difficulte=2):
     IN : WORDLENGTH ( int ), difficulte ( int ) in {0,1,2}
     OUT : word ( str )
     '''
+    if difficulte == 10 :
+        return "N"+"O"*(int(WORDLENGTH)-4)+"DLE"
     Liste_mots = json.load(open('./data/dictionnaires/liste_mots_a_trouver.json','r'))[int(WORDLENGTH)]
-    return choice(Liste_mots[difficulte*len(Liste_mots)//4:(difficulte+1)*len(Liste_mots)//4])
+    Nb_mots = len(Liste_mots)//10
+    return choice(Liste_mots[difficulte*Nb_mots:(difficulte+1)*Nb_mots])
 
 
 # -----
@@ -35,7 +38,7 @@ def get_valid_words(WORDLENGTH):
     dic_file = open(f"./data/dictionnaires/{WORDLENGTH}_lettres.json")
     Mots_valides=json.load(dic_file)
     dic_file.close()
-    return Mots_valides
+    return sorted(Mots_valides + ["N"+"O"*(int(WORDLENGTH)-4)+"DLE"])
 
 def couleur(guess,target):
     Couleurs=[0,]*len(target)
