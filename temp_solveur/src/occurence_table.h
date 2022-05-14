@@ -13,4 +13,6 @@ void compute_occ(occ_table T, char *mot, char *rep, int index);
 
 void print_T(occ_table T);
 
+int compteur_valide(occ_table T, int compteur[26]);
+
 #endif

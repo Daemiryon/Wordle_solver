@@ -1,10 +1,27 @@
-struct _abr {
-    _abr* abr[26];
-};
-typedef _abr abr;
+#ifndef TREE_H
+#define TREE_H
 
-abr *init_A(cell D[]);
-void add (abr A, char* mot);
-void destroy_A(abr A);
-int nb_match(abr A, table_acc T, char* mot, char* coul, int compteur[26]);
-void MAJ(abr A. table_acc T, char* mot, char* coul, int compteur[26]);
+#include "occurence_table.h"
+
+struct _abr
+{
+    int profondeur;
+    struct _abr *branche[26];
+};
+typedef struct _abr abr;
+
+abr *creat_abr(int profondeur);
+
+abr *init_A();
+
+void print_A(abr *A);
+
+void add(abr *A, char *mot);
+
+void destroy_A(abr *A);
+
+int nb_match(abr *A, occ_table T, char *mot, char *coul, int compteur[26]);
+
+void MAJ(abr *A, occ_table T, char *mot, char *coul, int compteur[26]);
+
+#endif

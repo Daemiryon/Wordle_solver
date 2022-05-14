@@ -80,3 +80,15 @@ void print_T(occ_table T)
     }
     printf("\n");
 }
+
+int compteur_valide(occ_table T, int compteur[26])
+{
+    for (int i = 0; i < 26; i++)
+    {
+        if (T[i][0] > compteur[i] || T[i][1] < compteur[i])
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
