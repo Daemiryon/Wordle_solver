@@ -81,7 +81,7 @@ void print_T(occ_table T)
     printf("\n");
 }
 
-int compteur_valide(occ_table T, int compteur[26])
+int compteur_valide(occ_table T, compteur compteur)
 {
     for (int i = 0; i < 26; i++)
     {
@@ -91,4 +91,12 @@ int compteur_valide(occ_table T, int compteur[26])
         }
     }
     return 1;
+}
+
+void init_C(compteur c)
+{
+    for (int i = 0; i < 26; i++)
+    {
+        c[i] = 0;
+    }
 }
