@@ -1,5 +1,6 @@
 #include "occurence_table.h"
 #include <stdio.h>
+#include <stdbool.h>
 
 extern int nb_letters;
 
@@ -99,4 +100,17 @@ void init_C(compteur c)
     {
         c[i] = 0;
     }
+}
+
+bool filtre_D(occ_table T, char *mot)
+{
+    for (int i = 0; i < nb_letters; i++)
+    {
+        int a = mot[i] - 'A';
+        if (!T[a][1])
+        {
+            return false;
+        }
+    }
+    return true;
 }

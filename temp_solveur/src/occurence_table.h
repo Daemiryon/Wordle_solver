@@ -1,5 +1,6 @@
 #ifndef OCCURENCE_TABLE_H
 #define OCCURENCE_TABLE_H
+#include <stdbool.h>
 
 typedef int occ_table[26][2];
 typedef int compteur[26];
@@ -17,5 +18,7 @@ void print_T(occ_table T);
 void init_C(compteur c);
 
 int compteur_valide(occ_table T, compteur c);
+
+bool filtre_D(occ_table T,char *mot);
 
 #endif
