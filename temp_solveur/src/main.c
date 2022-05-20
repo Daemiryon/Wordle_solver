@@ -40,7 +40,7 @@ int main() {
         );
         fgets(input, 4, stdin);
         if(strcmp(input,"-1")==0){
-            printf("FUCK");
+            printf("FUCK"); //Ah stylé mdr
             return EXIT_SUCCESS;
         }
     }
