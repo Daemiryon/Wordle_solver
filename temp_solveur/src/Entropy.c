@@ -42,14 +42,57 @@ double Entropy(char *mot)
     return E;
 }
 
+double Max_prob(char *mot)
+{
+    double P;
+    double P_max = 0;
+    char couleur[nb_letters + 1];
+    for (int i = 0; i < pow(3, nb_letters); i++)
+    {
+        color(i, couleur);
+        P = Proba_Colo(mot, couleur);
+        if (P > P_max)
+        {
+            P_max = P;
+        }
+    }
+    return P_max;
+}
+
 int compute_next_strat_1()
 {
+    int index_best;
+    double E_max = 0;
+    double E;
     cell *Cell = D->content[D->first];
     while (Cell)
     {
+        E = Entropy(Cell->word);
+        if (E > E_max)
+        {
+            E_max = E;
+            index_best = Cell->index;
         }
+        Cell = Cell->next;
+    }
+    return index_best;
 }
 
 int compute_next_strat_2()
 {
+    int index_best;
+    double P_min;
+    double P;
+    cell *Cell = D->content[D->first];
+    while (Cell)
+    {
+        P = Max_prob(Cell->word);
+        if (P_min > P)
+        {
+            P_min = P;
+            index_best = Cell->index;
+        }
+        Cell = Cell->next;
+    }
+    return index_best;
 }
