@@ -6,25 +6,25 @@ toobj = -o
 
 # -----
 # Execution
-solveur: main
-	@exe/main
+solveur: main.exe
+	@exe/main.exe
 
-table: test_table_occ
-	@exe/test_table_occ
+table: test_table_occ.exe
+	@exe/test_table_occ.exe
 
-tree: test_tree
-	@exe/test_tree
+tree: test_tree.exe
+	@exe/test_tree.exe
 
 # -----
 # Création des exécutables
-main: obj/main.o obj/tree.o obj/occurence_table.o obj/dictionnary.o
-	$(exec) obj/main.o obj/tree.o obj/occurence_table.o obj/dictionnary.o $(toexe) exe/main
+main.exe: obj/main.o obj/tree.o obj/occurence_table.o obj/dictionnary.o
+	$(exec) obj/main.o obj/tree.o obj/occurence_table.o obj/dictionnary.o $(toexe) exe/main.exe
 
-test_table_occ: obj/occurence_table.o obj/test_table_occ.o
-	$(exec) obj/occurence_table.o obj/test_table_occ.o $(toexe) exe/test_table_occ
+test_table_occ.exe: obj/occurence_table.o obj/test_table_occ.o
+	$(exec) obj/occurence_table.o obj/test_table_occ.o $(toexe) exe/test_table_occ.exe
 
-test_tree: obj/test_tree.o obj/tree.o
-	$(exec) obj/test_tree.o obj/tree.o $(toexe) exe/test_tree
+test_tree.exe: obj/test_tree.o obj/tree.o obj/occurence_table.o
+	$(exec) obj/test_tree.o obj/tree.o obj/occurence_table.o $(toexe) exe/test_tree.exe
 
 # -----
 # Création des fichiers objets
