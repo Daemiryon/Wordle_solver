@@ -15,7 +15,7 @@ abr *creat_abr(int profondeur);
 
 abr *init_A(); // [ iteratif ] 1) créer un Arbre, 2) parcour le dico global et rempli l'arbre grace à la fonction add(), 3) retourne l'arbre
 
-void print_A(abr *A, char *buffer); //[ récursif ] print tout les mots présent dans l'abre : utilise le buffer pour garder une trace de ton parcours récursif de l'arbre en ajoutant les lettres rencontrés au fur et à mesure
+void print_A(abr *A, char *buffer); 
 
 void add(abr *A, char *mot);
 

@@ -100,4 +100,41 @@ int nb_match(abr *A, occ_table T, char *mot, char *coul, compteur compteur)
     return compteur_valide(T, compteur);
 }
 
-// int MAJ_A(abr A, occ_table T, char *mot, char *coul, int compteur[26]);
+int MAJ_A(abr* A, occ_table T, char* mot, char* color, compteur c){
+    int p = A->profondeur;
+    if (p < nb_letters){
+        int a = mot[p]-65; /* récupère l'indice de la lettre courante */
+        int count = 0;
+        switch (color[p]){
+            case '2': /* lettre bien place -> 1 seul sous arbre à explorer */
+                for (unsigned int i=0;i<26;i++){
+                    if (A->branche[i] && i!=a){
+                        destroy_A(A->branche[i]);
+                        A->branche[i] = NULL;
+                    } else if (A->branche[a] && (T[a][1] > c[a])){
+                        c[a]++;
+                        count += nb_match(A->branche[a], T, mot, color, c);
+                        c[a]--;
+                    }
+                }
+                break;
+            case '1': /* 1 & 0 -> lettre pas à la bonne place -> on explores les sous arbre non vide parmis les 25 restants */
+            case '0':
+                for (int i = 0; i < 26; i++){
+                    if ((A->branche[i]) && (i != a) && (T[i][1] > c[i])){
+                        c[i]++;
+                        count += nb_match(A->branche[i], T, mot, color, c);
+                        c[i]--;
+                    } else if (A->branche[a] && i==a){
+                        destroy_A(A->branche[a]);
+                        A->branche[a] = NULL;
+                    }
+                }
+                break;
+        }
+        return count;
+    }
+    return compteur_valide(T,c);
+}
+//[ recursif ] Ellague l'arbre et retourne le nombre de mots restant. Même algo que nb_match() + destoy les branches non_exploré.
+

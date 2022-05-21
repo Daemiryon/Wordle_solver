@@ -127,7 +127,7 @@ int main()
     char buffer[nb_letters+1];
     print_A(A,buffer);
     occ_table T;
-    // init_T(T);
+    init_T(T);
     // compute_occ(T, mots[11], couleur[11], 0);
     // print_T(T);
     // compteur c;
@@ -137,14 +137,16 @@ int main()
 
     for (int i = 0; i < 52; i++)
     {
-        init_T(T);
-        compute_occ(T, mots[i], couleur[i], 0);
+        // init_T(T);
+        maj_T(T, mots[i], couleur[i]);
         // print_T(T);
 
         printf("%s : \n", mots[i]);
         compteur c;
         init_C(c);
-        printf("%d \n", nb_match(A, T, mots[i], couleur[i], c));
+        printf("%d \n",MAJ_A(A, T, mots[i], couleur[i], c));
+        printf("%d \n",nb_match(A, T, mots[i], couleur[i], c));
+        print_A(A,buffer);
     }
 
     destroy_A(A);
