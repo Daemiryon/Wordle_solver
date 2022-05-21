@@ -7,7 +7,6 @@
 *.d
 
 # Object files
-obj/
 *.o
 *.ko
 *.obj
@@ -35,7 +34,6 @@ obj/
 *.dylib
 
 # Executables
-exe/
 *.exe
 *.out
 *.app
