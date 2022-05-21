@@ -124,6 +124,8 @@ int main()
     {
         add(A, mots[i]);
     }
+    char buffer[nb_letters+1];
+    print_A(A,buffer);
     occ_table T;
     // init_T(T);
     // compute_occ(T, mots[11], couleur[11], 0);

@@ -15,6 +15,23 @@ abr *creat_abr(int profondeur)
     return A;
 }
 
+// abr *init_A(); // 1) créer un Arbre, 2)parcour le dico global et rempli l'arbre grace à la fonction add()
+
+void print_A(abr *A, char *buffer){
+    int p = A->profondeur;
+    if (p == nb_letters){
+        buffer[nb_letters] = '\0';
+        printf("%s\n",buffer);
+    } else {
+        for (unsigned int i=0;i<26;i++){
+            if (A->branche[i]){
+                buffer[p] = i+65;
+                print_A(A->branche[i],buffer);
+            }            
+        }
+    }
+} 
+
 void add(abr *A, char *mot)
 {
     int i = A->profondeur;
@@ -83,5 +100,4 @@ int nb_match(abr *A, occ_table T, char *mot, char *coul, compteur compteur)
     return compteur_valide(T, compteur);
 }
 
-// abr *init_A(); // 1) créer un Arbre, 2)parcour le dico global et rempli l'arbre grace à la fonction add()
 // int MAJ_A(abr A, occ_table T, char *mot, char *coul, int compteur[26]);
