@@ -17,20 +17,26 @@ abr *creat_abr(int profondeur)
 
 // abr *init_A(); // 1) créer un Arbre, 2)parcour le dico global et rempli l'arbre grace à la fonction add()
 
-void print_A(abr *A, char *buffer){
+void print_A(abr *A, char *buffer)
+{
     int p = A->profondeur;
-    if (p == nb_letters){
+    if (p == nb_letters)
+    {
         buffer[nb_letters] = '\0';
-        printf("%s\n",buffer);
-    } else {
-        for (unsigned int i=0;i<26;i++){
-            if (A->branche[i]){
-                buffer[p] = i+65;
-                print_A(A->branche[i],buffer);
-            }            
+        printf("%s\n", buffer);
+    }
+    else
+    {
+        for (unsigned int i = 0; i < 26; i++)
+        {
+            if (A->branche[i])
+            {
+                buffer[p] = i + 65;
+                print_A(A->branche[i], buffer);
+            }
         }
     }
-} 
+}
 
 void add(abr *A, char *mot)
 {
@@ -96,46 +102,90 @@ int nb_match(abr *A, occ_table T, char *mot, char *coul, compteur compteur)
         }
         return count;
     }
-
+    // printf("Feuille\n");
+    // for (int i = 0; i < 26; i++)
+    // {
+    //     printf("%c:%d, ", i + 'A', compteur[i]);
+    // }
+    // printf("\n [ %d ] \n", compteur_valide(T, compteur));
     return compteur_valide(T, compteur);
 }
 
-int MAJ_A(abr* A, occ_table T, char* mot, char* color, compteur c){
+int MAJ_A(abr *A, occ_table T, char *mot, char *color, compteur c)
+{
     int p = A->profondeur;
-    if (p < nb_letters){
-        int a = mot[p]-65; /* récupère l'indice de la lettre courante */
+    if (p < nb_letters)
+    {
+        int a = mot[p] - 65; /* récupère l'indice de la lettre courante */
         int count = 0;
-        switch (color[p]){
-            case '2': /* lettre bien place -> 1 seul sous arbre à explorer */
-                for (int i=0;i<26;i++){
-                    if (A->branche[i] && i!=a){
-                        destroy_A(A->branche[i]);
-                        A->branche[i] = NULL;
-                    }
+        int temp_count;
+        switch (color[p])
+        {
+        case '2': /* lettre bien place -> 1 seul sous arbre à explorer */
+            for (int i = 0; i < 26; i++)
+            {
+                if (A->branche[i] && i != a)
+                {
+                    destroy_A(A->branche[i]);
+                    A->branche[i] = NULL;
                 }
-                if (A->branche[a] && (T[a][1] > c[a])){
+            }
+            if (A->branche[a])
+            {
+                if (T[a][1] > c[a])
+                {
                     c[a]++;
-                    count += MAJ_A(A->branche[a], T, mot, color, c);
+                    temp_count = MAJ_A(A->branche[a], T, mot, color, c);
+                    count += temp_count;
                     c[a]--;
-                }
-                break;
-            case '1': /* 1 & 0 -> lettre pas à la bonne place -> on explores les sous arbre non vide parmis les 25 restants */
-            case '0':
-                for (int i = 0; i < 26; i++){
-                    if ((A->branche[i]) && (i != a) && (T[i][1] > c[i])){
-                        c[i]++;
-                        count += MAJ_A(A->branche[i], T, mot, color, c);
-                        c[i]--;
-                    } else if (A->branche[a] && i==a){
+
+                    if (temp_count == 0)
+                    {
                         destroy_A(A->branche[a]);
                         A->branche[a] = NULL;
                     }
                 }
-                break;
+                else
+                {
+                    destroy_A(A->branche[a]);
+                    A->branche[a] = NULL;
+                }
+            }
+            break;
+        case '1': /* 1 & 0 -> lettre pas à la bonne place -> on explores les sous arbre non vide parmis les 25 restants */
+        case '0':
+            for (int i = 0; i < 26; i++)
+            {
+                if ((A->branche[i]) && (i != a))
+                {
+                    if (T[i][1] > c[i])
+                    {
+                        c[i]++;
+                        temp_count = MAJ_A(A->branche[i], T, mot, color, c);
+                        count += temp_count;
+                        c[i]--;
+                        if (temp_count == 0)
+                        {
+                            destroy_A(A->branche[i]);
+                            A->branche[i] = NULL;
+                        }
+                    }
+                    else
+                    {
+                        destroy_A(A->branche[i]);
+                        A->branche[i] = NULL;
+                    }
+                }
+            }
+            if (A->branche[a])
+            {
+                destroy_A(A->branche[a]);
+                A->branche[a] = NULL;
+            }
+            break;
         }
         return count;
     }
-    return compteur_valide(T,c);
+    return compteur_valide(T, c);
 }
 //[ recursif ] Ellague l'arbre et retourne le nombre de mots restant. Même algo que nb_match() + destoy les branches non_exploré.
-

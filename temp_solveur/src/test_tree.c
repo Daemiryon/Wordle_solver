@@ -124,14 +124,28 @@ int main()
     {
         add(A, mots[i]);
     }
-    char buffer[nb_letters+1];
-    print_A(A,buffer);
+    char buffer[nb_letters + 1];
+    print_A(A, buffer);
+
     occ_table T;
     init_T(T);
+    compteur c;
+    init_C(c);
+
+    int k = 27;
+
+    // printf("%s : %s\n", mots[k], couleur[k]);
+
+    // maj_T(T, mots[k], couleur[k]);
+    // print_T(T);
+
+    // printf("%d \n", nb_match(A, T, mots[k], couleur[k], c));
+    // printf("\n MAJ de A, nb mots :  %d\n", MAJ_A(A, T, mots[k], couleur[k], c));
+    // print_A(A, buffer);
+
     // compute_occ(T, mots[11], couleur[11], 0);
     // print_T(T);
-    // compteur c;
-    // init_C(c);
+
     // printf("%d \n", nb_match(A, T, mots[11], couleur[11], c));
     // printf("%d\n", A->branche['D' - 'A']->branche['U' - 'A']->branche['R' - 'A']->branche['I' - 'A']->branche['T' - 'A']->profondeur);
 
@@ -144,9 +158,9 @@ int main()
         printf("%s : \n", mots[i]);
         compteur c;
         init_C(c);
-        printf("%d \n",nb_match(A, T, mots[i], couleur[i], c));
-        printf("%d \n",MAJ_A(A, T, mots[i], couleur[i], c));
-        print_A(A,buffer);
+        printf("%d \n", MAJ_A(A, T, mots[i], couleur[i], c));
+        printf("%d \n", nb_match(A, T, mots[i], couleur[i], c));
+        print_A(A, buffer);
     }
 
     destroy_A(A);
