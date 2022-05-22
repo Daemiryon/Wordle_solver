@@ -8,6 +8,7 @@ typedef struct cell{
     struct cell* next;
     struct cell* previous;
     int index;
+    float freq;
 } cell;
 
 //Question pour moi : comment gérer le fonctionnement de liste contigue ???
