@@ -107,15 +107,16 @@ int MAJ_A(abr* A, occ_table T, char* mot, char* color, compteur c){
         int count = 0;
         switch (color[p]){
             case '2': /* lettre bien place -> 1 seul sous arbre à explorer */
-                for (unsigned int i=0;i<26;i++){
+                for (int i=0;i<26;i++){
                     if (A->branche[i] && i!=a){
                         destroy_A(A->branche[i]);
                         A->branche[i] = NULL;
-                    } else if (A->branche[a] && (T[a][1] > c[a])){
-                        c[a]++;
-                        count += nb_match(A->branche[a], T, mot, color, c);
-                        c[a]--;
                     }
+                }
+                if (A->branche[a] && (T[a][1] > c[a])){
+                    c[a]++;
+                    count += MAJ_A(A->branche[a], T, mot, color, c);
+                    c[a]--;
                 }
                 break;
             case '1': /* 1 & 0 -> lettre pas à la bonne place -> on explores les sous arbre non vide parmis les 25 restants */
@@ -123,7 +124,7 @@ int MAJ_A(abr* A, occ_table T, char* mot, char* color, compteur c){
                 for (int i = 0; i < 26; i++){
                     if ((A->branche[i]) && (i != a) && (T[i][1] > c[i])){
                         c[i]++;
-                        count += nb_match(A->branche[i], T, mot, color, c);
+                        count += MAJ_A(A->branche[i], T, mot, color, c);
                         c[i]--;
                     } else if (A->branche[a] && i==a){
                         destroy_A(A->branche[a]);

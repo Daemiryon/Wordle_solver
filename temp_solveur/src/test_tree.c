@@ -144,8 +144,8 @@ int main()
         printf("%s : \n", mots[i]);
         compteur c;
         init_C(c);
-        printf("%d \n",MAJ_A(A, T, mots[i], couleur[i], c));
         printf("%d \n",nb_match(A, T, mots[i], couleur[i], c));
+        printf("%d \n",MAJ_A(A, T, mots[i], couleur[i], c));
         print_A(A,buffer);
     }
 
