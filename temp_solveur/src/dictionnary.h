@@ -11,14 +11,15 @@ typedef struct cell{
     float freq;
 } cell;
 
-//Question pour moi : comment gérer le fonctionnement de liste contigue ???
+typedef struct dico{
+    int first;
+    int taille;
+    cell** content;
+} dico;
 
-extern cell* init_dico(int n); 
-extern void dico_add(cell* dico, char* word); //Fonction auxiliaire, ajoute un mot dans le dico
-extern void print_dico(cell* dico);
-extern void destroy_dico(cell* dico);
-extern void maj_dico(occ_table t); 
-extern void suppr_dico(cell* dico,int one_index);
-extern char* pop(cell* dico,int one_index); 
+extern dico* init_dico(int n); 
+extern void destroy_dico(dico* one_dico);
+extern void print_dico(dico* one_dico); //déplacement par index
+extern void print_dico_p(dico* one_dico); //déplacement par pointeur
 
 #endif

@@ -4,47 +4,85 @@
 #include<stdlib.h>
 #include<string.h>
 
-/*Première version - sera sûrement sujette à modfications*/
-
-cell* init_dico(int n){
-    
-    cell* dico = calloc(n,sizeof(cell));
-    
-    /*----Ouverture du bon dico----*/
-    char* dicoPath = "../../appli/data/dictionnaires/"; 
-    char n_charValue = n+'0'; //marche uniquement pour n<10 : TO FIX later
-    char* dicoName = "_lettres.json";
-    strcat(dicoPath,n_charValue); //Ajoute n_charValue à la fin de de dicoPath
-    strcat(dicoPath,dicoName); // Même fonctionnement
-
-    /*Remarque : l'ouverture est à tester*/
-
-    FILE *f = fopen(dicoPath,"r");
-
-    if(f == NULL){
-        printf("/!\\ INVALID FILENAME /!\\");
-    }
-    else{
-
-        int longueurF =0; 
-        fscanf(f,"%d",&longueurF); //Récupération de l0
-        char buffer[longueurF];
-
-        fseek(f,1,SEEK_SET); //Ajuste (normalement) la lecture sur l1
-
-        while(fgets(buffer,longueurF,f) != NULL){
-            dico_add(dico,buffer);
-            
-            /*Ici, remplir le dico avec dico_add*/
-
-        }
-    }
-
-    fclose(f);
-    return dico;
+cell* init_cell(char* word_cell,int ind){
+    cell* cell_dico = malloc(sizeof(cell));
+    cell_dico->word = word_cell;
+    cell_dico->index = ind;
+    cell_dico->previous = NULL;
+    cell_dico->next = NULL;
+    cell_dico->freq = 0;
+    return cell_dico;
 }
 
+dico* init_dico(int n){
 
-void dico_add(cell* dico, char* word){
+    /*Récupération de n en char* */
+    char buffer_n[25];
+    sprintf(buffer_n,"%d",n);
+
+    /*Ouverture du bon fichier*/
+
+    char dicoPath[30] = "./dictionnaire/";
+    strcat(dicoPath,buffer_n);
+    char endDicoPath[25]="_lettres.txt";
+    strcat(dicoPath,endDicoPath);
     
+    FILE *f = fopen(dicoPath,"r"); 
+
+    int longueurF =0; 
+    char buffer_mot[10];
+    fgets(buffer_mot,10,f); //Récupère dans buffer la 1ere ligne de f
+    longueurF = atoi(buffer_mot); //Nombre de mots du fichier 
+    
+    char buffer[longueurF];
+    
+    /*Libération de la mémoire pour x cellules*/
+
+    dico* one_dico = malloc(sizeof(dico));
+    one_dico->content = calloc(longueurF,sizeof(cell*)); 
+    one_dico->first = 0;
+    one_dico->taille = longueurF;
+    int i=0;
+    
+    /*Remplissage de content*/
+
+    while(fgets(buffer,longueurF,f) != NULL){
+        buffer[strlen(buffer)-1]='\0'; 
+        char* buffer_copy= strdup(buffer);
+        one_dico->content[i] = init_cell(buffer_copy,i);
+        
+        if(i !=0){
+            one_dico->content[i-1]->next = one_dico->content[i];
+            one_dico->content[i]->previous = one_dico->content[i-1];
+        } 
+        
+        i++;
+    }
+    
+    return one_dico;
 }
+
+void destroy_dico(dico* one_dico){
+    for(int i=0;i<one_dico->taille;i++){
+        free(one_dico->content[i]->word);
+        free(one_dico->content[i]);
+    }
+    free(one_dico);
+}
+
+void print_dico(dico* one_dico){
+    for(int i=one_dico->first;i<one_dico->taille;i++){
+        printf("---%d---\n",one_dico->content[i]->index);
+        printf("%s\n",one_dico->content[i]->word);
+    }
+}
+
+void print_dico_p(dico* one_dico){
+    cell* current_cell = one_dico->content[0];
+    while(current_cell != NULL){
+        printf("---%d---\n",current_cell->index);
+        printf("%s\n",current_cell->word);
+        current_cell=current_cell->next;
+    }
+}
+
