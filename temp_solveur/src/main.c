@@ -1,12 +1,18 @@
 #include "tree.h"
 #include "dictionnary.h"
 #include "occurence_table.h"
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+//Global variables
+abr *A;
+occ_table *T;
+dico *D;
 int nb_letters;
+double nb_mots;
 
 void get_nb_letters(){
     FILE* f = fopen ("wsolf.txt", "r");
@@ -15,15 +21,13 @@ void get_nb_letters(){
     fclose(f);
 }
 
-void output_opener(){
+void get_opener(char* opener){
     FILE* f = fopen ("openers.txt", "r");
     int line = nb_letters;
-    char str[512];
     for(int i=0;i<line;++i){
-        fgets(str, sizeof(str), f);
+        fgets(opener, sizeof(opener), f);
     }
     fclose(f);
-    printf("Opener: %s\n",str);
 }
 
 void get_input(char* input){ //"while(invalid input)do(ask input and check its validity)"
@@ -43,7 +47,7 @@ void get_input(char* input){ //"while(invalid input)do(ask input and check its v
         printf("M.F. answer: ");
         scanf("%s", input);
         if(strcmp(input,"-1")==0){
-            exit(EXIT_SUCCESS);
+            return;
         }
         if(strlen(input)!=5){
             printf("Wrong number of numbers ! Try again.\n");
@@ -65,23 +69,47 @@ void get_input(char* input){ //"while(invalid input)do(ask input and check its v
             }
             if(is_valid_word){
                 done = true;
-                printf("Registered input: %s\n",input);
             }
         }
     }
 }
 
-int main() {
-    /* cell* D = init_dico(nb_letters);
-    abr* init_A();
-    occ_table T;
-    init_T(T); */
-    char input[512];
-    get_nb_letters(); //reads wsolf.txt
-    output_opener();  //reads openers.txt (the content of this file has to calculated)
-    while(true){
-        get_input(input); //provides a verified 5 character string input, also allows exiting of the program
-        //Traitement [...]
-        printf("Proposed word: ?\n");
+bool end_condition(char* input){
+    if(strcmp(input,"-1")==0){
+        printf("Partie interrompue.\n");
+        return true;
     }
+    if(strcmp(input,"22222")==0){
+        printf("Mot trouvé.\n");
+        return true;
+    }
+    return false;
+}
+
+int main() {
+    char opener[512];
+    char input[512];
+    char guess[512];
+    int index;
+
+    get_nb_letters(); //reads wsolf.txt
+
+    //D = init_dico(nb_letters);
+    //abr* init_A();
+    //init_T(*T);
+
+    get_opener(opener);  //reads openers.txt (the content of this file has to calculated)
+    printf("Opener: %s",opener);
+    get_input(input);
+    while(!end_condition(input)){
+        //maj_T(T, guess, input);
+        //MAJ_D(D,T);
+        //MAJ_A(A, T, guess, input, 0);
+
+        //index = compute_next_strat_1()
+        //guess = pop(D, index);
+        printf("Guess : %s\n", guess);
+        get_input(input); //provides "-1" or a verified 5 character string input, also allows exiting of the program
+    }
+    return EXIT_SUCCESS;
 }
