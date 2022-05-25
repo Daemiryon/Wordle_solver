@@ -13,13 +13,17 @@ typedef struct cell{
 
 typedef struct dico{
     int first;
-    int taille;
+    int taille; //taille statique (non dynamique)
     cell** content;
 } dico;
 
-extern dico* init_dico(int n); 
+extern dico* init_dico(); 
 extern void destroy_dico(dico* one_dico);
 extern void print_dico(dico* one_dico); //déplacement par index
 extern void print_dico_p(dico* one_dico); //déplacement par pointeur
+extern void maj_dico(dico* one_dico,occ_table T);
+extern void suppr_dico(dico* one_dico,int i);
+extern char* pop(dico* one_dico,int i);
+
 
 #endif

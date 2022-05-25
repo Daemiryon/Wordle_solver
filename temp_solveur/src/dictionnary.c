@@ -3,6 +3,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<assert.h>
+
+extern int nb_letters;
 
 cell* init_cell(char* word_cell,int ind){
     cell* cell_dico = malloc(sizeof(cell));
@@ -14,11 +17,11 @@ cell* init_cell(char* word_cell,int ind){
     return cell_dico;
 }
 
-dico* init_dico(int n){
+dico* init_dico(){
 
     /*Récupération de n en char* */
     char buffer_n[25];
-    sprintf(buffer_n,"%d",n);
+    sprintf(buffer_n,"%d",nb_letters);
 
     /*Ouverture du bon fichier*/
 
@@ -34,7 +37,7 @@ dico* init_dico(int n){
     fgets(buffer_mot,10,f); //Récupère dans buffer la 1ere ligne de f
     longueurF = atoi(buffer_mot); //Nombre de mots du fichier 
     
-    char buffer[longueurF];
+    char buffer[25];
     
     /*Libération de la mémoire pour x cellules*/
 
@@ -46,7 +49,7 @@ dico* init_dico(int n){
     
     /*Remplissage de content*/
 
-    while(fgets(buffer,longueurF,f) != NULL){
+    while(fgets(buffer,25,f) != NULL){
         buffer[strlen(buffer)-1]='\0'; 
         char* buffer_copy= strdup(buffer);
         one_dico->content[i] = init_cell(buffer_copy,i);
@@ -58,7 +61,6 @@ dico* init_dico(int n){
         
         i++;
     }
-    
     return one_dico;
 }
 
@@ -67,18 +69,19 @@ void destroy_dico(dico* one_dico){
         free(one_dico->content[i]->word);
         free(one_dico->content[i]);
     }
+    free(one_dico->content);
     free(one_dico);
 }
 
 void print_dico(dico* one_dico){
-    for(int i=one_dico->first;i<one_dico->taille;i++){
+    for(int i=0;i<one_dico->taille;i++){
         printf("---%d---\n",one_dico->content[i]->index);
         printf("%s\n",one_dico->content[i]->word);
     }
 }
 
 void print_dico_p(dico* one_dico){
-    cell* current_cell = one_dico->content[0];
+    cell* current_cell = one_dico->content[one_dico->first];
     while(current_cell != NULL){
         printf("---%d---\n",current_cell->index);
         printf("%s\n",current_cell->word);
@@ -86,3 +89,46 @@ void print_dico_p(dico* one_dico){
     }
 }
 
+void maj_dico(dico* one_dico,occ_table T){
+    
+    cell* current_cell = one_dico->content[one_dico->first];
+    
+    while(current_cell != NULL){
+        if(!filtre_D(T,current_cell->word)){
+            suppr_dico(one_dico,current_cell->index);
+        }
+        current_cell = current_cell->next;
+    }
+}
+
+void suppr_dico(dico* one_dico,int i){
+    
+    assert(i<one_dico->taille);
+    cell* current_cell = one_dico->content[i];
+    
+    if(i == one_dico->first){ //Premier à supprimer
+        if (current_cell->next != NULL){ //Dico réduit à 1 mot
+            current_cell->next->previous = NULL;
+            one_dico->first = current_cell->next->index;
+        }
+        else {
+            printf("Un seul mot dans dico !\n");
+        }
+    }
+    else{
+        if (current_cell->next == NULL){ //Dernier à supprimer
+            current_cell->previous->next = NULL;
+            current_cell->previous = NULL;
+        }
+        else { //Cas autre
+            current_cell->previous->next = current_cell->next;
+            current_cell->next->previous = current_cell->previous;
+        }
+    }
+}
+
+char* pop(dico* one_dico,int i){
+    assert(i<one_dico->taille);
+    suppr_dico(one_dico,i);
+    return(one_dico->content[i]->word);
+}

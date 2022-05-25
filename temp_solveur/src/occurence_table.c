@@ -107,8 +107,8 @@ bool filtre_D(occ_table T, char *mot)
     for (int i = 0; i < nb_letters; i++)
     {
         int a = mot[i] - 'A';
-        if (!T[a][1])
-        {
+        if (T[a][1]==0)
+        {   
             return false;
         }
     }
