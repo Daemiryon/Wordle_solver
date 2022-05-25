@@ -1,4 +1,4 @@
-91
+90
 AA
 AH
 AI
@@ -64,7 +64,6 @@ ON
 OR
 OS
 OU
-P.
 PA
 PC
 PH
