@@ -194,4 +194,16 @@ int elague(abr *A, occ_table T, char *mot, char *color, compteur c){
     }
     return compteur_valide(T, c);
 }
+
+int verify(abr* A, char* word){
+    int p = A->profondeur;
+    if (p == nb_letters){
+        return 1;
+    }    
+    int a = word[p]-65;
+    if (A->branche[a]){
+        return verify(A->branche[a],word);
+    }
+    return 0;
+}
 //[ recursif ] Ellague l'arbre et retourne le nombre de mots restant. Même algo que nb_match() + destoy les branches non_exploré.

@@ -30,6 +30,8 @@ int main()
     D = init_dico();
     A = init_A();
     char buffer[nb_letters + 1];
+    printf("%d\n",verify(A,"AXEL"));
+    printf("%d\n",verify(A,"AAAA"));
     //print_A(A, buffer);   // Print pour vérifier le fonctionnement de la fonction d'initialisation de l'arbre
     
     occ_table T;

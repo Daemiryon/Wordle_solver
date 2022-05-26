@@ -27,4 +27,6 @@ int nb_match(abr *A, occ_table T, char *mot, char *coul, compteur c);
 int elague(abr *A, occ_table T, char *mot, char *color, compteur c);
 int MAJ_A(abr *A, occ_table T, char *mot, char *coul); //[ recursif ] Ellague l'arbre et retourne le nombre de mots restant. Même algo que nb_match() + destoy les branches non_exploré.
 
+int verify(abr* A, char* word);
+
 #endif
