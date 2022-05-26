@@ -7,11 +7,10 @@ elif [ "$#" -gt "1" ]
 then
     echo "ARGUMENT ERROR: Il ne faut rentrer qu'un seul argument !"
     echo "Cet argument est un nombre compris entre 3 et 10."
-elif ! [[ ! "$1" =~ [3-9] ]] | [ "$1" -ne "10" ]
+elif [ "$1" -lt "3" ] || [ "$1" -gt "10" ]
 then
     echo "ARGUMENT ERROR: L'argument est un nombre compris entre 3 et 10."
 else
-    echo "$1"
     echo "$1" > ./temp_solveur/src/wsolf.txt
     cd ./temp_solveur/
     if [ ! -e ./obj/ ]
