@@ -119,20 +119,20 @@ int nb_letters;
 int main()
 {
 
-    nb_letters = 9;
+    nb_letters = 4;
     D = init_dico();
 
     A = init_A();
     char buffer[nb_letters + 1];
-    print_A(A, buffer);
+    //print_A(A, buffer);
     
     occ_table T;
     init_T(T);
     compteur c;
     init_C(c);
 
-    maj_T(T,"RECULERONS","0000000000");
-    MAJ_A(A,T,"RECULERONS","0000000000");
+    maj_T(T,"AXEL","2222");
+    MAJ_A(A,T,"AXEL","2222");
     print_A(A,buffer);
     // for (int i = 0; i < 52; i++)
     // {

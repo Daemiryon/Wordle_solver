@@ -25,7 +25,7 @@ dico* init_dico(){
 
     /*Ouverture du bon fichier*/
 
-    char dicoPath[30] = "./dictionnaire/";
+    char dicoPath[32] = "src/dictionnaire/";
     strcat(dicoPath,buffer_n);
     char endDicoPath[25]="_lettres.txt";
     strcat(dicoPath,endDicoPath);
