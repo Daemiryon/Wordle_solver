@@ -2,6 +2,7 @@
 #define TREE_H
 
 #include "occurence_table.h"
+#include "dictionnary.h"
 
 struct _abr
 {
@@ -23,6 +24,7 @@ void destroy_A(abr *A);
 
 int nb_match(abr *A, occ_table T, char *mot, char *coul, compteur c);
 
-int MAJ_A(abr *A, occ_table T, char *mot, char *coul, compteur c); //[ recursif ] Ellague l'arbre et retourne le nombre de mots restant. Même algo que nb_match() + destoy les branches non_exploré.
+int elague(abr *A, occ_table T, char *mot, char *color, compteur c);
+int MAJ_A(abr *A, occ_table T, char *mot, char *coul); //[ recursif ] Ellague l'arbre et retourne le nombre de mots restant. Même algo que nb_match() + destoy les branches non_exploré.
 
 #endif

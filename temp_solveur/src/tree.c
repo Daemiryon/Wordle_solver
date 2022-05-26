@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 extern int nb_letters;
+extern dico* D;
 
 abr *creat_abr(int profondeur)
 {
@@ -15,7 +16,14 @@ abr *creat_abr(int profondeur)
     return A;
 }
 
-// abr *init_A(); // 1) créer un Arbre, 2)parcour le dico global et rempli l'arbre grace à la fonction add()
+abr* init_A(){
+    abr* A = creat_abr(0);
+    for (int i = 0; i<D->taille; i++)
+    {
+        add(A,D->content[i]->word);
+    }
+    return A;
+}
 
 void print_A(abr *A, char *buffer)
 {
@@ -102,17 +110,15 @@ int nb_match(abr *A, occ_table T, char *mot, char *coul, compteur compteur)
         }
         return count;
     }
-    // printf("Feuille\n");
-    // for (int i = 0; i < 26; i++)
-    // {
-    //     printf("%c:%d, ", i + 'A', compteur[i]);
-    // }
-    // printf("\n [ %d ] \n", compteur_valide(T, compteur));
     return compteur_valide(T, compteur);
 }
 
-int MAJ_A(abr *A, occ_table T, char *mot, char *color, compteur c)
-{
+int MAJ_A(abr *A, occ_table T, char *mot, char *color){
+    compteur c;
+    init_C(c);
+    return elague(A,T,mot,color,c);
+}
+int elague(abr *A, occ_table T, char *mot, char *color, compteur c){
     int p = A->profondeur;
     if (p < nb_letters)
     {
@@ -135,7 +141,7 @@ int MAJ_A(abr *A, occ_table T, char *mot, char *color, compteur c)
                 if (T[a][1] > c[a])
                 {
                     c[a]++;
-                    temp_count = MAJ_A(A->branche[a], T, mot, color, c);
+                    temp_count = elague(A->branche[a], T, mot, color, c);
                     count += temp_count;
                     c[a]--;
 
@@ -161,7 +167,7 @@ int MAJ_A(abr *A, occ_table T, char *mot, char *color, compteur c)
                     if (T[i][1] > c[i])
                     {
                         c[i]++;
-                        temp_count = MAJ_A(A->branche[i], T, mot, color, c);
+                        temp_count = elague(A->branche[i], T, mot, color, c);
                         count += temp_count;
                         c[i]--;
                         if (temp_count == 0)

@@ -112,57 +112,43 @@ char couleur[52][6] = {
     "22222",
 };
 
+dico* D;
+abr* A;
 int nb_letters;
 
 int main()
 {
 
-    nb_letters = 5;
-    abr *A = creat_abr(0);
+    nb_letters = 9;
+    D = init_dico();
 
-    for (int i = 0; i < 52; i++)
-    {
-        add(A, mots[i]);
-    }
+    A = init_A();
     char buffer[nb_letters + 1];
     print_A(A, buffer);
-
+    
     occ_table T;
     init_T(T);
     compteur c;
     init_C(c);
 
-    int k = 27;
+    maj_T(T,"RECULERONS","0000000000");
+    MAJ_A(A,T,"RECULERONS","0000000000");
+    print_A(A,buffer);
+    // for (int i = 0; i < 52; i++)
+    // {
+    //     // init_T(T);
+    //     maj_T(T, mots[i], couleur[i]);
+    //     // print_T(T);
 
-    // printf("%s : %s\n", mots[k], couleur[k]);
-
-    // maj_T(T, mots[k], couleur[k]);
-    // print_T(T);
-
-    // printf("%d \n", nb_match(A, T, mots[k], couleur[k], c));
-    // printf("\n MAJ de A, nb mots :  %d\n", MAJ_A(A, T, mots[k], couleur[k], c));
-    // print_A(A, buffer);
-
-    // compute_occ(T, mots[11], couleur[11], 0);
-    // print_T(T);
-
-    // printf("%d \n", nb_match(A, T, mots[11], couleur[11], c));
-    // printf("%d\n", A->branche['D' - 'A']->branche['U' - 'A']->branche['R' - 'A']->branche['I' - 'A']->branche['T' - 'A']->profondeur);
-
-    for (int i = 0; i < 52; i++)
-    {
-        // init_T(T);
-        maj_T(T, mots[i], couleur[i]);
-        // print_T(T);
-
-        printf("%s : \n", mots[i]);
-        compteur c;
-        init_C(c);
-        printf("%d \n", MAJ_A(A, T, mots[i], couleur[i], c));
-        printf("%d \n", nb_match(A, T, mots[i], couleur[i], c));
-        print_A(A, buffer);
-    }
+    //     printf("%s : \n", mots[i]);
+    //     compteur c;
+    //     init_C(c);
+    //     printf("%d \n", elague(A, T, mots[i], couleur[i], c));
+    //     printf("%d \n", nb_match(A, T, mots[i], couleur[i], c));
+    //     print_A(A, buffer);
+    // }
 
     destroy_A(A);
+    destroy_dico(D);
     return 0;
 }
