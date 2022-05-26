@@ -47,7 +47,7 @@ obj/tree.o: src/tree.h src/tree.c
 	$(comp) src/tree.c $(toobj) obj/tree.o
 
 obj/Entropy.o: src/Entropy.h src/Entropy.c
-	$(comp) src/Entropy.c $(toobj) obj/Entropy.c
+	$(comp) src/Entropy.c $(toobj) obj/Entropy.o
 
 obj/test_table_occ.o: src/occurence_table.h src/test_table_occ.c
 	$(comp) src/test_table_occ.c $(toobj) obj/test_table_occ.o
