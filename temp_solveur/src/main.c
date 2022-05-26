@@ -27,6 +27,7 @@ int get_nb_letters()
 
 void get_opener(char *opener)
 {
+
     FILE *f = fopen("openers.txt", "r");
     int line = nb_letters;
     for (int i = 0; i < line; ++i)
@@ -118,20 +119,25 @@ int main()
     char buffer[nb_letters + 1];
     init_T(T);
     D = init_dico();
-    nb_mots = D->taille;
-    // print_dico(D);
-    // printf("%d \n", D->taille);
     A = init_A();
-    // print_A(A, buffer);
-    // printf("%d\n", A->branche[0]->profondeur);
+    nb_mots = D->taille;
 
-    get_opener(opener); // reads openers.txt (the content of this file has to calculated)
-    guess = opener;
+    if (nb_letters <= 10)
+    {
+        get_opener(opener); // reads openers.txt (the content of this file has to calculated)
+        guess = opener;
+    }
+    else
+    {
+        guess = D->content[D->first]->word;
+        // printf("%s\n", D->content[D->first]->word);
+        // print_dico(D);
+    }
+
     printf("Opener: %s\n", guess);
     get_input(input);
     while (!end_condition(input))
     {
-        // printf("input : %s\n mots \n", input);
         maj_T(T, guess, input);
         MAJ_A(A, T, guess, input);
         maj_dico(D, T);
@@ -148,7 +154,6 @@ int main()
             index = D->first;
         }
 
-        // printf("%d | %d \n", index, D->taille);
         guess = pop(D, index);
         printf("Guess : %s\n", guess);
         get_input(input); // provides "-1" or a verified 5 character string input, also allows exiting of the program
