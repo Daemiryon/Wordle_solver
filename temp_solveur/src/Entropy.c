@@ -1,9 +1,10 @@
 #include "tree.h"
 #include "dictionnary.h"
+#include <stdio.h>
 #include <math.h>
 
 extern abr *A;
-extern occ_table *T;
+extern occ_table T;
 extern dico *D;
 extern int nb_letters;
 extern double nb_mots;
@@ -21,7 +22,7 @@ void color(int n, char *buffer)
 double Proba_Colo(char *mot, char *color)
 {
     compteur c;
-    occ_table *T_temp;
+    occ_table T_temp;
     init_C(c);
     copy_T(T, T_temp);
     maj_T(T_temp, mot, color);
@@ -37,7 +38,10 @@ double Entropy(char *mot)
     {
         color(i, couleur);
         P = Proba_Colo(mot, couleur);
-        E -= P * log2(P);
+        if (P)
+        {
+            E -= P * log2(P);
+        }
     }
     return E;
 }
@@ -56,6 +60,7 @@ double Max_prob(char *mot)
             P_max = P;
         }
     }
+    // printf("P_MAX : %f\n", P_max);
     return P_max;
 }
 
@@ -68,6 +73,7 @@ int compute_next_strat_1()
     while (Cell)
     {
         E = Entropy(Cell->word);
+        // printf("%f\n", E);
         if (E > E_max)
         {
             E_max = E;
@@ -80,17 +86,18 @@ int compute_next_strat_1()
 
 int compute_next_strat_2()
 {
-    int index_best;
-    double P_min;
+    int index_best = 0;
+    double P_min = 1;
     double P;
     cell *Cell = D->content[D->first];
     while (Cell)
     {
         P = Max_prob(Cell->word);
-        if (P_min > P)
+        if (P_min > P && P)
         {
             P_min = P;
             index_best = Cell->index;
+            // printf("%d\n", index_best);
         }
         Cell = Cell->next;
     }
