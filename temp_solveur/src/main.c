@@ -17,7 +17,7 @@ double nb_mots;
 
 void get_nb_letters()
 {
-    FILE *f = fopen("wsolf.txt", "r");
+    FILE *f = fopen("src/wsolf.txt", "r");    
     fscanf(f, "%d", &nb_letters);
     printf("Nombre de lettres: %d\n", nb_letters);
     fclose(f);
@@ -26,7 +26,7 @@ void get_nb_letters()
 void get_opener(char *opener)
 {
 
-    FILE *f = fopen("openers.txt", "r");
+    FILE *f = fopen("src/openers.txt", "r");
     int line = nb_letters;
     for (int i = 0; i < line; ++i)
     {
@@ -56,7 +56,7 @@ void get_input(char *input)
         {
             return;
         }
-        if (strlen(input) != nb_letters)
+        if ((int) strlen(input) != nb_letters)
         {
             printf("Wrong number of numbers ! Try again.\n");
         }
@@ -115,7 +115,7 @@ int main()
     char input[nb_letters + 2];
     char *guess;
     int index;
-    char buffer[nb_letters + 1];
+    // char buffer[nb_letters + 1];
     init_T(T);
     D = init_dico();
     A = init_A();
