@@ -131,7 +131,7 @@ Vous renvoyez alors la chaîne **2222** ce qui terminera la partie.
 Dans un terminal Linux, allez dans les fichiers du solveur :
 ```bash
 # À exécuter depuis la racine du projet
-cd temp_solveur/
+cd solveur/
 ```
 Puis choisissez la structure que vous voulez tester en tapant la commande correspondante :
 ```bash
@@ -152,6 +152,6 @@ Lors de la compilation, les fichiers objet **.o** et les exécutables **.exe** o
 Pour les supprimer, dans un terminal Linux, exécutez les commandes suivantes à la racine du projet :
 ```bash
 # À exécuter depuis la racine du projet
-cd temp_solveur/
+cd solveur/
 make clean
 ```

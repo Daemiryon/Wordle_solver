@@ -11,8 +11,8 @@ elif [ "$1" -lt "3" ] || [ "$1" -gt "20" ]
 then
     echo "ARGUMENT ERROR: L'argument est un nombre compris entre 3 et 20."
 else
-    echo $1 > ./temp_solveur/src/wsolf.txt
-    cd ./temp_solveur/
+    echo $1 > ./solveur/src/wsolf.txt
+    cd ./solveur/
     if [ ! -e ./obj/ ]
     then
     mkdir ./obj/
