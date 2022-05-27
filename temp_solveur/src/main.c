@@ -15,14 +15,12 @@ dico *D;
 int nb_letters;
 double nb_mots;
 
-int get_nb_letters()
+void get_nb_letters()
 {
-    int n;
     FILE *f = fopen("wsolf.txt", "r");
-    fscanf(f, "%d", &n);
-    printf("Nombre de lettres: %d\n", n);
+    fscanf(f, "%d", &nb_letters);
+    printf("Nombre de lettres: %d\n", nb_letters);
     fclose(f);
-    return n;
 }
 
 void get_opener(char *opener)
@@ -111,9 +109,10 @@ bool end_condition(char *input)
 int main()
 {
 
-    nb_letters = get_nb_letters(); // reads wsolf.txt
-    char opener[512];
-    char input[512];
+    get_nb_letters(); // reads wsolf.txt
+
+    char opener[nb_letters + 2];
+    char input[nb_letters + 2];
     char *guess;
     int index;
     char buffer[nb_letters + 1];
@@ -130,8 +129,6 @@ int main()
     else
     {
         guess = D->content[D->first]->word;
-        // printf("%s\n", D->content[D->first]->word);
-        // print_dico(D);
     }
 
     printf("Opener: %s\n", guess);
@@ -140,14 +137,15 @@ int main()
     {
         maj_T(T, guess, input);
         MAJ_A(A, T, guess, input);
-        maj_dico(D, T);
+        maj_dico(D);
 
         // print_A(A, buffer);
         // print_T(T);
         // print_dico_p(D);
+
         if (nb_letters <= 10)
         {
-            index = compute_next_strat_2();
+            index = compute_next_strat_1();
         }
         else
         {
@@ -156,7 +154,7 @@ int main()
 
         guess = pop(D, index);
         printf("Guess : %s\n", guess);
-        get_input(input); // provides "-1" or a verified 5 character string input, also allows exiting of the program
+        get_input(input); // provides "-1" or a verified nb_letters character string input, also allows exiting of the program
     }
     destroy_A(A);
     destroy_dico(D);

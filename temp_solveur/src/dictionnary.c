@@ -100,7 +100,7 @@ void print_dico_p(dico *one_dico)
     }
 }
 
-void maj_dico(dico *one_dico, occ_table T)
+void maj_dico(dico *one_dico)
 {
 
     cell *current_cell = one_dico->content[one_dico->first];
@@ -128,10 +128,10 @@ void suppr_dico(dico *one_dico, int i)
             current_cell->next->previous = NULL;
             one_dico->first = current_cell->next->index;
         }
-        else
-        {
-            printf("Un seul mot dans dico !\n");
-        }
+        //     else
+        //     {
+        //         printf("Un seul mot dans dico !\n");
+        //     }
     }
     else
     {
