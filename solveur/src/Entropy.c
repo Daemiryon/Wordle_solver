@@ -86,6 +86,7 @@ int compute_next_strat_1()
 
 int compute_next_strat_2()
 {
+    int flag = 1;
     int index_best = 0;
     double P_min = 1;
     double P;
@@ -93,8 +94,17 @@ int compute_next_strat_2()
     while (Cell)
     {
         P = Max_prob(Cell->word);
-        if (P_min > P && P)
+        if (((P_min > P) && P) || verify(A, Cell->word) && (P_min == P) && flag)
         {
+            if (!verify(A, Cell->word))
+            {
+                flag = 1;
+            }
+            else
+            {
+                flag = 0;
+            }
+            // printf("%s , %f \n", Cell->word, P);
             P_min = P;
             index_best = Cell->index;
             // printf("%d\n", index_best);

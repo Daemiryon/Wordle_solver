@@ -115,6 +115,21 @@ void maj_dico(dico *one_dico)
     }
 }
 
+void maj_dico2(occ_table T, dico *one_dico)
+{
+
+    cell *current_cell = one_dico->content[one_dico->first];
+
+    while (current_cell != NULL)
+    {
+        if (!filtre_D(T, current_cell->word))
+        {
+            suppr_dico(one_dico, current_cell->index);
+        }
+        current_cell = current_cell->next;
+    }
+}
+
 void suppr_dico(dico *one_dico, int i)
 {
 

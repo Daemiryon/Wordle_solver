@@ -24,6 +24,7 @@ extern void destroy_dico(dico *one_dico);
 extern void print_dico(dico *one_dico);   // déplacement par index
 extern void print_dico_p(dico *one_dico); // déplacement par pointeur
 extern void maj_dico(dico *one_dico);
+extern void maj_dico2(occ_table T, dico *one_dico);
 extern void suppr_dico(dico *one_dico, int i);
 extern char *pop(dico *one_dico, int i);
 

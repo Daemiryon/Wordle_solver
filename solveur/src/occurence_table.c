@@ -104,11 +104,14 @@ void init_C(compteur c)
 
 bool filtre_D(occ_table T, char *mot)
 {
+    compteur c;
+    init_C(c);
     for (int i = 0; i < nb_letters; i++)
     {
         int a = mot[i] - 'A';
-        if (T[a][1]==0)
-        {   
+        c[a]++;
+        if (T[a][1] < c[a])
+        {
             return false;
         }
     }
