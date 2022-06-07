@@ -35,6 +35,7 @@ Il consiste en la création de deux applications autour du jeu Wordle :
 ## Plannings des tâches (Gantt) du projet
 
 [Planning des tâches (Gantt) - Application WEB](https://docs.google.com/spreadsheets/d/1sz8TemHDO66MD2cEXAMvSilQM0ajqywi5HdHzMRzw44/edit?usp=sharing)
+[Planning des tâches (Gantt) - Solveur](https://docs.google.com/spreadsheets/d/1uYkEPePmoIYob3N8ON1gJfrEZKpzgf4EvqCg9EoEarU/edit?usp=sharing)
 
 
 ## Rapport du projet

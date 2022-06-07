@@ -206,4 +206,3 @@ int verify(abr* A, char* word){
     }
     return 0;
 }
-//[ recursif ] Ellague l'arbre et retourne le nombre de mots restant. Même algo que nb_match() + destoy les branches non_exploré.
