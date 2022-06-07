@@ -19,7 +19,7 @@ void get_nb_letters()
 {
     FILE *f = fopen("src/wsolf.txt", "r");
     fscanf(f, "%d", &nb_letters);
-    printf("Nombre de lettres: %d\n", nb_letters);
+    printf("\nNombre de lettres: %d\n", nb_letters);
     fclose(f);
 }
 
@@ -41,12 +41,6 @@ void get_input(char *input)
     bool is_valid_char;
     bool is_valid_word;
     char *valid_numbers = "012";
-    // printf(
-    //     "Please review my word M.F !\n\
-    //     0:Letter not found\n\
-    //     1:Letter in wrong position\n\
-    //     2:Letter in correct position\n\
-    //     -1:Exit\n");
 
     while (!done)
     {
@@ -58,7 +52,7 @@ void get_input(char *input)
         }
         if ((int)strlen(input) != nb_letters)
         {
-            printf("Wrong number of numbers ! Try again.\n");
+            printf("La longueur de la chaîne ne correspond pas avec la longueur du mot à trouver. Réessayez !\n");
         }
         else
         {
@@ -75,7 +69,7 @@ void get_input(char *input)
                 }
                 if (!is_valid_char)
                 {
-                    printf("Invalid characters ! Try again.\n");
+                    printf("Un ou plusieurs caractères de la chaîne ne sont pas valides ! Réessayez.\n");
                     is_valid_word = false;
                     break;
                 }
@@ -125,7 +119,7 @@ int main()
     char input[nb_letters + 2];
     char *guess;
     int index;
-    char buffer[nb_letters + 1];
+    //char buffer[nb_letters + 1];
     init_T(T);
     D = init_dico();
     A = init_A();
@@ -141,7 +135,7 @@ int main()
         guess = D->content[D->first]->word;
     }
 
-    printf("Opener: %s\n", guess);
+    printf("\nOpener: %s", guess);
     get_input(input);
 
     maj_T(T, guess, input);
@@ -159,10 +153,6 @@ int main()
             maj_dico2(T, D);
         }
 
-        // print_A(A, buffer);
-        // print_T(T);
-        // print_dico_p(D);
-
         if (nb_letters <= 10)
         {
             index = compute_next_strat_2();
@@ -173,7 +163,7 @@ int main()
         }
 
         guess = pop(D, index);
-        printf("Guess : %s\n", guess);
+        printf("\nGuess : %s\n", guess);
         get_input(input); // provides "-1" or a verified nb_letters character string input, also allows exiting of the program
         maj_T(T, guess, input);
     }
