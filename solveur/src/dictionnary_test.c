@@ -13,7 +13,6 @@ int main(){
     nb_letters = 4;
     D = init_dico();
     A = init_A(); 
-    int keep_alive=0;
 
     /* VERIFICATION QUE LE DICTIONNAIRE SE SOIT BIEN CHARGÉ : */
     
