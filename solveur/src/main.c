@@ -119,7 +119,6 @@ int main()
     char input[nb_letters + 2];
     char *guess;
     int index;
-    //char buffer[nb_letters + 1];
     init_T(T);
     D = init_dico();
     A = init_A();

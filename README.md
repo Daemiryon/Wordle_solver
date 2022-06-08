@@ -40,7 +40,7 @@ Il consiste en la création de deux applications autour du jeu Wordle :
 
 ## Rapport du projet
 
-[Rapport (Non disponible)](./)
+[Rapport](./Rapport_PPII_2-GroupeE12.pdf)
 
 
 
