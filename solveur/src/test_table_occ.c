@@ -118,13 +118,34 @@ int main()
     nb_letters = 5;
     occ_table T;
     init_T(T);
-    char target[5] = "DEVIN";
+    // char target[5] = "DEVIN";
     for (int i = 0; i < 14; i++)
     {
         printf("%s : \n", mots[i]);
         maj_T(T, mots[i], couleur[i]);
         print_T(T);
     }
+    printf("Convergence vers DEVIN -> OK\n-----------------------------\n");
+
+    init_T(T);
+    maj_T(T, "ABCDE", "00000");
+    printf("mot : ABCDE, couleur : 00000 \nOccurence à 0 pour A,B,C et D :\n");
+    print_T(T);
+
+    init_T(T);
+    maj_T(T, "ABCDE", "22222");
+    printf("mot : ABCDE, couleur : 22222 \nOccurence à 1 pour A,B,C et D et à 0 pour tout les autres:\n");
+    print_T(T);
+
+    init_T(T);
+    maj_T(T, "AAABB", "10200");
+    printf("mot : AAABB, couleur : 10200 \nOccurence à 2 pour A et à 0 pour B:\n");
+    print_T(T);
+
+    init_T(T);
+    maj_T(T, "AABBB", "12000");
+    printf("mot : AABBB, couleur : 12000 \nOccurence à (2,5) pour A et à 0 pour B:\n");
+    print_T(T);
 
     return 0;
 }
