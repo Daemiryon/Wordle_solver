@@ -94,7 +94,7 @@ int compute_next_strat_2()
     while (Cell)
     {
         P = Max_prob(Cell->word);
-        if (((P_min > P) && P) || verify(A, Cell->word) && (P_min == P) && flag)
+        if (((P_min > P) && P) || (verify(A, Cell->word) && ((P_min == P) && flag)))
         {
             if (!verify(A, Cell->word))
             {
