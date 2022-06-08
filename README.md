@@ -29,7 +29,7 @@ Il consiste en la création de deux applications autour du jeu Wordle :
 
 [Dossier de conception - Application WEB](./Conception_application_web.pdf)
 
-[Dossier de conception - Solveur (Non disponible)](./)
+[Dossier de conception - Solveur](./Conception_solveur.pdf)
 
 
 ## Plannings des tâches (Gantt) du projet
